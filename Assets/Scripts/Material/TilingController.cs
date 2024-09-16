@@ -35,7 +35,10 @@ public class TilingController : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        if (meshRenderer == null) meshRenderer = GetComponent<MeshRenderer>();
+        if (meshRenderer == null)
+        {
+            meshRenderer = GetComponent<MeshRenderer>();
+        }
     }
 
     private void Update()
@@ -50,7 +53,10 @@ public class TilingController : MonoBehaviour
     /// </summary>
     private void Reset()
     {
-        if (meshRenderer == null) meshRenderer = GetComponent<MeshRenderer>();
+        if (meshRenderer == null)
+        {
+            meshRenderer = GetComponent<MeshRenderer>();
+        }
     }
 
     private void OnValidate()
