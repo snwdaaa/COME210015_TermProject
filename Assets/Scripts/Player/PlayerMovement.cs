@@ -53,13 +53,9 @@ public class PlayerMovement : MonoBehaviour
     private void Move(Vector2 moveInput)
     {
         // 이동 속력
-        float smoothTime;
-        if (characterController.isGrounded)
-            smoothTime = moveSpeedSmoothTime; // 가속도 smoothTime 설정
-        else
-            smoothTime = moveSpeedSmoothTime / airControlPercentage; // 떠있는 동안에는 airControlPercentage에 의해 조작 속도 조절
-
-        float targetSpeed = moveSpeed * moveInput.magnitude; // 목표 속력 = 최대 속력 * 입력 벡터 크기     
+        float targetSpeed = moveSpeed * moveInput.magnitude; // 목표 속력 = 최대 속력 * 입력 벡터 크기
+        // 가속도 smoothTime 설정. 떠있는 동안에는 airControlPercentage에 의해 조작 속도 조절
+        float smoothTime = characterController.isGrounded ? moveSpeedSmoothTime : moveSpeedSmoothTime / airControlPercentage;
         targetSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref moveSpeedRef, smoothTime); // 이동 속력 점진적으로 증가
         currentYSpeed += Physics.gravity.y * Time.deltaTime; // 아래에 물체가 없는 경우에 y 속력이 중력에 영향을 받게 함
 
@@ -84,9 +80,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Sprint(Vector2 moveInput)
     {
-        if (moveInput.y > 0) // 앞으로 이동하는 경우에만 달릴 수 있음
+        if (playerKeyInput.keyPressed_Sprint) // 앞으로 이동하는 경우에만 달릴 수 있음
         {
-            if (playerKeyInput.keyPressed_Sprint)
+            if (moveInput.y > 0)
                 moveSpeed = sprintSpeed;
         }
         else
