@@ -25,9 +25,7 @@ public class PlayerKeyInput : MonoBehaviour
         Vector2 input = context.ReadValue<Vector2>(); // context -> 레퍼런스
 
         if (input != null)
-        {
             moveInput = input;
-        }
     }
 
     // 콜백 호출되면 이벤트 실행

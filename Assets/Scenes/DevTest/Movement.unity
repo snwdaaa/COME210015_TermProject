@@ -396,6 +396,7 @@ GameObject:
   - component: {fileID: 1927819022}
   - component: {fileID: 1927819023}
   - component: {fileID: 1927819020}
+  - component: {fileID: 1927819024}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -428,7 +429,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.4, z: 0}
 --- !u!4 &1927819017
 Transform:
   m_ObjectHideFlags: 0
@@ -585,11 +586,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
-  walkSpeed: 3
+  walkSpeed: 2.5
+  sprintSpeed: 5
+  crouchSpeed: 2
   moveSpeedSmoothTime: 0.2
-  sprintSpeed: 4
   jumpSpeed: 3
-  airControlPercentage: 0.01
+  airControlPercentage: 0.5
+  enableDuckJump: 0
+  standHeight: 1.7
+  crouchHeight: 1
+  crouchSmoothTime: 0.1
+  standSmoothTime: 0.05
+  standCenter: {x: 0, y: -0.4, z: 0}
+  crouchCenter: {x: 0, y: -0.2, z: 0}
 --- !u!114 &1927819021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -628,6 +637,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSensitivity: 0.05
   mouseMaxAngleY: 85
+--- !u!114 &1927819024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927819015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dbe8f5a1d76b0344ad8bdb25968dcbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMoveState: 0
+  currentPostureState: 0
 --- !u!1 &2037584339
 GameObject:
   m_ObjectHideFlags: 0
