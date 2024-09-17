@@ -16,7 +16,7 @@
                 },
                 {
                     "name": "Sprint",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "93c3411a-18f7-4c68-871d-2a1567b3c743",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -25,7 +25,7 @@
                 },
                 {
                     "name": "Crouch",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "94176a7e-a21e-4d41-b7f2-6b7d99366318",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -34,7 +34,7 @@
                 },
                 {
                     "name": "Fire",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "7677d37e-ddb7-46a4-8a6e-6a5ad20c9fef",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -43,11 +43,11 @@
                 },
                 {
                     "name": "Jump",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "b8358d3a-c913-414b-bc50-6852b33fea53",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": true
                 },
                 {

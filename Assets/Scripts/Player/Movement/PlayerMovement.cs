@@ -118,7 +118,6 @@ public class PlayerMovement : MonoBehaviour
     }
     private void StartJump()
     {
-        
         currentYSpeed = jumpSpeed; // y 속력 변경해 점프
     }
 

@@ -46,6 +46,15 @@ public class PlayerKeyInput : MonoBehaviour
 
     public void OnJumpCallback(InputAction.CallbackContext context)
     {
-        keyPressed_Jump = context.ReadValueAsButton();
+        if (context.started)
+            StartCoroutine(JumpTrigger(0.1f));
+    }
+
+    // Trigger용 코루틴
+    private IEnumerator JumpTrigger(float time)
+    {
+        keyPressed_Jump = true;
+        yield return new WaitForSeconds(time);
+        keyPressed_Jump = false;
     }
 }
