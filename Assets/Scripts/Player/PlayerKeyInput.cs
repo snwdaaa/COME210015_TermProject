@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem; // Input System 사용
 
+/// <summary>
+/// 플레이어 키 입력 감지 스크립트
+/// </summary>
 public class PlayerKeyInput : MonoBehaviour
 {
     // 컴포넌트

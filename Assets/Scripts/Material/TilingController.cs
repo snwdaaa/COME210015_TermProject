@@ -1,12 +1,11 @@
-/// <summary>
-/// 하나의 Material로 여러 Mesh에 각각 다른 tiling과 offset을 적용하는 스크립트
-/// Play Mode와 Edit Mode 둘 다 동작
-/// </summary>
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 하나의 Material로 여러 Mesh에 각각 다른 tiling과 offset을 적용하는 스크립트
+/// Play Mode와 Edit Mode 둘 다 동작
+/// </summary>
 [ExecuteAlways]
 public class TilingController : MonoBehaviour
 {

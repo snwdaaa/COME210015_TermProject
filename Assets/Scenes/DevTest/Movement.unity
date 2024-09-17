@@ -349,6 +349,8 @@ GameObject:
   - component: {fileID: 1927819016}
   - component: {fileID: 1927819019}
   - component: {fileID: 1927819021}
+  - component: {fileID: 1927819022}
+  - component: {fileID: 1927819023}
   - component: {fileID: 1927819020}
   m_Layer: 0
   m_Name: Player
@@ -392,7 +394,7 @@ Transform:
   m_GameObject: {fileID: 1927819015}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.85, z: -13.92}
+  m_LocalPosition: {x: 0, y: 0.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -504,6 +506,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: b8358d3a-c913-414b-bc50-6852b33fea53
     m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1927819022}
+        m_TargetAssemblyTypeName: PlayerMouseInput, Assembly-CSharp
+        m_MethodName: OnLookCallback
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 8115bd44-5836-44cf-89ce-b7ce52325201
+    m_ActionName: Player/Look[/Mouse/position]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PC
   m_DefaultActionMap: Player
@@ -522,7 +540,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
+  walkSpeed: 3
   moveSpeedSmoothTime: 0.2
+  sprintSpeed: 6
   jumpSpeed: 3
   airControlPercentage: 0.01
 --- !u!114 &1927819021
@@ -537,6 +557,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 996efb56e54a98a4d8d51a31b46f1afc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1927819022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927819015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1c0592bb5bdff446b84ce346b22ea33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1927819023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927819015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd971a90539d14741aba20b25f8fbc62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseSensitivity: 0.05
+  mouseMaxAngleY: 85
 --- !u!1 &2037584339
 GameObject:
   m_ObjectHideFlags: 0

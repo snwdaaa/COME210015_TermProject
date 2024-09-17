@@ -4,12 +4,14 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
+/// <summary>
+/// 플레이어 이동 스크립트
+/// </summary>
 public class PlayerMovement : MonoBehaviour
 {
     // 컴포넌트
     private CharacterController characterController;
     private PlayerKeyInput playerKeyInput;
-    private Camera fpCam;
 
     [Header("이동 속도 설정")]
     public float moveSpeed;
@@ -30,7 +32,6 @@ public class PlayerMovement : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         playerKeyInput = GetComponent<PlayerKeyInput>();
-        fpCam = Camera.main;
     }
 
     private void FixedUpdate()
