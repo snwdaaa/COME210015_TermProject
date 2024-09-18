@@ -116,6 +116,7 @@ public class PlayerMovement : MonoBehaviour
         if (playerKeyInput.keyPressed_Jump)
             StartJump();
     }
+
     private void StartJump()
     {
         currentYSpeed = jumpSpeed; // y 속력 변경해 점프
@@ -171,10 +172,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void EndCrouch()
     {
+        // 일어섰을 때의 높이만큼 충분한 공간이 없으면 일어나지 않음
+        // 캐릭터의 상하좌우에서 위쪽으로 레이 발사해서 검사
+        float dist = standHeight - crouchHeight + characterController.height - transform.position.y;
+        bool cond1 = PhysicsUtil.CheckUpperSpace(transform.position + transform.forward * characterController.radius, dist); // 앞쪽
+        bool cond2 = PhysicsUtil.CheckUpperSpace(transform.position - transform.forward * characterController.radius, dist); // 뒤쪽
+        bool cond3 = PhysicsUtil.CheckUpperSpace(transform.position + transform.right * characterController.radius, dist); // 오른쪽
+        bool cond4 = PhysicsUtil.CheckUpperSpace(transform.position - transform.right * characterController.radius, dist); // 왼쪽
+        if (cond1 || cond2 || cond3 || cond4) return;
+
         if (playerState.currentPostureState == PlayerState.CurrentPostureState.Crouch)
             moveSpeed = walkSpeed;
 
-        // 머리 위로 레이캐스트 쏴서 공간 있는 경우에만 일어남
         if (standHeight - currentHeight > 0.01f)
         {
             characterController.height = Mathf.SmoothDamp(currentHeight, standHeight, ref currentHeightRef, standSmoothTime);
