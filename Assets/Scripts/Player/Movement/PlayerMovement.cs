@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     private float currentYSpeed; // 현재 y 방향 속도
 
     [Header("앉기 설정")]
+    private bool isCrouching = false;
     public float standHeight = 1.7f;
     public float crouchHeight = 1f;
     public float crouchSmoothTime = 1f;
@@ -164,6 +165,7 @@ public class PlayerMovement : MonoBehaviour
         {
             moveSpeed = crouchSpeed;
             playerState.currentPostureState = PlayerState.CurrentPostureState.Crouch;
+            isCrouching = true;
         }
 
         characterController.height = Mathf.SmoothDamp(currentHeight, crouchHeight, ref currentHeightRef, crouchSmoothTime); 
@@ -172,6 +174,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void EndCrouch()
     {
+        // isCrouching은 플레이어가 일어날 수 있는 경우에만 false가 되어야 함
+        if (isCrouching)
+            playerState.currentPostureState = PlayerState.CurrentPostureState.Crouch;
+
         // 일어섰을 때의 높이만큼 충분한 공간이 없으면 일어나지 않음
         // 캐릭터의 상하좌우에서 위쪽으로 레이 발사해서 검사
         float dist = standHeight - crouchHeight + characterController.height - transform.position.y;
@@ -181,6 +187,8 @@ public class PlayerMovement : MonoBehaviour
         bool cond4 = PhysicsUtil.CheckUpperSpace(transform.position - transform.right * characterController.radius, dist); // 왼쪽
         if (cond1 || cond2 || cond3 || cond4) return;
 
+        // ------- 이 위에 있는 코드는 일어나지 못하는 상황에 대한 코드 -------
+
         if (playerState.currentPostureState == PlayerState.CurrentPostureState.Crouch)
             moveSpeed = walkSpeed;
 
@@ -189,5 +197,7 @@ public class PlayerMovement : MonoBehaviour
             characterController.height = Mathf.SmoothDamp(currentHeight, standHeight, ref currentHeightRef, standSmoothTime);
             characterController.center = Vector3.SmoothDamp(characterController.center, standCenter, ref crouchCenterRef, crouchSmoothTime);
         }
+
+        isCrouching = false;
     }
 }
