@@ -1421,7 +1421,7 @@ Transform:
   m_GameObject: {fileID: 1927819015}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.85, z: 0}
+  m_LocalPosition: {x: -8.5, y: 0.85, z: 6.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1567,7 +1567,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 848123d3d7522fb4baa6b3fb733094bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveState: 0
+  postureState: 0
+  moveSpeed: 2.5
   walkSpeed: 2.5
   sprintSpeed: 5
   crouchSpeed: 2
@@ -1581,6 +1583,9 @@ MonoBehaviour:
   standSmoothTime: 0.05
   standCenter: {x: 0, y: -0.4, z: 0}
   crouchCenter: {x: 0, y: -0.2, z: 0}
+  slopeSlidingSpeed: 3
+  slopeDownForce: 3
+  slopeControlRatio: 0.05
 --- !u!114 &1927819021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1628,11 +1633,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1927819015}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dbe8f5a1d76b0344ad8bdb25968dcbe, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f4d87d469f5f57479afc31d5e8d6957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMoveState: 0
-  currentPostureState: 0
 --- !u!1 &2037584339
 GameObject:
   m_ObjectHideFlags: 0

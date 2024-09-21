@@ -10,9 +10,15 @@ using UnityEngine.UIElements;
 public class PlayerMovement : MonoBehaviour
 {
     // 컴포넌트
-    private CharacterController characterController;
-    private PlayerKeyInput playerKeyInput;
-    private PlayerState playerState;
+    public CharacterController characterController { get; private set; }
+    public PlayerKeyInput playerKeyInput { get; private set; }
+    public PlayerStateMachine playerStateMachine { get; private set; }
+
+    public enum MoveState { Idle, Walk, Sprint, CrouchWalk, Slide, OnAir };
+    public enum PostureState { Stand, Crouch };
+    [Header("상태")] // 인스펙터 확인용
+    public MoveState moveState = MoveState.Idle;
+    public PostureState postureState = PostureState.Stand;
 
     [Header("이동 속도 설정")]
     public float moveSpeed;
@@ -26,20 +32,30 @@ public class PlayerMovement : MonoBehaviour
     [Range(0.01f, 1f)] public float airControlPercentage = 1f; // 점프 중 조작 가능한 정도
     public bool enableDuckJump = false;
     private float currentYSpeed; // 현재 y 방향 속도
+    public bool isJumping { get; private set; }
 
     [Header("앉기 설정")]
-    private bool isCrouching = false;
     public float standHeight = 1.7f;
     public float crouchHeight = 1f;
     public float crouchSmoothTime = 1f;
     public float standSmoothTime = 1f;
     public Vector3 standCenter = new Vector3(0, -0.4f, 0);
     public Vector3 crouchCenter = new Vector3(0, -0.2f, 0);
+    public bool isCrouching { get; set; }
+
+    [Header("경사면 설정")]
+    public float slopeSlidingSpeed = 3f;
+    public float slopeDownForce = 1f;
+    [Range(0f, 1f)] public float slopeControlRatio = 0.5f; // 경사면에서 적용 가능한 조작 비율
+    [HideInInspector] public RaycastHit slopeHit;
+    private float slopeForceTmp;
 
     // 레퍼런스 & temp 변수
-    private float moveSpeedRef; // 변화량 저장 레퍼런스
+    private float moveSpeedRef;
     private Vector3 crouchCenterRef;
     private float currentHeightRef;
+    public Vector3 moveVelocity { get; private set; }
+    public Vector3 moveVelocityWithGravity { get; private set; }
 
     // 현재 이동 속력 -> 캐릭터 컨트롤러의 속도 벡터의 크기
     public float currentSpeed => new Vector2(characterController.velocity.x, characterController.velocity.z).magnitude;
@@ -48,47 +64,26 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
-        playerKeyInput = GetComponent<PlayerKeyInput>();
-        playerState = GetComponent<PlayerState>();
+        playerKeyInput = GetComponent<PlayerKeyInput>();  
+
+        slopeForceTmp = slopeDownForce;
+
+        playerStateMachine = GetComponent<PlayerStateMachine>();
+        playerStateMachine.Initialize(playerStateMachine.idleState, playerStateMachine.standState); // State 초기화
     }
 
     private void FixedUpdate()
     {
-        CheckIdleState();
-        CheckStandState();
-        Walk(playerKeyInput.moveInput);
-        CheckSprint(playerKeyInput.moveInput);
-        CheckCrouch();
-        CheckJump();
-        CheckOnAirState();
-    }
-
-    private void CheckIdleState()
-    {
-        if (currentSpeed == 0)
-            playerState.currentMoveState = PlayerState.CurrentMoveState.Idle;
-    }
-
-    private void CheckStandState()
-    {
-        playerState.currentPostureState = PlayerState.CurrentPostureState.Stand;
-    }
-
-    private void CheckOnAirState()
-    {
-        if (!characterController.isGrounded)
-            playerState.currentMoveState = PlayerState.CurrentMoveState.OnAir;
+        CalcMoveVelocity();
     }
 
     /// <summary>
-    /// 입력받은 방향으로 플레이어 이동.
-    /// 바로 목표 속도로 바뀌지 않고 가속도가 붙게 함
+    /// 입력받은 방향으로 플레이어 이동시킬 값을 매 프레임마다 계산
     /// </summary>
     /// <param name="moveInput">키 입력 벡터</param>
-    private void Walk(Vector2 moveInput)
+    private void CalcMoveVelocity()
     {
-        if (currentSpeed != 0 && playerState.currentMoveState != PlayerState.CurrentMoveState.Walk)
-            playerState.currentMoveState = PlayerState.CurrentMoveState.Walk;
+        Vector2 moveInput = playerKeyInput.moveInput;
 
         // 이동 속력
         float targetSpeed = moveSpeed * moveInput.magnitude; // 목표 속력 = 최대 속력 * 입력 벡터 크기
@@ -100,84 +95,155 @@ public class PlayerMovement : MonoBehaviour
         // 방향
         Vector3 moveDirection = transform.forward * moveInput.y + transform.right * moveInput.x; // 이동 방향
 
-        // 최종 속도
-        Vector3 moveVelocity = moveDirection * targetSpeed + transform.up * currentYSpeed; // 중력 영향 받게 함
-
-        characterController.Move(moveVelocity * Time.deltaTime); // 정해진 속도로 캐릭터 이동
-
-        if (characterController.isGrounded)
-            currentYSpeed = 0; // 물체 위에 있는 경우에는 중력 영향 X
+        // 최종 속도 계산 결과
+        moveVelocity = moveDirection * targetSpeed;
+        moveVelocityWithGravity = moveDirection * targetSpeed + transform.up * currentYSpeed; // 중력 영향 받게 함
     }
 
-    private void CheckJump()
+    /// <summary>
+    /// 가파른 경사면에서 슬라이딩하게 함
+    /// </summary>
+    public void SlideSlope()
     {
-        if (!characterController.isGrounded) return; // 공중에 떠있는 경우에는 점프 X
-        if (!enableDuckJump && playerState.currentPostureState == PlayerState.CurrentPostureState.Crouch) return;
-
-        if (playerKeyInput.keyPressed_Jump)
-            StartJump();
+        Vector3 slideDir = Vector3.Normalize(slopeHit.normal) - Vector3.up; // 슬라이딩 방향 = 경사면 노멀 벡터 - 위쪽 방향 단위 벡터
+        Vector3 slideVelocity = slideDir * slopeSlidingSpeed + Vector3.down * slopeDownForce; // 경사면 내려갈 때 떨림 현상 방지하기 위해 아래쪽으로 힘 적용
+        Debug.DrawRay(transform.position, slideDir, Color.red);
+        characterController.Move((slideVelocity + moveVelocity * slopeControlRatio) * Time.deltaTime); // 슬라이딩 방향으로 슬라이드. slopeControlRatio에 따라 경사면에서 조작 가능한 정도 조절
     }
 
-    private void StartJump()
-    {
-        currentYSpeed = jumpSpeed; // y 속력 변경해 점프
-    }
-
-    private void CheckSprint(Vector2 moveInput)
-    {
-        if (playerState.currentMoveState != PlayerState.CurrentMoveState.Sprint)
-        {
-            if (playerKeyInput.keyPressed_Sprint) // 앞으로 이동하는 경우에만 달릴 수 있음
-            {
-                if (moveInput.y > 0)
-                    StartSprint();
-            }
-            else
-                EndSprint();
-        }
-    }
-
-    private void StartSprint()
-    {
-        playerState.currentMoveState = PlayerState.CurrentMoveState.Sprint;
-        moveSpeed = sprintSpeed;
-    }
-
-    private void EndSprint()
+    /// <summary>
+    /// 걷기 시작
+    /// </summary>
+    public void StartWalk()
     {
         moveSpeed = walkSpeed;
     }
 
-    private void CheckCrouch()
+    /// <summary>
+    /// 지형 상태에 따라 다르게 움직임
+    /// </summary>
+    public void Move()
     {
-        if (playerState.currentPostureState != PlayerState.CurrentPostureState.Crouch)
+        if (PhysicsUtil.IsOnSlope(gameObject, ref slopeHit)) // 만약 플레이어가 이동 가능한 경사면 위에 있다면
         {
-            if (playerKeyInput.keyPressed_Crouch)
-                StartCrouch();
-            else
-                EndCrouch();
+            MoveOnSlope();
         }
+        else // 평지 또는 공중에 있으면
+        {
+            MoveOnPlain();
+        }
+
+        if (characterController.isGrounded) currentYSpeed = 0.0f; // 물체 위에 있는 경우에는 중력 영향 X
     }
 
-    private void StartCrouch()
+    /// <summary>
+    /// 플레이어가 이동 가능한 경사면에서 움직이게 함
+    /// </summary>
+    private void MoveOnSlope()
     {
-        if (playerState.currentPostureState != PlayerState.CurrentPostureState.Crouch)
+        characterController.Move((moveVelocity + (Vector3.down * slopeDownForce)) * Time.deltaTime); // 경사면 내려갈 때 떨림 현상 방지하기 위해 아래쪽으로 힘 적용
+    }
+
+    /// <summary>
+    /// 플레이어가 경사가 없는 지형에서 움직이게 함
+    /// </summary>
+    private void MoveOnPlain()
+    {
+        characterController.Move(moveVelocityWithGravity * Time.deltaTime); // 정해진 속도로 캐릭터 이동
+    }
+
+    public bool CheckJump()
+    {
+        if (!characterController.isGrounded) return false; // 공중에 떠있는 경우에는 점프 X
+
+        if (playerKeyInput.keyPressed_Jump) // 점프
         {
-            moveSpeed = crouchSpeed;
-            playerState.currentPostureState = PlayerState.CurrentPostureState.Crouch;
-            isCrouching = true;
+            StartJump();
+            return true;
         }
+        else if (isJumping) // 착지
+        {
+            EndJump();
+            return true;
+        }
+
+        return false;
+    }
+
+    private void StartJump()
+    {
+        slopeDownForce = 0;
+
+        isJumping = true;
+        currentYSpeed = jumpSpeed; // y 속력 변경해 점프
+    }
+
+    private void EndJump()
+    {
+        isJumping = false;
+        slopeDownForce = slopeForceTmp;
+    }
+
+    /// <summary>
+    /// 달리기가 가능한지 여부를 반환
+    /// </summary>
+    /// <returns>달리기 가능 여부</returns>
+    public bool CheckSprint()
+    {
+        Vector2 moveInput = playerKeyInput.moveInput;
+
+        if (playerKeyInput.keyPressed_Sprint) // 앞으로 이동하는 경우에만 달릴 수 있음
+        {
+            if(moveInput.y > 0)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// 달리기 시작
+    /// </summary>
+    public void StartSprint()
+    {
+        moveSpeed = sprintSpeed;
+    }
+
+    /// <summary>
+    /// 달리기 종료
+    /// </summary>
+    public void EndSprint()
+    {
+        moveSpeed = walkSpeed;
+    }
+
+    /// <summary>
+    /// 앉기가 가능한지 여부를 반환
+    /// </summary>
+    /// <returns>앉기 가능 여부</returns>
+    public bool CheckCrouch()
+    {
+        if (playerKeyInput.keyPressed_Crouch)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public void StartCrouch()
+    {
+        moveSpeed = crouchSpeed;
+        isCrouching = true;
 
         characterController.height = Mathf.SmoothDamp(currentHeight, crouchHeight, ref currentHeightRef, crouchSmoothTime); 
         characterController.center = Vector3.SmoothDamp(characterController.center, crouchCenter, ref crouchCenterRef, crouchSmoothTime);
     }
 
-    private void EndCrouch()
+    public void EndCrouch()
     {
-        // isCrouching은 플레이어가 일어날 수 있는 경우에만 false가 되어야 함
-        if (isCrouching)
-            playerState.currentPostureState = PlayerState.CurrentPostureState.Crouch;
-
         // 일어섰을 때의 높이만큼 충분한 공간이 없으면 일어나지 않음
         // 캐릭터의 상하좌우에서 위쪽으로 레이 발사해서 검사
         float dist = standHeight - crouchHeight + characterController.height - transform.position.y;
@@ -189,15 +255,15 @@ public class PlayerMovement : MonoBehaviour
 
         // ------- 이 위에 있는 코드는 일어나지 못하는 상황에 대한 코드 -------
 
-        if (playerState.currentPostureState == PlayerState.CurrentPostureState.Crouch)
-            moveSpeed = walkSpeed;
-
         if (standHeight - currentHeight > 0.01f)
         {
             characterController.height = Mathf.SmoothDamp(currentHeight, standHeight, ref currentHeightRef, standSmoothTime);
             characterController.center = Vector3.SmoothDamp(characterController.center, standCenter, ref crouchCenterRef, crouchSmoothTime);
         }
+        else
+        {
+            isCrouching = false;
+        }
 
-        isCrouching = false;
     }
 }

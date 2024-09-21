@@ -24,4 +24,49 @@ public class PhysicsUtil : MonoBehaviour
 
         return false;
     }
+
+    /// <summary>
+    /// Character Controller 컴포넌트를 가지는 오브젝트가 경사면 위에 있는지 확인
+    /// </summary>
+    /// <param name="obj">Character Controller 게임 오브젝트</param>
+    /// <param name="slopeHit">경사면 정보를 담을 RaycastHit 레퍼런스</param>
+    /// <returns>경사면에서 위에 있는지 여부 리턴</returns>
+    public static bool IsOnSlope(GameObject obj, ref RaycastHit slopeHit)
+    {
+        CharacterController characterController = obj.GetComponent<CharacterController>();
+
+        if (characterController.isGrounded)
+        {
+            if (Physics.Raycast(obj.transform.position, Vector3.down * 1.5f, out slopeHit))
+            {
+                float slopeAngle = Vector3.Angle(Vector3.Normalize(slopeHit.normal), Vector3.up); // 경사면과의 각도 = 경사면의 노멀 벡터와 Vector3.up 사이의 각도
+                if (slopeAngle > 0f)
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Character Controller 컴포넌트를 가지는 오브젝트가 올라가있는 경사면의 각도가 캐릭터 컨트롤러의 Slope Limit보다 큰지 확인
+    /// </summary>
+    /// <param name="obj">Character Controller 게임 오브젝트</param>
+    /// <param name="slopeHit">경사면 정보를 담을 RaycastHit 레퍼런스</param>
+    /// <returns>Slope Limit보다 가파른 곳에 있는지 여부</returns>
+    public static bool IsOnSteepSlope(GameObject obj, ref RaycastHit slopeHit)
+    {
+        CharacterController characterController = obj.GetComponent<CharacterController>();
+        if (characterController.isGrounded)
+        {
+            if (Physics.Raycast(obj.transform.position, Vector3.down * 1.5f, out slopeHit))
+            {
+                float slopeAngle = Vector3.Angle(Vector3.Normalize(slopeHit.normal), Vector3.up); // 경사면과의 각도 = 경사면의 노멀 벡터와 Vector3.up 사이의 각도
+                if (slopeAngle > characterController.slopeLimit)
+                    return true;
+            }
+        }
+
+        return false;
+    }
 }
