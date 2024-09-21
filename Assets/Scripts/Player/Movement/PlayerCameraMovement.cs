@@ -35,7 +35,9 @@ public class PlayerCameraMovement : MonoBehaviour
         // Y축 입력 -> 카메라 X축에 대해 회전    
         Vector3 currentCamRotation = playerFpCam.transform.localEulerAngles; // 현재 카메라 회전 각도
         if (currentCamRotation.x > 180) // 현재 회전 각도를 -180 ~ 180 사이로 변환
+        {
             currentCamRotation.x -= 360;
+        }
 
         float xAngle = currentCamRotation.x - Vector3.right.x * mouseInput.y * mouseSensitivity; // 계산할 회전 각도
         xAngle = Mathf.Clamp(xAngle, -mouseMaxAngleY, mouseMaxAngleY);

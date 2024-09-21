@@ -25,7 +25,9 @@ public class PlayerKeyInput : MonoBehaviour
         Vector2 input = context.ReadValue<Vector2>(); // context -> 레퍼런스
 
         if (input != null)
+        {
             moveInput = input;
+        }
     }
 
     // 콜백 호출되면 이벤트 실행
@@ -47,7 +49,9 @@ public class PlayerKeyInput : MonoBehaviour
     public void OnJumpCallback(InputAction.CallbackContext context)
     {
         if (context.started)
+        {
             StartCoroutine(JumpTrigger(0.1f));
+        }
     }
 
     // Trigger용 코루틴

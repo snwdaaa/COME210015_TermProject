@@ -19,7 +19,9 @@ public class PhysicsUtil : MonoBehaviour
         {
             // Ray의 이동 거리와 필요한 거리의 차이가 매우 적으면 같은 것으로 생각
             if (hit.distance - needLength < 0.01f)
-                return true;           
+            {
+                return true;
+            }
         }
 
         return false;
@@ -41,7 +43,9 @@ public class PhysicsUtil : MonoBehaviour
             {
                 float slopeAngle = Vector3.Angle(Vector3.Normalize(slopeHit.normal), Vector3.up); // 경사면과의 각도 = 경사면의 노멀 벡터와 Vector3.up 사이의 각도
                 if (slopeAngle > 0f)
+                {
                     return true;
+                }
             }
         }
 
@@ -63,7 +67,9 @@ public class PhysicsUtil : MonoBehaviour
             {
                 float slopeAngle = Vector3.Angle(Vector3.Normalize(slopeHit.normal), Vector3.up); // 경사면과의 각도 = 경사면의 노멀 벡터와 Vector3.up 사이의 각도
                 if (slopeAngle > characterController.slopeLimit)
+                {
                     return true;
+                }
             }
         }
 
