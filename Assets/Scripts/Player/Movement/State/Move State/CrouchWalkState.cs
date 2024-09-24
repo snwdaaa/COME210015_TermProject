@@ -24,14 +24,14 @@ public class CrouchWalkState : IState
 
         // ------- 전이 검사 -------
 
+        // Idle 상태 전이 검사
+        if (pm.currentSpeed == 0)
+        {
+            pm.playerStateMachine.TransferMoveState(pm.playerStateMachine.idleState);
+        }
+
         if (!pm.isCrouching)
         {
-            // Idle 상태 전이 검사
-            if (pm.currentSpeed == 0)
-            {
-                pm.playerStateMachine.TransferMoveState(pm.playerStateMachine.idleState);
-            }
-
             // Walk 상태 전이 검사
             if (pm.currentSpeed > 0)
             {

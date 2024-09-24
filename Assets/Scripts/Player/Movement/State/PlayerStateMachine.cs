@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// State 패턴으로 플레이어 상태 관리
+/// </summary>
 public class PlayerStateMachine : MonoBehaviour
 {
     PlayerMovement playerMovement;
@@ -52,6 +55,8 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void FixedUpdate()
     {
+        Debug.Log(CurrentPostureState);
+
         if (CurrentMoveState != null)
         {
             CurrentMoveState.Update();
