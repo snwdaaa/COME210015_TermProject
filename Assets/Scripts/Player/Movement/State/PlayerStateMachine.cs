@@ -55,8 +55,6 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void FixedUpdate()
     {
-        Debug.Log(CurrentPostureState);
-
         if (CurrentMoveState != null)
         {
             CurrentMoveState.Update();
