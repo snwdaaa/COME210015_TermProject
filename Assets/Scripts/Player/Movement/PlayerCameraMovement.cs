@@ -12,13 +12,13 @@ public class PlayerCameraMovement : MonoBehaviour
     private Camera playerFpCam; // 플레이어 1인칭 카메라
 
     [Header("카메라 설정")]
+    public GameObject camPivot; // 카메라 Pivot
     public float mouseSensitivity = 0.05f; // 마우스 감도
     public float mouseMaxAngleY = 85f;
 
     private void Start()
     {
         playerMouseInput = GetComponent<PlayerMouseInput>();
-        playerFpCam = Camera.main; // 메인 카메라
     }
 
     private void LateUpdate()
@@ -33,7 +33,7 @@ public class PlayerCameraMovement : MonoBehaviour
         transform.Rotate(playerRotateAngle * mouseSensitivity);
 
         // Y축 입력 -> 카메라 X축에 대해 회전    
-        Vector3 currentCamRotation = playerFpCam.transform.localEulerAngles; // 현재 카메라 회전 각도
+        Vector3 currentCamRotation = camPivot.transform.localEulerAngles; // 현재 카메라 회전 각도
         if (currentCamRotation.x > 180) // 현재 회전 각도를 -180 ~ 180 사이로 변환
         {
             currentCamRotation.x -= 360;
@@ -41,7 +41,6 @@ public class PlayerCameraMovement : MonoBehaviour
 
         float xAngle = currentCamRotation.x - Vector3.right.x * mouseInput.y * mouseSensitivity; // 계산할 회전 각도
         xAngle = Mathf.Clamp(xAngle, -mouseMaxAngleY, mouseMaxAngleY);
-        playerFpCam.transform.localEulerAngles = new Vector3(xAngle, currentCamRotation.y, currentCamRotation.z);
-
+        camPivot.transform.localEulerAngles = new Vector3(xAngle, currentCamRotation.y, currentCamRotation.z);
     }
 }
