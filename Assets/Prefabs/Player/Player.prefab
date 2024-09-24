@@ -60,6 +60,7 @@ GameObject:
   - component: {fileID: 8892478975388790068}
   - component: {fileID: 7050707003175455490}
   - component: {fileID: 8900724211172536266}
+  - component: {fileID: 1667721829826381156}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -318,6 +319,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4d87d469f5f57479afc31d5e8d6957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1667721829826381156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2624145374533046313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80206bb28e836794b801a2e6912d0c5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3191060434111475965
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,6 +340,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8598248801642093804}
+  - component: {fileID: 3186179641672499499}
   m_Layer: 0
   m_Name: CamPivot
   m_TagString: Untagged
@@ -350,6 +364,25 @@ Transform:
   - {fileID: 2402439537865315288}
   m_Father: {fileID: 1796649636568423598}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3186179641672499499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3191060434111475965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5812b6727ac73a488dc2608ad605df8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkAmount: 0.1
+  walkFrequency: 7
+  sprintAmount: 0.14
+  sprintFrequency: 14
+  crouchWalkAmount: 0.1
+  crouchWalkFrequency: 4
+  smoothness: 10
 --- !u!1 &4250550713329436892
 GameObject:
   m_ObjectHideFlags: 0

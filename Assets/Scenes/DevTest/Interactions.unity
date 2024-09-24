@@ -243,28 +243,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tiling: {x: 30, y: 30}
   offset: {x: 0, y: 0}
---- !u!1 &1553344638 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3191060434111475965, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
-  m_PrefabInstance: {fileID: 5217701824656435457}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1553344640
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1553344638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5812b6727ac73a488dc2608ad605df8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkAmount: 0.1
-  walkFrequency: 7
-  sprintAmount: 0.14
-  sprintFrequency: 14
-  smoothness: 10
 --- !u!1 &1706075190
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,10 +392,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3191060434111475965, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1553344640}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
