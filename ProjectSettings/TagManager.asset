@@ -11,10 +11,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - SURFACE_DEFAULT
+  - SURFACE_DIRT
+  - SURFACE_WOOD
+  - SURFACE_WATER
   - 
   - 
   - 
