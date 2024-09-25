@@ -155,14 +155,14 @@ public class PlayerMovement : MonoBehaviour
     public bool CheckJump()
     {
         if (!PhysicsUtil.IsGrounded(this.gameObject)) return false; // 공중에 떠있는 경우에는 점프 X
-        if (isCrouching && !enableDuckJump) return false; // enableDuckJump가 false인 경우 앉을 상태에서 점프 X
 
-        if (playerKeyInput.keyPressed_Jump) // 점프
+        if (!isJumping && playerKeyInput.keyPressed_Jump) // 점프
         {
+            if (isCrouching && !enableDuckJump) return false; // enableDuckJump가 false인 경우 앉을 상태에서 점프 X
             StartJump();
             return true;
         }
-        else if (isJumping) // 착지
+        else if (isJumping && PhysicsUtil.IsGrounded(this.gameObject)) // 착지
         {
             EndJump();
             return true;

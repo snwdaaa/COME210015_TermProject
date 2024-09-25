@@ -46,7 +46,7 @@ public class CrouchWalkState : IState
         }
 
         // OnAir 상태 전이 검사
-        if ((pm.enableDuckJump && pm.CheckJump()) || PhysicsUtil.IsGrounded(pm.gameObject))
+        if ((pm.enableDuckJump && pm.CheckJump()) || !PhysicsUtil.IsGrounded(pm.gameObject))
         {
             pm.playerStateMachine.TransferMoveState(pm.playerStateMachine.onAirState);
         }

@@ -93,7 +93,6 @@ public class PhysicsUtil : MonoBehaviour
             // Debug.DrawRay(rayStartPos, Vector3.down * 0.25f, Color.cyan);
             if (characterController.isGrounded)
             {
-                Debug.Log("Grounded");
                 return true;
             }
         }
