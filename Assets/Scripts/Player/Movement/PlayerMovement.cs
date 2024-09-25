@@ -54,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
     private float moveSpeedRef;
     private Vector3 crouchCenterRef;
     private float currentHeightRef;
+    private Vector3 groundedCheckRayStartPos;
     public Vector3 moveVelocity { get; private set; }
     public Vector3 moveVelocityWithGravity { get; private set; }
 
@@ -88,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
         // 이동 속력
         float targetSpeed = moveSpeed * moveInput.magnitude; // 목표 속력 = 최대 속력 * 입력 벡터 크기
         // 가속도 smoothTime 설정. 떠있는 동안에는 airControlPercentage에 의해 조작 속도 조절
-        float smoothTime = characterController.isGrounded ? moveSpeedSmoothTime : moveSpeedSmoothTime / airControlPercentage;
+        float smoothTime = PhysicsUtil.IsGrounded(this.gameObject) ? moveSpeedSmoothTime : moveSpeedSmoothTime / airControlPercentage;
         targetSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref moveSpeedRef, smoothTime); // 이동 속력 점진적으로 증가
         currentYSpeed += Physics.gravity.y * Time.deltaTime; // 아래에 물체가 없는 경우에 y 속력이 중력에 영향을 받게 함
 
@@ -132,7 +133,7 @@ public class PlayerMovement : MonoBehaviour
             MoveOnPlain();
         }
 
-        if (characterController.isGrounded) currentYSpeed = 0.0f; // 물체 위에 있는 경우에는 중력 영향 X
+        if (PhysicsUtil.IsGrounded(this.gameObject)) currentYSpeed = 0.0f; // 물체 위에 있는 경우에는 중력 영향 X
     }
 
     /// <summary>
@@ -153,7 +154,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool CheckJump()
     {
-        if (!characterController.isGrounded) return false; // 공중에 떠있는 경우에는 점프 X
+        if (!PhysicsUtil.IsGrounded(this.gameObject)) return false; // 공중에 떠있는 경우에는 점프 X
         if (isCrouching && !enableDuckJump) return false; // enableDuckJump가 false인 경우 앉을 상태에서 점프 X
 
         if (playerKeyInput.keyPressed_Jump) // 점프

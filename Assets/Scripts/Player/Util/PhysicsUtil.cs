@@ -13,7 +13,7 @@ public class PhysicsUtil : MonoBehaviour
     public static bool CheckUpperSpace(Vector3 startPos, float needLength)
     {
         RaycastHit hit;
-        Debug.DrawRay(startPos, Vector3.up * needLength, Color.green);
+        // Debug.DrawRay(startPos, Vector3.up * needLength, Color.green);
 
         if (Physics.Raycast(startPos, Vector3.up, out hit, needLength))
         {
@@ -70,6 +70,31 @@ public class PhysicsUtil : MonoBehaviour
                 {
                     return true;
                 }
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// 기존 CharacterController의 isGrounded의 신뢰성을 개선하기 위해 Raycast로 이중 검사
+    /// </summary>
+    /// <param name="obj">CharacterController 컴포넌트가 있는 게임 오브젝트</param>
+    /// <returns>지면에 닿아있는 지 여부</returns>
+    public static bool IsGrounded(GameObject obj)
+    {
+        CharacterController characterController = obj.GetComponent<CharacterController>();
+        Vector3 rayStartPos = new Vector3(obj.transform.position.x, 
+                                          obj.transform.position.y - characterController.height / 2f + characterController.center.y, 
+                                          obj.transform.position.z);
+
+        if (Physics.Raycast(rayStartPos, Vector3.down, 0.25f))
+        {
+            // Debug.DrawRay(rayStartPos, Vector3.down * 0.25f, Color.cyan);
+            if (characterController.isGrounded)
+            {
+                Debug.Log("Grounded");
+                return true;
             }
         }
 

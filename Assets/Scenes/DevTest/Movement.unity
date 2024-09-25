@@ -3086,6 +3086,10 @@ PrefabInstance:
       propertyPath: field of view
       value: 85
       objectReference: {fileID: 0}
+    - target: {fileID: 4599401207524311884, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
+      propertyPath: m_StepOffset
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 7050707003175455490, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
       propertyPath: slopeSlidingSpeed
       value: 4

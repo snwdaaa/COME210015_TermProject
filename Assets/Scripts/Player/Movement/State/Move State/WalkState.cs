@@ -32,7 +32,7 @@ public class WalkState : IState
         }
 
         // OnAir 상태 전이 검사
-        if (pm.CheckJump() || !pm.characterController.isGrounded)
+        if (pm.CheckJump() || !PhysicsUtil.IsGrounded(pm.gameObject))
         {
             pm.playerStateMachine.TransferMoveState(pm.playerStateMachine.onAirState);
         }

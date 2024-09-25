@@ -22,7 +22,7 @@ public class OnAirState : IState
         pm.Move();
 
         // Idle 상태 전이 검사
-        if (pm.characterController.isGrounded)
+        if (PhysicsUtil.IsGrounded(pm.gameObject))
         {
             pm.playerStateMachine.TransferMoveState(pm.playerStateMachine.idleState);
         }

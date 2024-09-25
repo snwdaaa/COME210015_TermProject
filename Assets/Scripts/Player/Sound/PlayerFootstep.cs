@@ -56,7 +56,6 @@ public class PlayerFootstep : MonoBehaviour
         // 아래 방향으로 Ray 발사
         RaycastHit hit;
         Vector3 rayStartPos = new Vector3(transform.position.x, 0.1f, transform.position.z);
-        Debug.DrawRay(rayStartPos, Vector3.down * 0.5f, Color.red);
         if (Physics.Raycast(rayStartPos, Vector3.down, out hit, 0.5f))
         {
             surfaceType = hit.transform.gameObject.layer;
