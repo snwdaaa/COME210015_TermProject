@@ -105,9 +105,8 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     public void SlideSlope()
     {
-        Vector3 slideDir = Vector3.Normalize(slopeHit.normal) - Vector3.up; // 슬라이딩 방향 = 경사면 노멀 벡터 - 위쪽 방향 단위 벡터
+        Vector3 slideDir = Vector3.ProjectOnPlane(Vector3.down, Vector3.Normalize(slopeHit.normal)); // 슬라이딩 방향 = Vector3.down을 법선벡터가 slopeHit.normal인 표면에 투영해서 생긴 벡터
         Vector3 slideVelocity = slideDir * slopeSlidingSpeed + Vector3.down * slopeDownForce; // 경사면 내려갈 때 떨림 현상 방지하기 위해 아래쪽으로 힘 적용
-        Debug.DrawRay(transform.position, slideDir, Color.red);
         characterController.Move((slideVelocity + moveVelocity * slopeControlRatio) * Time.deltaTime); // 슬라이딩 방향으로 슬라이드. slopeControlRatio에 따라 경사면에서 조작 가능한 정도 조절
     }
 
