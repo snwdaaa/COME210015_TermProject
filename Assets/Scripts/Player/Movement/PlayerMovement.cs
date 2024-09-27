@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController characterController { get; private set; }
     public PlayerKeyInput playerKeyInput { get; private set; }
     public PlayerStateMachine playerStateMachine { get; private set; }
+    public PlayerStamina playerStamina { get; private set; }
 
     public enum MoveState { Idle, Walk, Sprint, CrouchWalk, Slide, OnAir };
     public enum PostureState { Stand, Crouch };
@@ -33,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     public bool enableDuckJump = false;
     private float currentYSpeed; // 현재 y 방향 속도
     public bool isJumping { get; private set; }
+    public event Action StartJumpAction;
 
     [Header("앉기 설정")]
     public float standHeight = 1.7f;
@@ -65,7 +68,8 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
-        playerKeyInput = GetComponent<PlayerKeyInput>();  
+        playerKeyInput = GetComponent<PlayerKeyInput>();
+        playerStamina = GetComponent<PlayerStamina>();
 
         slopeForceTmp = slopeDownForce;
 
@@ -75,6 +79,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        CheckJump();
         CalcMoveVelocity();
     }
 
@@ -155,10 +160,11 @@ public class PlayerMovement : MonoBehaviour
     public bool CheckJump()
     {
         if (!PhysicsUtil.IsGrounded(this.gameObject)) return false; // 공중에 떠있는 경우에는 점프 X
-
-        if (playerKeyInput.keyPressed_Jump) // 점프
+        
+        if (!isJumping && playerKeyInput.keyPressed_Jump) // 점프
         {       
             if (isCrouching && !enableDuckJump) return false; // enableDuckJump가 false인 경우 앉을 상태에서 점프 X
+            if (!playerStamina.hasEnoughStamina_Jump) return false;
 
             StartJump();
             return true;
@@ -175,9 +181,9 @@ public class PlayerMovement : MonoBehaviour
     private void StartJump()
     {
         slopeDownForce = 0;
-
         isJumping = true;
         currentYSpeed = jumpSpeed; // y 속력 변경해 점프
+        StartJumpAction(); // 점프 액션 실행
     }
 
     private void EndJump()
@@ -192,6 +198,8 @@ public class PlayerMovement : MonoBehaviour
     /// <returns>달리기 가능 여부</returns>
     public bool CheckSprint()
     {
+        if (!playerStamina.hasEnoughStamina_Sprint) return false;
+
         Vector2 moveInput = playerKeyInput.moveInput;
 
         if (playerKeyInput.keyPressed_Sprint) // 앞으로 이동하는 경우에만 달릴 수 있음

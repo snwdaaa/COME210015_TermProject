@@ -62,6 +62,7 @@ GameObject:
   - component: {fileID: 7050707003175455490}
   - component: {fileID: 8900724211172536266}
   - component: {fileID: 1667721829826381156}
+  - component: {fileID: 7838085299630053660}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -204,7 +205,7 @@ CharacterController:
   m_Height: 1.7
   m_Radius: 0.4
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_StepOffset: 0.4
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: -0.4, z: 0}
@@ -401,7 +402,7 @@ MonoBehaviour:
   standSmoothTime: 0.05
   standCenter: {x: 0, y: -0.4, z: 0}
   crouchCenter: {x: 0, y: -0.2, z: 0}
-  slopeSlidingSpeed: 3
+  slopeSlidingSpeed: 4
   slopeDownForce: 3
   slopeControlRatio: 0.05
 --- !u!114 &8900724211172536266
@@ -431,7 +432,6 @@ MonoBehaviour:
   jumpSound:
   - {fileID: 8300000, guid: f42760acdd77d6c459020ab0f9db4f30, type: 3}
   - {fileID: 8300000, guid: db2281b9de1863f409d62f9edf69c6cf, type: 3}
-  - {fileID: 8300000, guid: a465f4e2a2f3a354f927f77994a68a08, type: 3}
   - {fileID: 8300000, guid: 8420cf17e21d6354a98e6ef6d19dc9cc, type: 3}
   - {fileID: 8300000, guid: e708389b7a8f64a46aa12d201c187b69, type: 3}
   - {fileID: 8300000, guid: f85e18b3e969dac4bbfc7f6b18139932, type: 3}
@@ -466,6 +466,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 001f691d110d55648871a03f446ffa08, type: 3}
   - {fileID: 8300000, guid: 6478d7fb30f301b4fa8f74d5d1dad094, type: 3}
   - {fileID: 8300000, guid: f1547ad8fbfa4f24d83e5a445aee860d, type: 3}
+  - {fileID: 8300000, guid: 47832b56ccba5bc408b1d5aac1871746, type: 3}
+  - {fileID: 8300000, guid: 3d132da7af60f1145a3deb6a8bc42a08, type: 3}
   woodSound:
   - {fileID: 8300000, guid: 8e001351cd7065543a068386cde4c960, type: 3}
   - {fileID: 8300000, guid: c41fb169b2991c247a5466e00faa6639, type: 3}
@@ -475,6 +477,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3af6e561e364a274aa306461461c386b, type: 3}
   - {fileID: 8300000, guid: 30668cf6c5cbfef478b0812fc59eb646, type: 3}
   - {fileID: 8300000, guid: eea9624d96ae191439615ca598fe01fa, type: 3}
+  - {fileID: 8300000, guid: a45bdfd5056ed1d4d8f667cc2498ca12, type: 3}
+  - {fileID: 8300000, guid: ec4bd5988d7de0c41ab2d9959705dd8b, type: 3}
   waterSound:
   - {fileID: 8300000, guid: adf4e7fa93007bd49937217a0922f285, type: 3}
   - {fileID: 8300000, guid: b9a5f4a46006d6f429a02ea0fadc4809, type: 3}
@@ -484,13 +488,32 @@ MonoBehaviour:
   - {fileID: 8300000, guid: eb25cc7f1bf9dbb43aa0833fe823843e, type: 3}
   - {fileID: 8300000, guid: e6f87af77d097a84ca825ab2c2ce7e87, type: 3}
   - {fileID: 8300000, guid: b682207ff9ac8db4695704cd57fb59a7, type: 3}
+  - {fileID: 8300000, guid: 938df53f74d50544b83b2cd1b17069f9, type: 3}
+  - {fileID: 8300000, guid: f29d6db9c3a008d4aae34c3399830406, type: 3}
   walkVolume: 0.7
-  crouchWalkVolume: 0.5
-  sprintVolume: 0.1
-  walkStepInterval: 0
-  sprintStepInterval: 0
-  crouchWalkStepInterval: 0
-  onAirStarted: 0
+  crouchWalkVolume: 0.3
+  sprintVolume: 1
+  walkStepInterval: 0.5
+  sprintStepInterval: 0.3
+  crouchWalkStepInterval: 0.65
+--- !u!114 &7838085299630053660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2624145374533046313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd9a8bb6bfe859c4bace5c534cbbe132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStamina: 100
+  currentStamina: 0
+  sprintStaminaDrainPerSec: 10
+  jumpStaminaDrain: 20
+  staminaRegenDelay: 2
+  staminaRegenRate: 5
 --- !u!1 &3191060434111475965
 GameObject:
   m_ObjectHideFlags: 0
@@ -609,7 +632,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 60
+  field of view: 85
   orthographic: 0
   orthographic size: 5
   m_Depth: -1

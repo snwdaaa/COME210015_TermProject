@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PlayerStateMachine : MonoBehaviour
 {
-    PlayerMovement playerMovement;
+    private PlayerMovement playerMovement;
 
     public IState CurrentMoveState { get; private set; } // 현재 움직임 상태
     public IState CurrentPostureState { get; private set; } // 현재 자세 상태
