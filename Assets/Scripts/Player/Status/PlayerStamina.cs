@@ -40,7 +40,6 @@ public class PlayerStamina : MonoBehaviour
         CheckDrainCondition();
         CheckRecoverCondition();
         CheckEnoughStaminaCondition();
-        Debug.Log(currentStamina);
     }
 
     /// <summary>
@@ -136,7 +135,7 @@ public class PlayerStamina : MonoBehaviour
         }
         else
         {
-            currentStamina += staminaRegenPerSec * Time.deltaTime; // 초당 amount만큼 회복
+            currentStamina += amount * Time.deltaTime; // 초당 amount만큼 회복
         }    
     }
 }
