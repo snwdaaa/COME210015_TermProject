@@ -389,14 +389,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 3190591475039466480, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
-      propertyPath: autoRecoverPerSec
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3190591475039466480, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
-      propertyPath: autoRecoverStartDelay
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

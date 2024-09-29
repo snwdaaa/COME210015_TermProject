@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+/// <summary>
+/// 플레이어 발소리 관리 스크립트
+/// </summary>
 public class PlayerFootstep : MonoBehaviour
 {
     // 컴포넌트
     private AudioSource audioSource;
     private PlayerStateMachine playerStateMachine;
     private PlayerMovement playerMovement;
+    private PlayerMovementHelper playerMovementHelper;
 
     [Header("사운드")]
     public AudioClip[] jumpSound;
@@ -26,9 +30,6 @@ public class PlayerFootstep : MonoBehaviour
     public float walkStepInterval;
     public float sprintStepInterval;
     public float crouchWalkStepInterval;
-    private bool onAirStarted = false; // 점프, 착지 사운드 재생 판별 용도
-    private enum JumpType { None, KeyPressed, Fall }; 
-    private JumpType jumpType = JumpType.None;
 
     private int surfaceType;
     private float stepIntervalTimer = 0f;
@@ -40,12 +41,33 @@ public class PlayerFootstep : MonoBehaviour
         audioSource.volume = walkVolume;
         playerStateMachine = GetComponent<PlayerStateMachine>();
         playerMovement = GetComponent<PlayerMovement>();
+        playerMovementHelper = GetComponent<PlayerMovementHelper>();
+
+        SubscribeEvent();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         PlayFootstepSound();
+    }
+
+    /// <summary>
+    /// 필요한 이벤트 구독
+    /// </summary>
+    private void SubscribeEvent()
+    {
+        // Jump Event
+        playerMovementHelper.PlayerJumpStartEvent += () =>
+        {
+            audioSource.PlayOneShot(jumpSound[Random.Range(0, jumpSound.Length)]);
+        };
+
+        // Landing Event
+        playerMovementHelper.PlayerLandingEvent += () =>
+        {
+            audioSource.PlayOneShot(landingSound[Random.Range(0, jumpSound.Length)]);
+        };
     }
 
     /// <summary>
@@ -85,18 +107,11 @@ public class PlayerFootstep : MonoBehaviour
     /// </summary>
     private void PlayJumpSound()
     {
-        if (!onAirStarted)
+        if (playerMovementHelper.onAirStarted)
         {
-            if (playerMovement.isJumping)
+            if (playerMovementHelper.onAirType_Jump)
             {
                 audioSource.PlayOneShot(jumpSound[Random.Range(0, jumpSound.Length)]);
-                jumpType = JumpType.KeyPressed;
-                onAirStarted = true;
-            }
-            else if (playerStateMachine.CurrentMoveState == playerStateMachine.onAirState)
-            {
-                jumpType = JumpType.Fall;
-                onAirStarted = true;
             }
         }
     }
@@ -110,16 +125,6 @@ public class PlayerFootstep : MonoBehaviour
         bool cond2 = playerStateMachine.CurrentMoveState == playerStateMachine.sprintState;
         bool cond3 = playerStateMachine.CurrentMoveState == playerStateMachine.crouchWalkState;
         bool cond4 = playerStateMachine.CurrentMoveState == playerStateMachine.idleState;
-
-        // 점프, 착지 사운드 재생
-        PlayJumpSound();
-
-        if (onAirStarted && (cond1 || cond2 || cond3 || cond4))
-        {
-            onAirStarted = false;
-            audioSource.PlayOneShot(landingSound[Random.Range(0, jumpSound.Length)]);
-            jumpType = JumpType.None;
-        }
 
         // 이동 시 발소리 재생
         if (cond1 || cond2 || cond3)

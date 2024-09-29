@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 플레이어 체력 관리 스크립트
+/// </summary>
 public class PlayerHealth : MonoBehaviour
 {
     [Header("체력 설정")]

@@ -64,6 +64,7 @@ GameObject:
   - component: {fileID: 1667721829826381156}
   - component: {fileID: 7838085299630053660}
   - component: {fileID: 3190591475039466480}
+  - component: {fileID: 8353190606753616343}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -531,6 +532,18 @@ MonoBehaviour:
   isDamageResetRecoverTimer: 0
   autoRecoverStartDelay: 10
   autoRecoverPerSec: 3
+--- !u!114 &8353190606753616343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2624145374533046313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26cbcab5f3759b342a3fd561f6335398, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3191060434111475965
 GameObject:
   m_ObjectHideFlags: 0
