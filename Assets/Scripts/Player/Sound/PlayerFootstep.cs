@@ -66,7 +66,10 @@ public class PlayerFootstep : MonoBehaviour
         // Landing Event
         playerMovementHelper.PlayerLandingEvent += () =>
         {
-            audioSource.PlayOneShot(landingSound[Random.Range(0, jumpSound.Length)]);
+            if (playerMovementHelper.fallHeight > 0.1f) // 높이가 어느 정도 있는 경우에만 사운드 재생
+            {
+                audioSource.PlayOneShot(landingSound[Random.Range(0, jumpSound.Length)]);
+            }         
         };
     }
 

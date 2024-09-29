@@ -78,10 +78,11 @@ public class PlayerMovementHelper : MonoBehaviour
         {
             onAirStarted = true;
             onAirType_Fall = true;
-            PlayerFallStartEvent?.Invoke();
 
             // 높이 계산
             CalcFallStartHeight();
+      
+            PlayerFallStartEvent?.Invoke(); // 이벤트 실행
         }
     }
 
@@ -98,12 +99,13 @@ public class PlayerMovementHelper : MonoBehaviour
         if (onAirStarted && (cond1 || cond2 || cond3 || cond4))
         {
             onAirStarted = false;
-            PlayerLandingEvent?.Invoke(); // 이벤트 실행
             if (onAirType_Jump) onAirType_Jump = false;
             else if (onAirType_Fall) onAirType_Fall = false;
 
             // 높이 계산
             CalcFallEndHeight();
+
+            PlayerLandingEvent?.Invoke(); // 이벤트 실행
         }
     }
 
