@@ -14,10 +14,10 @@ public class PlayerStamina : MonoBehaviour
     [Header("스태미너 설정")]
     public float maxStamina = 100f; // 최대 스태미너
     public float currentStamina { get; private set; } // 현재 스태미너
-    public float sprintStaminaDrainPerSec = 10f; // 달리기 초당 스태미너 소모량
-    public float jumpStaminaDrain = 20f; // 점프 시 소모되는 스태미너
-    public float staminaRegenDelay = 2f; // 스태미너 회복 지연 시간
-    public float staminaRegenPerSec = 5f; // 초당 회복되는 스태미너 양
+    [SerializeField] private float sprintStaminaDrainPerSec = 10f; // 달리기 초당 스태미너 소모량
+    [SerializeField] private float jumpStaminaDrain = 20f; // 점프 시 소모되는 스태미너
+    [SerializeField] private float staminaRegenDelay = 2f; // 스태미너 회복 지연 시간
+    [SerializeField] private float staminaRegenPerSec = 5f; // 초당 회복되는 스태미너 양
 
     private float regenTimer; // 회복 대기 시간 타이머
     public bool hasEnoughStamina_Jump { get; private set; }

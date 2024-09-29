@@ -10,19 +10,19 @@ public class HeadBobbing : MonoBehaviour
     private PlayerStateMachine stateMachine;
 
     [Header("카메라 움직임 (Walk)")]
-    [Range(0.001f, 1.0f)] public float walkAmount = 0.1f;
-    [Range(1f, 30f)] public float walkFrequency = 7.0f;
+    [SerializeField] [Range(0.001f, 1.0f)] private float walkAmount = 0.1f;
+    [SerializeField] [Range(1f, 30f)] private float walkFrequency = 7.0f;
 
     [Header("카메라 움직임 (Sprint)")]
-    [Range(0.001f, 1.0f)] public float sprintAmount = 0.14f;
-    [Range(1f, 30f)] public float sprintFrequency = 14.0f;
+    [SerializeField] [Range(0.001f, 1.0f)] private float sprintAmount = 0.14f;
+    [SerializeField] [Range(1f, 30f)] private float sprintFrequency = 14.0f;
 
     [Header("카메라 움직임 (Crouch Walk)")]
-    [Range(0.001f, 1.0f)] public float crouchWalkAmount = 0.1f;
-    [Range(1f, 30f)] public float crouchWalkFrequency = 4.0f;
+    [SerializeField] [Range(0.001f, 1.0f)] private float crouchWalkAmount = 0.1f;
+    [SerializeField] [Range(1f, 30f)] private float crouchWalkFrequency = 4.0f;
 
     [Header("기타 설정")]
-    [Range(10f, 100f)] public float smoothness = 10.0f;
+    [SerializeField] [Range(10f, 100f)] private float smoothness = 10.0f;
 
     private Vector3 pivotOriginPos;
 

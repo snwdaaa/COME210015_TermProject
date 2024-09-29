@@ -10,8 +10,8 @@ using UnityEngine;
 public class TilingController : MonoBehaviour
 {
     private MeshRenderer meshRenderer;
-    public Vector2 tiling = new Vector2(1, 1);
-    public Vector2 offset = new Vector2(0, 0);
+    [SerializeField] private Vector2 tiling = new Vector2(1, 1);
+    [SerializeField] private Vector2 offset = new Vector2(0, 0);
 
     /// <summary>
     /// 타일링, 오프셋 값 업데이트

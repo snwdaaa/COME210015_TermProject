@@ -3564,22 +3564,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 3190591475039466480, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
-      propertyPath: fallDamageSound.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3190591475039466480, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
-      propertyPath: fallDamageSound.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: 63e0175a58364a14d874cf6a4602923b, type: 3}
-    - target: {fileID: 3190591475039466480, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
-      propertyPath: fallDamageSound.Array.data[1]
-      value: 
-      objectReference: {fileID: 8300000, guid: 70bfbaaebebfb0d4ba87a5e9947d5ad3, type: 3}
-    - target: {fileID: 3190591475039466480, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
-      propertyPath: fallDamageSound.Array.data[2]
-      value: 
-      objectReference: {fileID: 8300000, guid: 70bfbaaebebfb0d4ba87a5e9947d5ad3, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

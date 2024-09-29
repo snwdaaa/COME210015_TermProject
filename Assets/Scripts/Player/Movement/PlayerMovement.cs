@@ -23,14 +23,14 @@ public class PlayerMovement : MonoBehaviour
     public PostureState postureState = PostureState.Stand;
 
     [Header("이동 속도 설정")]
-    public float moveSpeed;
-    public float walkSpeed = 3f;
-    public float sprintSpeed = 6f;
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float walkSpeed = 3f;
+    [SerializeField] private float sprintSpeed = 6f;
     public float crouchSpeed = 2f;
-    public float moveSpeedSmoothTime = 0.2f;
+    [SerializeField] private float moveSpeedSmoothTime = 0.2f;
 
     [Header("점프 설정")]
-    public float jumpSpeed = 10f;
+    [SerializeField] private float jumpSpeed = 10f;
     [Range(0.01f, 1f)] public float airControlPercentage = 1f; // 점프 중 조작 가능한 정도
     public bool enableDuckJump = false;
     private float currentYSpeed; // 현재 y 방향 속도
@@ -38,18 +38,18 @@ public class PlayerMovement : MonoBehaviour
     public event Action StartJumpAction;
 
     [Header("앉기 설정")]
-    public float standHeight = 1.7f;
-    public float crouchHeight = 1f;
-    public float crouchSmoothTime = 1f;
-    public float standSmoothTime = 1f;
-    public Vector3 standCenter = new Vector3(0, -0.4f, 0);
-    public Vector3 crouchCenter = new Vector3(0, -0.2f, 0);
+    [SerializeField] private float standHeight = 1.7f;
+    [SerializeField] private float crouchHeight = 1f;
+    [SerializeField] private float crouchSmoothTime = 1f;
+    [SerializeField] private float standSmoothTime = 1f;
+    [SerializeField] private Vector3 standCenter = new Vector3(0, -0.4f, 0);
+    [SerializeField] private Vector3 crouchCenter = new Vector3(0, -0.2f, 0);
     public bool isCrouching { get; set; }
 
     [Header("경사면 설정")]
-    public float slopeSlidingSpeed = 3f;
-    public float slopeDownForce = 1f;
-    [Range(0f, 1f)] public float slopeControlRatio = 0.5f; // 경사면에서 적용 가능한 조작 비율
+    [SerializeField] private float slopeSlidingSpeed = 3f;
+    [SerializeField] private float slopeDownForce = 1f;
+    [SerializeField] [Range(0f, 1f)] private float slopeControlRatio = 0.5f; // 경사면에서 적용 가능한 조작 비율
     [HideInInspector] public RaycastHit slopeHit;
     private float slopeForceTmp;
 

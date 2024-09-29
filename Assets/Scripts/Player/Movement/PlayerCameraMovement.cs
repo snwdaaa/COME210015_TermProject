@@ -12,9 +12,9 @@ public class PlayerCameraMovement : MonoBehaviour
     private Camera playerFpCam; // 플레이어 1인칭 카메라
 
     [Header("카메라 설정")]
-    public GameObject camPivot; // 카메라 Pivot
-    public float mouseSensitivity = 0.05f; // 마우스 감도
-    public float mouseMaxAngleY = 85f;
+    [SerializeField] private GameObject camPivot; // 카메라 Pivot
+    [SerializeField] private float mouseSensitivity = 0.05f; // 마우스 감도
+    [SerializeField] private float mouseMaxAngleY = 85f;
 
     private void Start()
     {

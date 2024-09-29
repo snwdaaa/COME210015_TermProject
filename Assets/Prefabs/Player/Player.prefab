@@ -527,6 +527,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 011b9e277719c9049905883a87540aaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fallDamageSound:
+  - {fileID: 8300000, guid: 63e0175a58364a14d874cf6a4602923b, type: 3}
   maxHealth: 100
   enableAutoRecover: 1
   isDamageResetRecoverTimer: 1

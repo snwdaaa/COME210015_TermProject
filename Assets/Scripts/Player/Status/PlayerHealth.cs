@@ -30,7 +30,7 @@ public class PlayerHealth : MonoBehaviour
     
     // 기타 변수
     public float currentHealth { get; private set; } // 현재 체력
-    public float isDied { get; private set; } // 사망 여부
+    public bool isDied { get; private set; } // 사망 여부
     private float recoverTimer = 0f; // 회복 타이머
 
     private void Start()
@@ -123,6 +123,7 @@ public class PlayerHealth : MonoBehaviour
     public void Die()
     {
         Debug.Log("Player Died");
+        isDied = true;
     }
 
     /// <summary>

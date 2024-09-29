@@ -15,21 +15,21 @@ public class PlayerFootstep : MonoBehaviour
     private PlayerMovementHelper playerMovementHelper;
 
     [Header("사운드")]
-    public AudioClip[] jumpSound;
-    public AudioClip[] landingSound;
-    public AudioClip[] defaultSound;
-    public AudioClip[] dirtSound;
-    public AudioClip[] woodSound;
-    public AudioClip[] waterSound;
+    [SerializeField] private AudioClip[] jumpSound;
+    [SerializeField] private AudioClip[] landingSound;
+    [SerializeField] private AudioClip[] defaultSound;
+    [SerializeField] private AudioClip[] dirtSound;
+    [SerializeField] private AudioClip[] woodSound;
+    [SerializeField] private AudioClip[] waterSound;
     private AudioClip currentFootstepSound; // 재질에 따라 정해진 사운드
 
     [Header("설정")]
-    public float walkVolume = 0.2f;
-    public float crouchWalkVolume = 0.1f;
-    public float sprintVolume = 0.4f;
-    public float walkStepInterval;
-    public float sprintStepInterval;
-    public float crouchWalkStepInterval;
+    [SerializeField] private float walkVolume = 0.2f;
+    [SerializeField] private float crouchWalkVolume = 0.1f;
+    [SerializeField] private float sprintVolume = 0.4f;
+    [SerializeField] private float walkStepInterval;
+    [SerializeField] private float sprintStepInterval;
+    [SerializeField] private float crouchWalkStepInterval;
 
     private int surfaceType;
     private float stepIntervalTimer = 0f;
