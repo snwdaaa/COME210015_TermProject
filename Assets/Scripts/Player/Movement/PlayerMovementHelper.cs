@@ -127,8 +127,9 @@ public class PlayerMovementHelper : MonoBehaviour
             // = (점프 시작시 이동 속도)^2 * sin^2(이동 방향 루트 벡터와 점프 이동 방향 사이 각) / 2 * gravity
             float angle = Vector3.Angle(playerMoveDir.normalized, playerMoveDirAxis.normalized);
             float sinVal = Mathf.Sin(angle * Mathf.Deg2Rad); // 라디안으로 변환
+            sinVal = (sinVal > 0) ? sinVal : 1; // 제자리 점프 보정 -> 수직 방향 이동은 Sin(pi/2(90도)) = 1
             float jumpMaxHeight = (Mathf.Pow(playerMoveDir.magnitude, 2) * Mathf.Pow(sinVal, 2)) / (2 * Mathf.Abs(Physics.gravity.y)); // 중력값 항상 양수여야 함
-            playerMaxHeight = startYPos + jumpMaxHeight; 
+            playerMaxHeight = startYPos + jumpMaxHeight;
         }
         else if (onAirType_Fall)
         {
