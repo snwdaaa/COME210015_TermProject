@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class InteractableGenerator : MonoBehaviour
 {
-    private float progress = 0f; // ÁøÇàµµ
+    private float progress = 0f; // ì§„í–‰ë„
+
 
     // Start is called before the first frame update
     void Start()
