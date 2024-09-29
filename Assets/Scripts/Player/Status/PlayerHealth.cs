@@ -8,23 +8,57 @@ using UnityEngine;
 /// </summary>
 public class PlayerHealth : MonoBehaviour
 {
+    // 컴포넌트
+    private PlayerMovementHelper playerMovementHelper;
+    private AudioSource audioSource;
+
+    [Header("사운드")]
+    [SerializeField] private AudioClip[] fallDamageSound; // 낙하 대미지 사운드
+
     [Header("체력 설정")]
     [SerializeField] private float maxHealth = 100f; // 최대 체력
     [SerializeField] private bool enableAutoRecover = false; // 자동 회복 기능 활성화 여부
     [SerializeField] private bool isDamageResetRecoverTimer = false; // 대미지 받을 때 회복 타이머 초기화 여부
     [SerializeField] private float autoRecoverStartDelay = 10f; // 자동 회복 기능 활성화 딜레이
     [SerializeField] private float autoRecoverPerSec = 3f; // 초당 회복량
+
+    [Header("추락 대미지")]
+    [SerializeField] private float damagableHeight = 3f; // 대미지를 받을 수 있는 최소 높이
+    [SerializeField] private float deathHeight = 8f; // 즉사 높이
+    [SerializeField] private float baseFallDamage = 20f; // 최소 대미지
+    [SerializeField] private float fallDamageMultiplier = 1.5f;
+    
+    // 기타 변수
     public float currentHealth { get; private set; } // 현재 체력
+    public float isDied { get; private set; } // 사망 여부
     private float recoverTimer = 0f; // 회복 타이머
 
     private void Start()
     {
+        playerMovementHelper = GetComponent<PlayerMovementHelper>();
+        audioSource = GetComponent<AudioSource>();
+
         currentHealth = maxHealth;
+
+        // 이벤트 구독
+        SubscribeEvent();
     }
 
     private void Update()
     {
         CheckHealthCondition();
+    }
+
+    /// <summary>
+    /// 이벤트 구독 메서드
+    /// </summary>
+    private void SubscribeEvent()
+    {
+        // Landing Event
+        playerMovementHelper.PlayerLandingEvent += () =>
+        {
+            ApplyFallDamage(playerMovementHelper.fallHeight);
+        };
     }
 
     /// <summary>
@@ -83,8 +117,39 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // 범위 설정
     }
 
+    /// <summary>
+    /// 플레이어 사망 처리
+    /// </summary>
     public void Die()
     {
         Debug.Log("Player Died");
+    }
+
+    /// <summary>
+    /// 추락 높이에 따라 추락 데미지 계산 후 적용
+    /// </summary>
+    /// <param name="fallHeight">추락 높이</param>
+    private void ApplyFallDamage(float fallHeight)
+    {
+        if (fallHeight >= damagableHeight)
+        {
+            float fallDamage = 0;
+            if (fallHeight >= deathHeight) // 즉사 대미지 적용
+            {
+                fallDamage = maxHealth;
+            }
+            else // 높이에 비례한 대미지 적용
+            {
+                // 대미지 = 기본 추락 대미지 + (추락 높이 * 대미지 배수) 
+                fallDamage = baseFallDamage + (fallHeight * fallDamageMultiplier);
+            } 
+            
+            fallDamage = Mathf.Clamp(fallDamage, baseFallDamage, maxHealth); // baseFallDamage ~ 최대 체력
+            ApplyDamage(fallDamage);
+
+            // 추락 사운드 재생
+            audioSource.volume = 1f;
+            audioSource.PlayOneShot(fallDamageSound[UnityEngine.Random.Range(0, fallDamageSound.Length)]);
+        }
     }
 }

@@ -529,9 +529,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   enableAutoRecover: 1
-  isDamageResetRecoverTimer: 0
+  isDamageResetRecoverTimer: 1
   autoRecoverStartDelay: 10
   autoRecoverPerSec: 3
+  damagableHeight: 3
+  deathHeight: 8
+  baseFallDamage: 40
+  fallDamageMultiplier: 5
 --- !u!114 &8353190606753616343
 MonoBehaviour:
   m_ObjectHideFlags: 0
