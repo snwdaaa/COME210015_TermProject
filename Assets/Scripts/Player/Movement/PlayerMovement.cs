@@ -84,6 +84,25 @@ public class PlayerMovement : MonoBehaviour
     }
 
     /// <summary>
+    /// Movement 기능 활성화
+    /// </summary>
+    public void EnableMovement()
+    {
+        moveSpeed = walkSpeed;
+        this.enabled = true;
+    }
+
+    /// <summary>
+    /// Movement 기능 비활성화
+    /// </summary>
+    public void DisableMovement()
+    {
+        moveVelocity *= 0;
+        moveVelocityWithGravity *= 0;
+        this.enabled = false;
+    }
+
+    /// <summary>
     /// 입력받은 방향으로 플레이어 이동시킬 값을 매 프레임마다 계산
     /// </summary>
     /// <param name="moveInput">키 입력 벡터</param>
@@ -162,9 +181,17 @@ public class PlayerMovement : MonoBehaviour
         if (!PhysicsUtil.IsGrounded(this.gameObject)) return false; // 공중에 떠있는 경우에는 점프 X
         
         if (!isJumping && playerKeyInput.keyPressed_Jump) // 점프
-        {       
-            if (isCrouching && !enableDuckJump) return false; // enableDuckJump가 false인 경우 앉을 상태에서 점프 X
-            if (!playerStamina.hasEnoughStamina_Jump) return false;
+        {
+            if (isCrouching && !enableDuckJump) // enableDuckJump가 false인 경우 앉을 상태에서 점프 X
+            {
+                playerKeyInput.keyPressed_Jump = false;
+                return false; 
+            }
+            if (!playerStamina.hasEnoughStamina_Jump)
+            {
+                playerKeyInput.keyPressed_Jump = false;
+                return false;
+            }
 
             StartJump();
             return true;
@@ -179,7 +206,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void StartJump()
-    {
+    {       
         slopeDownForce = 0;
         isJumping = true;
         currentYSpeed = jumpSpeed; // y 속력 변경해 점프
@@ -188,6 +215,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void EndJump()
     {
+        playerKeyInput.keyPressed_Jump = false;
         isJumping = false;
         slopeDownForce = slopeForceTmp;
     }

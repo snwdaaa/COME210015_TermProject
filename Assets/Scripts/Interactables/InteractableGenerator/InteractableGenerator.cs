@@ -1,21 +1,335 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InteractableGenerator : MonoBehaviour
 {
-    private float progress = 0f; // 진행도
+    // 컴포넌트
+    private CircleQTEUI circleQTEUI;
+    private AudioSource audioSource;
+    [SerializeField] private AudioSource generatorSound;
+    private PlayerKeyInput keyInput;
+    private PlayerMovement playerMovement;
+    private PlayerCameraMovement cameraMovement;
 
+    [Header("사운드")]
+    [SerializeField] private AudioClip generatorSound_Start;
+    [SerializeField] private AudioClip generatorSound_Working;
+    [SerializeField] private AudioClip qteSound_Fail;
+    [SerializeField] private AudioClip qteSound_Normal;
+    [SerializeField] private AudioClip qteSound_Success;
+
+    [Header("UI")]
+    [SerializeField] private Slider progressBar;
+
+    [Header("발전기 속성")]
+    [SerializeField] private bool isPlayerOperating = false;
+    [SerializeField] private bool isRepaired = false;
+    private bool isStarted = false;
+
+    [Header("진행도 설정")]
+    [SerializeField] private float currentProgress = 0f; // 현재 진행도
+    private float completeProgress = 100f; // 최대 진행도
+    [SerializeField] private float progressionPerSec = 2f; // 초당 증가할 진행도
+    [SerializeField] private float decreasePerSec = 1f; // 아무 것도 진행하지 않을 때 초당 감소할 진행도
+    [SerializeField] private float failDecrease = 20f; // 빨간 구역 감소량
+    [SerializeField] private float normalDecrease = 5f; // 노란 구역 감소량
+    [SerializeField] private float successIncrease = 10f; // 초록 구역 증가량
+
+    [Header("필요 오브젝트")]
+    [SerializeField] private GameObject qteUIObject; // CircleQTEUI 컴포넌트를 가지는 오브젝트
+    [SerializeField] private GameObject progressUIObject;
+
+    private float neededTime; // 현재 진행도로부터 끝날 때까지 걸리는 시간
+    private float currentTime = 0;
+    private float nextTime;
+    private List<float> randomTimes;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        circleQTEUI = qteUIObject.GetComponent<CircleQTEUI>();
+        audioSource = GetComponent<AudioSource>();
+
+        SubscribeEvent();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        ProgressionAutoDecrease();
+    }
+
+    private void SubscribeEvent()
+    {
+        circleQTEUI.OnQTEFail += () =>
+        {
+            this.OnQTEFail();
+        };
+
+        circleQTEUI.OnQTENormal += () =>
+        {
+            this.OnQTENormal();
+        };
+
+        circleQTEUI.OnQTESuccess += () =>
+        {
+            this.OnQTESuccess();
+        };
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (!isRepaired)
+        {
+            if (other.gameObject.tag == "Player")
+            {
+                keyInput = other.gameObject.GetComponent<PlayerKeyInput>();
+                playerMovement = other.gameObject.GetComponent<PlayerMovement>();
+                cameraMovement = other.gameObject.GetComponent<PlayerCameraMovement>();
+
+                if (!isPlayerOperating)
+                {
+                    // ---- 사용 버튼 UI 표시 ----
+
+                    if (keyInput.keyPressed_Use)
+                    {
+                        EnterFixing();
+
+                        // ---- 사용 버튼 UI 숨기기 ----
+                        StartCoroutine("PlayGeneratorSound"); // 사운드 재생
+                        ToggleProgressUI(); // 진행도 UI 표시
+                        InitQuickTimeEvent(); // QTE 시작 전 설정
+                    }
+                }
+                else
+                {
+                    if (keyInput.keyPressed_Use)
+                    {
+                        ExitFixing();
+                        ToggleProgressUI(); // 진행도 UI 표시
+                        
+                        if (qteUIObject.activeInHierarchy) // 만약 QTE UI가 있으면 숨김
+                        {
+                            ToggleQTEUI();
+                        }
+                    }
+                    else
+                    {
+                        FixGenerator(); // 발전기 수리
+                        QuickTimeEvent(); // QTE 이벤트 실행
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// QTE UI를 끄고 켬
+    /// </summary>
+    private void ToggleQTEUI()
+    {
+        if (qteUIObject.activeInHierarchy)
+        {
+            qteUIObject.SetActive(false);
+        }
+        else
+        {
+            qteUIObject.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// 진행도 UI를 끄고 켬
+    /// </summary>
+    private void ToggleProgressUI()
+    {
+        if (progressUIObject.activeInHierarchy)
+        {
+            progressUIObject.SetActive(false);
+        }
+        else
+        {
+            progressUIObject.SetActive(true);
+        }
+    }
+
+    private IEnumerator PlayGeneratorSound()
+    {
+        if (!isStarted)
+        {
+            isStarted = true;
+            generatorSound.PlayOneShot(generatorSound_Start);
+            yield return new WaitForSeconds(generatorSound_Start.length);
+            generatorSound.clip = generatorSound_Working;
+            generatorSound.loop = true;
+            generatorSound.Play();
+        }
+    }
+
+    private void InitQuickTimeEvent()
+    {
+        // 끝날 때까지 걸리는 시간 계산
+        neededTime = (completeProgress - currentProgress) / progressionPerSec;
+
+        // 0초 ~ neededTime까지 QTE를 시작할 랜덤한 시간을 결정
+        randomTimes = GetRandomQTEStartTimes(0f, neededTime, (int)(neededTime / 10f));
+
+        nextTime = randomTimes[0];
+
+        currentTime = 0;
+
+        // 무작위로 뽑은 시간을 출력
+        foreach (float time in randomTimes)
+        {
+            Debug.Log(time);
+        }
+    }
+
+    /// <summary>
+    /// 랜덤으로 뽑힌 시간이 되면 QTE 실행
+    /// </summary>
+    private void QuickTimeEvent()
+    {
+        if (currentTime <= neededTime)
+        {
+            if (!qteUIObject.activeInHierarchy)
+            {
+                currentTime += Time.deltaTime;
+
+                if ((int)nextTime == (int)currentTime)
+                {       
+                    if (randomTimes.Count > 0)
+                    {
+                        nextTime = randomTimes[0];
+                        randomTimes.RemoveAt(0);
+                    }
+                    else
+                    {
+                        InitQuickTimeEvent();
+                    }
+
+                    ToggleQTEUI(); // QTE UI 표시             
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// startTime부터 finishTime까지 count개의 랜덤한 시점을 뽑음
+    /// </summary>
+    /// <param name="startTime"></param>
+    /// <param name="finishTime"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    List<float> GetRandomQTEStartTimes(float startTime, float finishTime, int count)
+    {
+        List<float> times = new List<float>();
+
+        for (int i = 0; i < count; i++)
+        {
+            float randomTime = UnityEngine.Random.Range(startTime, finishTime);
+
+            if (!times.Contains(randomTime))
+            {
+                times.Add(randomTime);
+            }
+        }
+
+        times.Sort(); // 시간 순으로 정렬
+
+        return times;
+    }
+
+    private void EnterFixing()
+    {
+        keyInput.keyPressed_Use = false;
+        playerMovement.DisableMovement();
+        cameraMovement.enabled = false;
+        isPlayerOperating = true;
+    }
+
+    private void ExitFixing()
+    {
+        keyInput.keyPressed_Use = false;
+        playerMovement.EnableMovement();
+        cameraMovement.enabled = true;
+        isPlayerOperating = false;
+    }
+
+    /// <summary>
+    /// 발전기 수리
+    /// </summary>
+    private void FixGenerator()
+    {
+        if (!isRepaired)
+        {
+            if (currentProgress < completeProgress)
+            {
+                if (!qteUIObject.activeInHierarchy)
+                {
+                    currentProgress += progressionPerSec * Time.deltaTime;
+                    progressBar.value = currentProgress;
+                }
+            }
+            else // 수리가 끝났을 때
+            {
+                isRepaired = true;
+                ToggleProgressUI();
+                ExitFixing();
+            }
+        }
+    }
+
+    private void ProgressionAutoDecrease()
+    {
+        if (!isRepaired && isStarted && !isPlayerOperating)
+        {
+            if (currentProgress <= 0)
+            {
+                generatorSound.Stop();
+            }
+
+            currentProgress -= decreasePerSec * Time.deltaTime;
+            currentProgress = Mathf.Clamp(currentProgress, 0, completeProgress);
+        }
+    }
+
+    /// <summary>
+    /// QTE 실패 시 호출되는 함수
+    /// </summary>
+    private void OnQTEFail()
+    {
+        currentProgress -= failDecrease;
+        currentProgress = Mathf.Clamp(currentProgress, 0, completeProgress);
+
+        audioSource.PlayOneShot(qteSound_Fail);
+        ToggleQTEUI(); // QTE UI 숨김
+    }
+
+    /// <summary>
+    /// QTE 보통 성공 시 호출되는 함수
+    /// </summary>
+    private void OnQTENormal()
+    {
+        currentProgress -= normalDecrease;
+        currentProgress = Mathf.Clamp(currentProgress, 0, completeProgress);
+
+        audioSource.PlayOneShot(qteSound_Normal);
+        ToggleQTEUI(); // QTE UI 숨김
+    }
+
+    /// <summary>
+    /// QTE 성공 시 호출되는 함수
+    /// </summary>
+    private void OnQTESuccess()
+    {
+        currentProgress += successIncrease;
+        currentProgress = Mathf.Clamp(currentProgress, 0, completeProgress);
+
+        audioSource.PlayOneShot(qteSound_Success);
+        ToggleQTEUI(); // QTE UI 숨김
     }
 }
