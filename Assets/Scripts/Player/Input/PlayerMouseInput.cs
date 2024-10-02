@@ -12,14 +12,10 @@ public class PlayerMouseInput : MonoBehaviour
     private PlayerInput playerInput;
 
     public Vector2 mouseInput { get; private set; }
-    public bool mouseButtonPressed_LeftButton { get; private set; }
-    public bool mouseButtonPressed_RightButton { get; private set; }
 
     private void Update()
     {
         DetectMouseInput_MouseInput();
-        DetectMouseInput_LeftButton();
-        DetectMouseInput_RightButton();
     }
 
     private void DetectMouseInput_MouseInput()
@@ -28,15 +24,5 @@ public class PlayerMouseInput : MonoBehaviour
         float mouseY = Input.GetAxis("Mouse Y");
 
         mouseInput = new Vector2(mouseX, mouseY);
-    }
-
-    private void DetectMouseInput_LeftButton()
-    {
-        mouseButtonPressed_LeftButton = Input.GetButton("LeftMouseButton");
-    }
-
-    private void DetectMouseInput_RightButton()
-    {
-        mouseButtonPressed_RightButton = Input.GetButton("RightMouseButton");
     }
 }

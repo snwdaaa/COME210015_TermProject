@@ -25,7 +25,7 @@ public class CircleQTEUI : MonoBehaviour
     private RectTransform rectTransform;
     private float currentAngle = 90f; // 현재 각도
     private float currentAngle_upper;
-
+    [SerializeField] private float rotatedAngle = 0f; // 회전 각을 누적해 한 바퀴 회전을 감지하기 위한 변수
 
     // 이벤트
     public event Action OnQTEFail;
@@ -50,12 +50,18 @@ public class CircleQTEUI : MonoBehaviour
 
         MoveCursorOnCircleEdge();
 
-        if (mouseInput.mouseButtonPressed_LeftButton)
+        // 키 입력 처리
+        if (Input.GetButtonDown("LeftMouseButton"))
         {
             CheckCursorCurrentRange();
         }
     }
 
+    /// <summary>
+    /// 특정 각도를 0 ~ 360도 범위로 변환
+    /// </summary>
+    /// <param name="angle"></param>
+    /// <returns>변환된 각도</returns>
     private float NormalizeAngle(float angle)
     {
         angle %= 360;
@@ -73,9 +79,12 @@ public class CircleQTEUI : MonoBehaviour
     /// </summary>
     private void MoveCursorOnCircleEdge()
     {
-        // 각도 업데이트 (시간에 따라 각도 변화)
+        // 커서가 원을 한 바퀴 돌았는 지 확인
+        CheckOneCircleRotationComplete();
+
+        // 커서 각도 업데이트 (시간에 따라 각도 변화)
         currentAngle += -speed * Time.deltaTime;
-        currentAngle = NormalizeAngle(currentAngle);
+        currentAngle = NormalizeAngle(currentAngle);   
 
         // 원의 중심과 반지름 계산
         Vector2 circleCenter = circleRectTransform.anchoredPosition;
@@ -92,11 +101,26 @@ public class CircleQTEUI : MonoBehaviour
     }
 
     /// <summary>
+    /// 커서가 한 바퀴 돌았는 지 확인 후 다 돌았으면 실패 처리
+    /// </summary>
+    private void CheckOneCircleRotationComplete()
+    {
+        rotatedAngle += Mathf.Abs(-speed * Time.deltaTime);
+
+        // 한 바퀴 모두 회전한 경우 실패 처리
+        if (rotatedAngle >= 360f)
+        {
+            OnQTEFail?.Invoke();
+            rotatedAngle = 0f;
+        }
+    }
+
+    /// <summary>
     /// 시작 위치에서 좀 각을 두고, 랜덤한 각도에 QTE 구간 추가
     /// </summary>
     private void SetRandomQTERange()
     {
-        float randomAngle = UnityEngine.Random.Range(0f, 180f);
+        float randomAngle = UnityEngine.Random.Range(45f, 180f);
         qteRangeTransform.rotation = Quaternion.Euler(0, 0, NormalizeAngle(randomAngle));
     }
 
@@ -108,8 +132,6 @@ public class CircleQTEUI : MonoBehaviour
         float mid = NormalizeAngle(qteRangeTransform.rotation.eulerAngles.z); // success와 normal 사이 각
         float end = NormalizeAngle(mid - (successRectTransform.gameObject.GetComponent<Image>().fillAmount * 360)); // success의 마지막
         float start = NormalizeAngle(mid + (normalRectTransform.gameObject.GetComponent<Image>().fillAmount * 360)); // normal의 시작
-
-        Debug.Log(start + " " + mid + " " + end + " " + currentAngle_upper);
 
         // 체크 범위 안에 들어올 때
         if (start >= currentAngle_upper && currentAngle_upper >= end)
@@ -128,5 +150,6 @@ public class CircleQTEUI : MonoBehaviour
             OnQTEFail?.Invoke();
         }
 
+        rotatedAngle = 0f; // 확인 각도 초기화
     }
 }

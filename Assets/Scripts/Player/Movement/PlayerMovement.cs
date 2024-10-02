@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     private float currentYSpeed; // 현재 y 방향 속도
     public bool isJumping { get; private set; }
     public event Action StartJumpAction;
+    private bool keyPressed_Jump;
 
     [Header("앉기 설정")]
     [SerializeField] private float standHeight = 1.7f;
@@ -77,10 +78,23 @@ public class PlayerMovement : MonoBehaviour
         playerStateMachine.Initialize(playerStateMachine.idleState, playerStateMachine.standState); // State 초기화
     }
 
+    private void Update()
+    {
+        CheckKeyInput();
+    }
+
     private void FixedUpdate()
     {
         CheckJump();
         CalcMoveVelocity();
+    }
+
+    private void CheckKeyInput()
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
+            keyPressed_Jump = true;
+        }
     }
 
     /// <summary>
@@ -180,16 +194,16 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!PhysicsUtil.IsGrounded(this.gameObject)) return false; // 공중에 떠있는 경우에는 점프 X
         
-        if (!isJumping && playerKeyInput.keyPressed_Jump) // 점프
+        if (!isJumping && keyPressed_Jump) // 점프
         {
             if (isCrouching && !enableDuckJump) // enableDuckJump가 false인 경우 앉을 상태에서 점프 X
             {
-                playerKeyInput.keyPressed_Jump = false;
+                keyPressed_Jump = false;
                 return false; 
             }
             if (!playerStamina.hasEnoughStamina_Jump)
             {
-                playerKeyInput.keyPressed_Jump = false;
+                keyPressed_Jump = false;
                 return false;
             }
 
@@ -215,7 +229,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void EndJump()
     {
-        playerKeyInput.keyPressed_Jump = false;
+        keyPressed_Jump = false;
         isJumping = false;
         slopeDownForce = slopeForceTmp;
     }
@@ -230,7 +244,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 moveInput = playerKeyInput.moveInput;
 
-        if (playerKeyInput.keyPressed_Sprint) // 앞으로 이동하는 경우에만 달릴 수 있음
+        if (Input.GetButton("Sprint")) // 앞으로 이동하는 경우에만 달릴 수 있음
         {
             if(moveInput.y > 0)
             {

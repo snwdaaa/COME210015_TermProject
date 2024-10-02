@@ -14,6 +14,9 @@ public class InteractableGenerator : MonoBehaviour
     private PlayerMovement playerMovement;
     private PlayerCameraMovement cameraMovement;
 
+    // 키 입력
+    private bool keyPressed_Use = false;
+
     [Header("사운드")]
     [SerializeField] private AudioClip generatorSound_Start;
     [SerializeField] private AudioClip generatorSound_Working;
@@ -45,7 +48,7 @@ public class InteractableGenerator : MonoBehaviour
     private float neededTime; // 현재 진행도로부터 끝날 때까지 걸리는 시간
     private float currentTime = 0;
     private float nextTime;
-    private List<float> randomTimes;
+    private List<int> randomTimes;
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +63,7 @@ public class InteractableGenerator : MonoBehaviour
     void Update()
     {
         ProgressionAutoDecrease();
+        CheckKeyInput();
     }
 
     private void SubscribeEvent()
@@ -78,6 +82,14 @@ public class InteractableGenerator : MonoBehaviour
         {
             this.OnQTESuccess();
         };
+    }
+
+    private void CheckKeyInput()
+    {
+        if (Input.GetButtonDown("Use"))
+        {
+            keyPressed_Use = true;
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -108,13 +120,15 @@ public class InteractableGenerator : MonoBehaviour
                 {
                     if (keyInput.keyPressed_Use)
                     {
+                        // QTE 도중에 취소하는 경우 UI 숨기고 실패 처리
+                        if (qteUIObject.activeInHierarchy)
+                        {
+                            OnQTEFail();
+                        }
+
                         ExitFixing();
                         ToggleProgressUI(); // 진행도 UI 표시
-                        
-                        if (qteUIObject.activeInHierarchy) // 만약 QTE UI가 있으면 숨김
-                        {
-                            ToggleQTEUI();
-                        }
+
                     }
                     else
                     {
@@ -175,7 +189,7 @@ public class InteractableGenerator : MonoBehaviour
         neededTime = (completeProgress - currentProgress) / progressionPerSec;
 
         // 0초 ~ neededTime까지 QTE를 시작할 랜덤한 시간을 결정
-        randomTimes = GetRandomQTEStartTimes(0f, neededTime, (int)(neededTime / 10f));
+        randomTimes = GetRandomQTEStartTimes(1f, neededTime, Mathf.Clamp((int)(neededTime / 5f), 0, 6));
 
         nextTime = randomTimes[0];
 
@@ -199,7 +213,7 @@ public class InteractableGenerator : MonoBehaviour
             {
                 currentTime += Time.deltaTime;
 
-                if ((int)nextTime == (int)currentTime)
+                if (nextTime == (int)currentTime)
                 {       
                     if (randomTimes.Count > 0)
                     {
@@ -224,13 +238,13 @@ public class InteractableGenerator : MonoBehaviour
     /// <param name="finishTime"></param>
     /// <param name="count"></param>
     /// <returns></returns>
-    List<float> GetRandomQTEStartTimes(float startTime, float finishTime, int count)
+    List<int> GetRandomQTEStartTimes(float startTime, float finishTime, int count)
     {
-        List<float> times = new List<float>();
+        List<int> times = new List<int>();
 
         for (int i = 0; i < count; i++)
         {
-            float randomTime = UnityEngine.Random.Range(startTime, finishTime);
+            int randomTime = UnityEngine.Random.Range((int)startTime, (int)finishTime);
 
             if (!times.Contains(randomTime))
             {
