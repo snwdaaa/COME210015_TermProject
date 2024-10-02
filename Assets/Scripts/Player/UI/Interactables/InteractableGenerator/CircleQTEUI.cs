@@ -105,9 +105,11 @@ public class CircleQTEUI : MonoBehaviour
     /// </summary>
     public void CheckCursorCurrentRange()
     {
-        float mid = qteRangeTransform.rotation.eulerAngles.z; // success와 normal 사이 각
+        float mid = NormalizeAngle(qteRangeTransform.rotation.eulerAngles.z); // success와 normal 사이 각
         float end = NormalizeAngle(mid - (successRectTransform.gameObject.GetComponent<Image>().fillAmount * 360)); // success의 마지막
         float start = NormalizeAngle(mid + (normalRectTransform.gameObject.GetComponent<Image>().fillAmount * 360)); // normal의 시작
+
+        Debug.Log(start + " " + mid + " " + end + " " + currentAngle_upper);
 
         // 체크 범위 안에 들어올 때
         if (start >= currentAngle_upper && currentAngle_upper >= end)

@@ -255,7 +255,7 @@ MonoBehaviour:
   qteRangeTransform: {fileID: 7332711040347362098}
   successRectTransform: {fileID: 3578001976180976658}
   normalRectTransform: {fileID: 3133502917675035452}
-  speed: 400
+  speed: 300
   radiusDelta: 20
 --- !u!222 &8610661321667632192
 CanvasRenderer:
