@@ -14,9 +14,6 @@ public class InteractableGenerator : MonoBehaviour
     private PlayerMovement playerMovement;
     private PlayerCameraMovement cameraMovement;
 
-    // 키 입력
-    private bool keyPressed_Use = false;
-
     [Header("사운드")]
     [SerializeField] private AudioClip generatorSound_Start;
     [SerializeField] private AudioClip generatorSound_Working;
@@ -63,7 +60,6 @@ public class InteractableGenerator : MonoBehaviour
     void Update()
     {
         ProgressionAutoDecrease();
-        CheckKeyInput();
     }
 
     private void SubscribeEvent()
@@ -82,14 +78,6 @@ public class InteractableGenerator : MonoBehaviour
         {
             this.OnQTESuccess();
         };
-    }
-
-    private void CheckKeyInput()
-    {
-        if (Input.GetButtonDown("Use"))
-        {
-            keyPressed_Use = true;
-        }
     }
 
     private void OnTriggerStay(Collider other)

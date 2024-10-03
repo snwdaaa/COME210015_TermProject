@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// 플레이어 State 관리 인터페이스
+/// State 관리 인터페이스
 /// </summary>
 public interface IState
 {
