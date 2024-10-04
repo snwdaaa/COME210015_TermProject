@@ -43,6 +43,11 @@ public class CircleQTEUI : MonoBehaviour
         audioSource.Play();
     }
 
+    private void Start()
+    {
+        SubscribeEvent();
+    }
+
     private void Update()
     {
         currentAngle_upper = currentAngle - 90f;
@@ -55,6 +60,14 @@ public class CircleQTEUI : MonoBehaviour
         {
             CheckCursorCurrentRange();
         }
+    }
+
+    private void SubscribeEvent()
+    {
+        // UI 비활성화
+        OnQTESuccess += ToggleQTEUI;
+        OnQTENormal += ToggleQTEUI;
+        OnQTEFail += ToggleQTEUI;
     }
 
     /// <summary>
@@ -151,5 +164,20 @@ public class CircleQTEUI : MonoBehaviour
         }
 
         rotatedAngle = 0f; // 확인 각도 초기화
+    }
+
+    /// <summary>
+    /// QTE UI를 끄고 켬
+    /// </summary>
+    public void ToggleQTEUI()
+    {
+        if (this.gameObject.activeInHierarchy)
+        {
+            this.gameObject.SetActive(false);
+        }
+        else
+        {
+            this.gameObject.SetActive(true);
+        }
     }
 }

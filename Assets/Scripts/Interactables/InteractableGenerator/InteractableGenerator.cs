@@ -129,21 +129,6 @@ public class InteractableGenerator : MonoBehaviour
     }
 
     /// <summary>
-    /// QTE UI를 끄고 켬
-    /// </summary>
-    private void ToggleQTEUI()
-    {
-        if (qteUIObject.activeInHierarchy)
-        {
-            qteUIObject.SetActive(false);
-        }
-        else
-        {
-            qteUIObject.SetActive(true);
-        }
-    }
-
-    /// <summary>
     /// 진행도 UI를 끄고 켬
     /// </summary>
     private void ToggleProgressUI()
@@ -172,15 +157,10 @@ public class InteractableGenerator : MonoBehaviour
     }
 
     private void InitQuickTimeEvent()
-    {
-        // 끝날 때까지 걸리는 시간 계산
-        neededTime = (completeProgress - currentProgress) / progressionPerSec;
-
-        // 0초 ~ neededTime까지 QTE를 시작할 랜덤한 시간을 결정
-        randomTimes = GetRandomQTEStartTimes(1f, neededTime, Mathf.Clamp((int)(neededTime / 5f), 0, 6));
-
+    {    
+        neededTime = (completeProgress - currentProgress) / progressionPerSec; // 끝날 때까지 걸리는 시간 계산
+        randomTimes = GetRandomQTEStartTimes(1f, neededTime, Mathf.Clamp((int)(neededTime / 5f), 1, 6)); // 0초 ~ neededTime까지 QTE를 시작할 랜덤한 시간을 결정
         nextTime = randomTimes[0];
-
         currentTime = 0;
 
         // 무작위로 뽑은 시간을 출력
@@ -195,25 +175,23 @@ public class InteractableGenerator : MonoBehaviour
     /// </summary>
     private void QuickTimeEvent()
     {
+        // 처음 시작했거나 랜덤 시간이 없는 경우
+        if (!isStarted || randomTimes.Count <= 0)
+        {
+            InitQuickTimeEvent();
+        }
+
         if (currentTime <= neededTime)
         {
             if (!qteUIObject.activeInHierarchy)
             {
                 currentTime += Time.deltaTime;
 
-                if (nextTime == (int)currentTime)
-                {       
-                    if (randomTimes.Count > 0)
-                    {
-                        nextTime = randomTimes[0];
-                        randomTimes.RemoveAt(0);
-                    }
-                    else
-                    {
-                        InitQuickTimeEvent();
-                    }
-
-                    ToggleQTEUI(); // QTE UI 표시             
+                if ((int)currentTime == nextTime)
+                {
+                    nextTime = randomTimes[0]; // 다음 QTE때 사용할 시간 업데이트
+                    randomTimes.RemoveAt(0);
+                    circleQTEUI.ToggleQTEUI(); // QTE UI 표시             
                 }
             }
         }
@@ -308,7 +286,6 @@ public class InteractableGenerator : MonoBehaviour
         currentProgress = Mathf.Clamp(currentProgress, 0, completeProgress);
 
         audioSource.PlayOneShot(qteSound_Fail);
-        ToggleQTEUI(); // QTE UI 숨김
     }
 
     /// <summary>
@@ -320,7 +297,6 @@ public class InteractableGenerator : MonoBehaviour
         currentProgress = Mathf.Clamp(currentProgress, 0, completeProgress);
 
         audioSource.PlayOneShot(qteSound_Normal);
-        ToggleQTEUI(); // QTE UI 숨김
     }
 
     /// <summary>
@@ -332,6 +308,5 @@ public class InteractableGenerator : MonoBehaviour
         currentProgress = Mathf.Clamp(currentProgress, 0, completeProgress);
 
         audioSource.PlayOneShot(qteSound_Success);
-        ToggleQTEUI(); // QTE UI 숨김
     }
 }

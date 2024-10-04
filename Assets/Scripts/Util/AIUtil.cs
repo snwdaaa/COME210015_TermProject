@@ -49,13 +49,20 @@ public class AIUtil : MonoBehaviour
     /// <returns></returns>
     public static Vector3 GetRandomPointOnNavMesh(Vector3 center, float radius, int areaMask)
     {
-        Vector3 randomPos = Random.insideUnitSphere * radius + center;
+        for (int i = 0; i < 30; i++)
+        {
+            Vector3 randomPos = Random.insideUnitSphere * radius + center;
 
-        NavMeshHit hit; // NavMesh 샘플링 결과 저장
+            NavMeshHit hit; // NavMesh 샘플링 결과 저장
 
-        // areaMask에 해당하는 NavMesh 중에서 randomPos에서 radius만큼 떨어진 곳 사이에서 가장 가까운 곳 찾음
-        NavMesh.SamplePosition(randomPos, out hit, radius, areaMask);
+            // areaMask에 해당하는 NavMesh 중에서 randomPos에서 radius만큼 떨어진 곳 사이에서 가장 가까운 곳 찾음
+            if(NavMesh.SamplePosition(randomPos, out hit, radius, areaMask))
+            {
+                return hit.position;
+            }         
+        }
 
-        return hit.position;
+        return Vector3.zero;
+
     }
 }

@@ -1,17 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
     // 컴포넌트
+    [Header("컴포넌트")]
     private AudioSource audioSource;
     [HideInInspector] public NavMeshAgent navAgent;
-    private Animator animator;
+    [HideInInspector] public Animator animator;
     [HideInInspector] public EnemyStateMachine esm;
+    [SerializeField] private CircleQTEUI circleQTEUI;
+
+    // 오브젝트
+    private GameObject player;
 
     // 상태
     [Header("State 설정")]
@@ -27,7 +31,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float attackDelay = 3f;
     [SerializeField] private float attackRadius = 2f;
     [SerializeField] private Transform attackRoot; // 해당 루트를 기준으로 일정 범위 공격
-    private RaycastHit[] hits = new RaycastHit[10]; // 공격 범위 안에 들어오는 물체의 RaycastHit 정보를 저장할 배열
+    private float attackTimer;
+    [SerializeField] public bool isAttacking = false;
 
     [Header("플레이어 탐지")]
     [SerializeField] private float detectionFov = 50f; // 시아갹
@@ -77,6 +82,20 @@ public class Enemy : MonoBehaviour
 
         // 상태 머신 초기화
         esm.Initialize(esm.patrolState);
+
+        // 이벤트 구독
+        SubscribeEvent();
+
+        // 공격 타이머 초기화
+        attackTimer = attackDelay; // 처음에 바로 공격할 수 있도록 타이머를 딜레이만큼 설정
+    }
+
+    private void SubscribeEvent()
+    {
+        circleQTEUI.OnQTEFail += () =>
+        {
+            MoveToQTEFailPos();
+        };
     }
 
     /// <summary>
@@ -119,7 +138,7 @@ public class Enemy : MonoBehaviour
     {
         CheckSight(); // 시야 범위 검사
         SetPatrolWaypoint(); // Patrol Waypoint 설정
-        SetChaseTarget(); // 추적 대상 검사
+        SetChaseTargetInSight(); // 추적 대상 검사
 
         yield return new WaitForSeconds(updatePeriod);
     }
@@ -140,12 +159,20 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// 시야에 들어오는 적을 감지해 추적 대상으로 설정
     /// </summary>
-    private void SetChaseTarget()
+    private void SetChaseTargetInSight()
     {
         if (isInSight)
         {
             chaseTarget = sightCol.transform;
         }
+    }
+
+    /// <summary>
+    /// QTE 실패시 플레이어의 위치를 추적 목표로 설정
+    /// </summary>
+    private void MoveToQTEFailPos()
+    {
+        chaseTarget = GameObject.FindWithTag("Player").transform;
     }
 
     // ----------------------------- Chase -----------------------------
@@ -167,7 +194,9 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(updatePeriod);
     }
 
-
+    /// <summary>
+    /// NavAgent의 destination을 계속 업데이트
+    /// </summary>
     private void UpdateChaseTargetPosition()
     {
         if (chaseTarget != null)
@@ -197,4 +226,69 @@ public class Enemy : MonoBehaviour
     }
 
     // ----------------------------- Attack -----------------------------
+    /// <summary>
+    /// updatePeriod 초마다 Chase 상태에 필요한 업데이트 기능 실행
+    /// </summary>
+    public void UpdateAttackStatus()
+    {
+        StartCoroutine("UpdateAttackStatusCoroutine");
+    }
+
+    public IEnumerator UpdateAttackStatusCoroutine()
+    {
+        CheckAttackCondition(); // 공격 조건 확인
+
+        yield return new WaitForSeconds(updatePeriod);
+    }
+
+    private bool IsPlayerInAttackRange(ref GameObject playerObj)
+    {
+        // 공격 범위(구) 내에 있는 모든 Collider를 가져옴
+        Collider[] colliders = Physics.OverlapSphere(attackRoot.position, attackRadius); // 중심이 attackRoot이고 반지름이 attackRadius인 구 안에 있는 Collider를 모두 가져옴
+
+        foreach (Collider col in colliders)
+        {
+            if (col.gameObject.tag == "Player") // 플레이어인 경우
+            {
+                playerObj = col.gameObject;
+                return true;
+            }
+        }
+
+        playerObj = null;
+        return false;
+    }
+
+    private void CheckAttackCondition()
+    {
+        if (isAttacking) return;
+
+        attackTimer += Time.deltaTime;
+        if (attackTimer >= attackDelay)
+        {
+            if (IsPlayerInAttackRange(ref player)) // Player가 범위 내에 있는 경우 레퍼런스로 컴포넌트 받아옴
+            {
+                isAttacking = true;
+                animator.SetTrigger("Attack");
+            }
+        }
+    }
+
+    private void AttackStart()
+    {
+
+    }
+
+    private void Attack()
+    {
+        audioSource.volume = 0.2f;
+        audioSource.PlayOneShot(attackSound);
+        player.GetComponent<PlayerHealth>().ApplyDamage(attackDamage);
+    }
+
+    private void AttackEnd()
+    {
+        isAttacking = false;
+        attackTimer = 0; // 타이머 초기화
+    }
 }

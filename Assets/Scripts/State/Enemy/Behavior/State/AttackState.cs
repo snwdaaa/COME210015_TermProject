@@ -19,7 +19,11 @@ public class AttackState : IState
 
     public void Update()
     {
-
+        // 공격 후 다시 Chase 상태로 이동
+        if (!enemy.isAttacking)
+        {
+            enemy.esm.TransferState(enemy.esm.chaseState);
+        }
     }
 
     public void Exit()

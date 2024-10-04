@@ -20,12 +20,23 @@ public class PatrolState : IState
 
     public void Update()
     {
+        // Chase 상태 전이
         if (enemy.chaseTarget != null)
         {
             enemy.esm.TransferState(enemy.esm.chaseState);
         }
 
+        // Attack 상태 전이
+        if (enemy.isAttacking)
+        {
+            enemy.esm.TransferState(enemy.esm.attackState);
+        }
+
+        // 애니메이터 설정
+        enemy.animator.SetFloat("MoveSpeed", enemy.navAgent.speed);
+
         enemy.UpdatePatrolStatus();
+        enemy.UpdateAttackStatus();
     }
 
     public void Exit()

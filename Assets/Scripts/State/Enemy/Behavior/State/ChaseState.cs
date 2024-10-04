@@ -26,7 +26,17 @@ public class ChaseState : IState
             enemy.esm.TransferState(enemy.esm.patrolState);
         }
 
+        // Attack 상태 전이
+        if (enemy.isAttacking)
+        {
+            enemy.esm.TransferState(enemy.esm.attackState);
+        }
+
+        // 애니메이터 설정
+        enemy.animator.SetFloat("MoveSpeed", enemy.navAgent.speed);
+
         enemy.UpdateChaseStatus();
+        enemy.UpdateAttackStatus();
     }
 
     public void Exit()
