@@ -2344,6 +2344,7 @@ GameObject:
   - component: {fileID: 4856983101443227702}
   - component: {fileID: 4823793627430482078}
   - component: {fileID: 6383149551737303910}
+  - component: {fileID: 314845065659562636}
   m_Layer: 0
   m_Name: Priest
   m_TagString: Untagged
@@ -2426,7 +2427,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2435,9 +2436,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 20
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -2445,23 +2446,59 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 0.05
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -20.007967
+      outSlope: -20.007967
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      time: 0.1
+      value: 0.5
+      inSlope: -5.0019917
+      outSlope: -5.0019917
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.2
+      value: 0.25
+      inSlope: -1.2504979
+      outSlope: -1.2504979
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.4
+      value: 0.125
+      inSlope: -0.31262448
+      outSlope: -0.31262448
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.77000123
+      value: 0.028121948
+      inSlope: -0.07815612
+      outSlope: -0.07815612
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.9866638
+      value: 0
+      inSlope: -0.05001994
+      outSlope: -0.05001994
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -2574,8 +2611,66 @@ MonoBehaviour:
   eyeTransform: {fileID: 3977593863448643448}
   targetLostTime: 10
   chaseTarget: {fileID: 0}
-  attackSound: {fileID: 0}
+  attackSound: {fileID: 8300000, guid: 5f6508cba53ecf0448b30e47bf27bfd1, type: 3}
   footstepSound: []
+--- !u!114 &314845065659562636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7312283401570007677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eca580ffcb55a0149a2753cc94ee8b9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultSound:
+  - {fileID: 8300000, guid: b993df4a93c1d304ab19d8b2eb88c9a5, type: 3}
+  - {fileID: 8300000, guid: 5c9bdbce37b06a24fa6ea793bcfd1907, type: 3}
+  - {fileID: 8300000, guid: 0909de896e9029541b92ae05fe15e4b6, type: 3}
+  - {fileID: 8300000, guid: 6ad0cf00f050bee41a2dee098475dc78, type: 3}
+  - {fileID: 8300000, guid: 7ca5a9710db4327439c9f8cb8204615e, type: 3}
+  - {fileID: 8300000, guid: 14ae706fef2303e4cb71112dbd5d250b, type: 3}
+  - {fileID: 8300000, guid: b995bc1775ea83b4b8f861763e9a1424, type: 3}
+  - {fileID: 8300000, guid: d15f7338d693f0343843a6b9096d27f6, type: 3}
+  dirtSound:
+  - {fileID: 8300000, guid: 9ea11a2d13d536e4e8441a0f5895995c, type: 3}
+  - {fileID: 8300000, guid: 203ac8b6f07070e4f93f1c1a6fff06c3, type: 3}
+  - {fileID: 8300000, guid: ac6649006dbee9e4685752e124111da7, type: 3}
+  - {fileID: 8300000, guid: f42914d98b070f741b2feee96a2988ee, type: 3}
+  - {fileID: 8300000, guid: feb62160ad1f8334ab037017b843d162, type: 3}
+  - {fileID: 8300000, guid: 001f691d110d55648871a03f446ffa08, type: 3}
+  - {fileID: 8300000, guid: 6478d7fb30f301b4fa8f74d5d1dad094, type: 3}
+  - {fileID: 8300000, guid: f1547ad8fbfa4f24d83e5a445aee860d, type: 3}
+  - {fileID: 8300000, guid: 47832b56ccba5bc408b1d5aac1871746, type: 3}
+  - {fileID: 8300000, guid: 3d132da7af60f1145a3deb6a8bc42a08, type: 3}
+  woodSound:
+  - {fileID: 8300000, guid: 8e001351cd7065543a068386cde4c960, type: 3}
+  - {fileID: 8300000, guid: c41fb169b2991c247a5466e00faa6639, type: 3}
+  - {fileID: 8300000, guid: 76c66b3ae15685a45a334b0628d1edd1, type: 3}
+  - {fileID: 8300000, guid: cb9aa4db4b3a12147bf2fe3d88fee270, type: 3}
+  - {fileID: 8300000, guid: 2e832dbb2c7c9ba4e97fd3005fe850b7, type: 3}
+  - {fileID: 8300000, guid: 3af6e561e364a274aa306461461c386b, type: 3}
+  - {fileID: 8300000, guid: 30668cf6c5cbfef478b0812fc59eb646, type: 3}
+  - {fileID: 8300000, guid: eea9624d96ae191439615ca598fe01fa, type: 3}
+  - {fileID: 8300000, guid: a45bdfd5056ed1d4d8f667cc2498ca12, type: 3}
+  - {fileID: 8300000, guid: ec4bd5988d7de0c41ab2d9959705dd8b, type: 3}
+  waterSound:
+  - {fileID: 8300000, guid: adf4e7fa93007bd49937217a0922f285, type: 3}
+  - {fileID: 8300000, guid: b9a5f4a46006d6f429a02ea0fadc4809, type: 3}
+  - {fileID: 8300000, guid: 6755e20b5c79018438c8aed7439dcfed, type: 3}
+  - {fileID: 8300000, guid: caf48be4d869fe24f85866b95cdbe017, type: 3}
+  - {fileID: 8300000, guid: a843d0038d0930149b2a4a6002937a10, type: 3}
+  - {fileID: 8300000, guid: eb25cc7f1bf9dbb43aa0833fe823843e, type: 3}
+  - {fileID: 8300000, guid: e6f87af77d097a84ca825ab2c2ce7e87, type: 3}
+  - {fileID: 8300000, guid: b682207ff9ac8db4695704cd57fb59a7, type: 3}
+  - {fileID: 8300000, guid: 938df53f74d50544b83b2cd1b17069f9, type: 3}
+  - {fileID: 8300000, guid: f29d6db9c3a008d4aae34c3399830406, type: 3}
+  walkVolume: 0.8
+  sprintVolume: 1
+  walkStepInterval: 0.4
+  sprintStepInterval: 0.3
 --- !u!1 &7525196848959419573
 GameObject:
   m_ObjectHideFlags: 0

@@ -193,6 +193,7 @@ public class PlayerMovement : MonoBehaviour
     public bool CheckJump()
     {
         if (!PhysicsUtil.IsGrounded(this.gameObject)) return false; // 공중에 떠있는 경우에는 점프 X
+        if (PhysicsUtil.IsOnSlope(this.gameObject, ref slopeHit)) return false; // 경사면 위에 있는 경우 점프 X
         
         if (!isJumping && keyPressed_Jump) // 점프
         {

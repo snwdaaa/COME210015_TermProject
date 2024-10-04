@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float attackRadius = 2f;
     [SerializeField] private Transform attackRoot; // 해당 루트를 기준으로 일정 범위 공격
     private float attackTimer;
-    [SerializeField] public bool isAttacking = false;
+    [HideInInspector] public bool isAttacking = false;
 
     [Header("플레이어 탐지")]
     [SerializeField] private float detectionFov = 50f; // 시아갹
@@ -46,7 +46,6 @@ public class Enemy : MonoBehaviour
 
     [Header("사운드")]
     [SerializeField] private AudioClip attackSound;
-    [SerializeField] private AudioClip[] footstepSound;
 
     // 유니티 에디터 내에서만 동작
 #if UNITY_EDITOR
