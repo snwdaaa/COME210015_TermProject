@@ -71,3 +71,10 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 Assets/Scripts/Player/PlayerMovementInput.cs
+Assets/Scenes/Flooded_Grounds/Content/Textures/GR_Asphalt1_AS.tif
+Assets/Scenes/Flooded_Grounds/Content/Textures/GR_Asphalt1_AS.tif.meta
+Assets/Scenes/Flooded_Grounds/Content/Textures/GR_Moss1_AS.tif
+Assets/Scenes/Flooded_Grounds/Content/Textures/GR_Moss1_AS.tif.meta
+Assets/Scenes/Flooded_Grounds/Content/Textures/NAT_Grass1_AS.tif
+Assets/Scenes/Flooded_Grounds/Content/Textures/NAT_Grass1_AS.tif.meta
+Assets/Scenes/Flooded_Grounds/Scenes/Scene_A/LightingData.asset
