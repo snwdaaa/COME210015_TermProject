@@ -85,12 +85,12 @@ public class PhysicsUtil : MonoBehaviour
     {
         CharacterController characterController = obj.GetComponent<CharacterController>();
         Vector3 rayStartPos = new Vector3(obj.transform.position.x, 
-                                          obj.transform.position.y - characterController.height / 2f + characterController.center.y, 
+                                          obj.transform.position.y - (characterController.height / 2f - characterController.center.y), 
                                           obj.transform.position.z);
 
-        if (Physics.Raycast(rayStartPos, Vector3.down, 0.25f))
+        if (Physics.Raycast(rayStartPos, Vector3.down, 0.5f))
         {
-            // Debug.DrawRay(rayStartPos, Vector3.down * 0.25f, Color.cyan);
+            Debug.DrawRay(rayStartPos, Vector3.down * 0.5f, Color.cyan);
             if (characterController.isGrounded)
             {
                 return true;

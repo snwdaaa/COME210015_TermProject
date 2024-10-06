@@ -4,26 +4,26 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
-/// ÇÃ·¹ÀÌ¾î ¹ß¼Ò¸® °ü¸® ½ºÅ©¸³Æ®
+/// í”Œë ˆì´ì–´ ë°œì†Œë¦¬ ê´€ë¦¬ ìŠ¤í¬ë¦½íŠ¸
 /// </summary>
 public class PlayerFootstep : MonoBehaviour
 {
-    // ÄÄÆ÷³ÍÆ®
+    // ì»´í¬ë„ŒíŠ¸
     private AudioSource audioSource;
     private PlayerStateMachine playerStateMachine;
     private PlayerMovement playerMovement;
     private PlayerMovementHelper playerMovementHelper;
 
-    [Header("»ç¿îµå")]
+    [Header("ì‚¬ìš´ë“œ")]
     [SerializeField] private AudioClip[] jumpSound;
     [SerializeField] private AudioClip[] landingSound;
     [SerializeField] private AudioClip[] defaultSound;
     [SerializeField] private AudioClip[] dirtSound;
     [SerializeField] private AudioClip[] woodSound;
     [SerializeField] private AudioClip[] waterSound;
-    private AudioClip currentFootstepSound; // ÀçÁú¿¡ µû¶ó Á¤ÇØÁø »ç¿îµå
+    private AudioClip currentFootstepSound; // ì¬ì§ˆì— ë”°ë¼ ì •í•´ì§„ ì‚¬ìš´ë“œ
 
-    [Header("¼³Á¤")]
+    [Header("ì„¤ì •")]
     [SerializeField] private float walkVolume = 0.2f;
     [SerializeField] private float crouchWalkVolume = 0.1f;
     [SerializeField] private float sprintVolume = 0.4f;
@@ -53,7 +53,7 @@ public class PlayerFootstep : MonoBehaviour
     }
 
     /// <summary>
-    /// ÇÊ¿äÇÑ ÀÌº¥Æ® ±¸µ¶
+    /// í•„ìš”í•œ ì´ë²¤íŠ¸ êµ¬ë…
     /// </summary>
     private void SubscribeEvent()
     {
@@ -66,7 +66,7 @@ public class PlayerFootstep : MonoBehaviour
         // Landing Event
         playerMovementHelper.PlayerLandingEvent += () =>
         {
-            if (playerMovementHelper.fallHeight > 0.1f) // ³ôÀÌ°¡ ¾î´À Á¤µµ ÀÖ´Â °æ¿ì¿¡¸¸ »ç¿îµå Àç»ı
+            if (playerMovementHelper.fallHeight > 0.1f) // ë†’ì´ê°€ ì–´ëŠ ì •ë„ ìˆëŠ” ê²½ìš°ì—ë§Œ ì‚¬ìš´ë“œ ì¬ìƒ
             {
                 audioSource.PlayOneShot(landingSound[Random.Range(0, jumpSound.Length)]);
             }         
@@ -74,19 +74,22 @@ public class PlayerFootstep : MonoBehaviour
     }
 
     /// <summary>
-    /// ¹Ù´Ú ÀçÁú È®ÀÎ ÈÄ currentFootstepSound¿¡ ÇØ´ç ÀçÁú »ç¿îµå ÇÒ´ç
+    /// ë°”ë‹¥ ì¬ì§ˆ í™•ì¸ í›„ currentFootstepSoundì— í•´ë‹¹ ì¬ì§ˆ ì‚¬ìš´ë“œ í• ë‹¹
     /// </summary>
     private void CheckSurfaceType()
     {
-        // ¾Æ·¡ ¹æÇâÀ¸·Î Ray ¹ß»ç
+        float yDownHeight =  transform.position.y - (playerMovement.characterController.height / 2f - playerMovement.characterController.center.y);
+
+        // ì•„ë˜ ë°©í–¥ìœ¼ë¡œ Ray ë°œì‚¬
         RaycastHit hit;
-        Vector3 rayStartPos = new Vector3(transform.position.x, 0.1f, transform.position.z);
+        Vector3 rayStartPos = new Vector3(transform.position.x, yDownHeight, transform.position.z);
+
         if (Physics.Raycast(rayStartPos, Vector3.down, out hit, 0.5f))
         {
             surfaceType = hit.transform.gameObject.layer;
         }
 
-        // surfaceType¿¡ µû¶ó »ç¿îµå °áÁ¤
+        // surfaceTypeì— ë”°ë¼ ì‚¬ìš´ë“œ ê²°ì •
         if (surfaceType == LayerMask.NameToLayer("SURFACE_DIRT"))
         {
             currentFootstepSound = dirtSound[Random.Range(0, dirtSound.Length)];
@@ -106,7 +109,7 @@ public class PlayerFootstep : MonoBehaviour
     }
 
     /// <summary>
-    /// ÇÃ·¹ÀÌ¾î°¡ ÂøÁöÇÑ °æ¿ì, Á¡ÇÁ ÈÄ ÂøÁöÀÎÁö Á¡ÇÁ ¾øÀÌ ¶³¾îÁø ÈÄ ÂøÁöÀÎÁö °áÁ¤ ÈÄ »ç¿îµå Àç»ı
+    /// í”Œë ˆì´ì–´ê°€ ì°©ì§€í•œ ê²½ìš°, ì í”„ í›„ ì°©ì§€ì¸ì§€ ì í”„ ì—†ì´ ë–¨ì–´ì§„ í›„ ì°©ì§€ì¸ì§€ ê²°ì • í›„ ì‚¬ìš´ë“œ ì¬ìƒ
     /// </summary>
     private void PlayJumpSound()
     {
@@ -120,7 +123,7 @@ public class PlayerFootstep : MonoBehaviour
     }
 
     /// <summary>
-    /// surfaceType¿¡ µû¶ó ´Ù¸¥ »ç¿îµå Àç»ı
+    /// surfaceTypeì— ë”°ë¼ ë‹¤ë¥¸ ì‚¬ìš´ë“œ ì¬ìƒ
     /// </summary>
     private void PlayFootstepSound()
     {
@@ -129,12 +132,12 @@ public class PlayerFootstep : MonoBehaviour
         bool cond3 = playerStateMachine.CurrentMoveState == playerStateMachine.crouchWalkState;
         bool cond4 = playerStateMachine.CurrentMoveState == playerStateMachine.idleState;
 
-        // ÀÌµ¿ ½Ã ¹ß¼Ò¸® Àç»ı
+        // ì´ë™ ì‹œ ë°œì†Œë¦¬ ì¬ìƒ
         if (cond1 || cond2 || cond3)
         {
             float interval = 0f;
 
-            // »óÅÂ º° °ª ¼³Á¤
+            // ìƒíƒœ ë³„ ê°’ ì„¤ì •
             if (cond1)
             {
                 audioSource.volume = walkVolume;
@@ -151,14 +154,14 @@ public class PlayerFootstep : MonoBehaviour
                 interval = crouchWalkStepInterval;
             }
 
-            // surfaceTypeÀ» È®ÀÎÇØ ÀçÁú¿¡ ¸Â´Â ·£´ı »ç¿îµå °áÁ¤
+            // surfaceTypeì„ í™•ì¸í•´ ì¬ì§ˆì— ë§ëŠ” ëœë¤ ì‚¬ìš´ë“œ ê²°ì •
             CheckSurfaceType();
 
-            // ±× ÀçÁú¿¡ ¸Â´Â ·£´ı »ç¿îµå Àç»ı
-            stepIntervalTimer += Time.deltaTime; // ¹ß¼Ò¸® Àç»ı °£°İÀ» À§ÇÑ Å¸ÀÌ¸Ó
+            // ê·¸ ì¬ì§ˆì— ë§ëŠ” ëœë¤ ì‚¬ìš´ë“œ ì¬ìƒ
+            stepIntervalTimer += Time.deltaTime; // ë°œì†Œë¦¬ ì¬ìƒ ê°„ê²©ì„ ìœ„í•œ íƒ€ì´ë¨¸
             if (stepIntervalTimer > interval)
             {
-                stepIntervalTimer = 0; // Å¸ÀÌ¸Ó ÃÊ±âÈ­
+                stepIntervalTimer = 0; // íƒ€ì´ë¨¸ ì´ˆê¸°í™”
                 audioSource.PlayOneShot(currentFootstepSound);
             }
         }

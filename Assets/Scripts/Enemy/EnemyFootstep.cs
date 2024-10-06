@@ -7,6 +7,7 @@ public class EnemyFootstep : MonoBehaviour
     // 컴포넌트
     private AudioSource audioSource;
     private Enemy enemy;
+    private CapsuleCollider capCol;
 
     [Header("사운드")]
     [SerializeField] private AudioClip[] defaultSound;
@@ -30,6 +31,7 @@ public class EnemyFootstep : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         audioSource.volume = walkVolume;
         enemy = GetComponent<Enemy>();
+        capCol = GetComponent<CapsuleCollider>();
     }
 
     // Update is called once per frame
@@ -43,9 +45,14 @@ public class EnemyFootstep : MonoBehaviour
     /// </summary>
     private void CheckSurfaceType()
     {
+        float yDownHeight = transform.position.y - (capCol.height / 2f - capCol.center.y);
+
         // 아래 방향으로 Ray 발사
         RaycastHit hit;
-        Vector3 rayStartPos = new Vector3(transform.position.x, 0.1f, transform.position.z);
+        Vector3 rayStartPos = new Vector3(transform.position.x, yDownHeight, transform.position.z);
+
+        Debug.DrawRay(rayStartPos, Vector3.down, Color.red);
+
         if (Physics.Raycast(rayStartPos, Vector3.down, out hit, 0.5f))
         {
             surfaceType = hit.transform.gameObject.layer;
