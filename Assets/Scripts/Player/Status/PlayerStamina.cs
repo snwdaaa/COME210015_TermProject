@@ -3,23 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ÇÃ·¹ÀÌ¾î ½ºÅÂ¹Ì³Ê °ü¸® ½ºÅ©¸³Æ®
+/// í”Œë ˆì´ì–´ ìŠ¤íƒœë¯¸ë„ˆ ê´€ë¦¬ ìŠ¤í¬ë¦½íŠ¸
 /// </summary>
 public class PlayerStamina : MonoBehaviour
 {
-    // ÄÄÆ÷³ÍÆ®
+    // ì»´í¬ë„ŒíŠ¸
     private PlayerStateMachine psm;
     private PlayerMovement pm;
 
-    [Header("½ºÅÂ¹Ì³Ê ¼³Á¤")]
-    public float maxStamina = 100f; // ÃÖ´ë ½ºÅÂ¹Ì³Ê
-    public float currentStamina { get; private set; } // ÇöÀç ½ºÅÂ¹Ì³Ê
-    [SerializeField] private float sprintStaminaDrainPerSec = 10f; // ´Ş¸®±â ÃÊ´ç ½ºÅÂ¹Ì³Ê ¼Ò¸ğ·®
-    [SerializeField] private float jumpStaminaDrain = 20f; // Á¡ÇÁ ½Ã ¼Ò¸ğµÇ´Â ½ºÅÂ¹Ì³Ê
-    [SerializeField] private float staminaRegenDelay = 2f; // ½ºÅÂ¹Ì³Ê È¸º¹ Áö¿¬ ½Ã°£
-    [SerializeField] private float staminaRegenPerSec = 5f; // ÃÊ´ç È¸º¹µÇ´Â ½ºÅÂ¹Ì³Ê ¾ç
+    [Header("ìŠ¤íƒœë¯¸ë„ˆ ì„¤ì •")]
+    [SerializeField] private float maxStamina = 100f; // ìµœëŒ€ ìŠ¤íƒœë¯¸ë„ˆ
+    public float currentMaxStamina { get; private set; }
+    public float currentStamina { get; private set; } // í˜„ì¬ ìŠ¤íƒœë¯¸ë„ˆ
+    [SerializeField] private float sprintStaminaDrainPerSec = 10f; // ë‹¬ë¦¬ê¸° ì´ˆë‹¹ ìŠ¤íƒœë¯¸ë„ˆ ì†Œëª¨ëŸ‰
+    [SerializeField] private float jumpStaminaDrain = 20f; // ì í”„ ì‹œ ì†Œëª¨ë˜ëŠ” ìŠ¤íƒœë¯¸ë„ˆ
+    [SerializeField] private float staminaRegenDelay = 2f; // ìŠ¤íƒœë¯¸ë„ˆ íšŒë³µ ì§€ì—° ì‹œê°„
+    [SerializeField] private float staminaRegenPerSec = 5f; // ì´ˆë‹¹ íšŒë³µë˜ëŠ” ìŠ¤íƒœë¯¸ë„ˆ ì–‘
 
-    private float regenTimer; // È¸º¹ ´ë±â ½Ã°£ Å¸ÀÌ¸Ó
+    private float regenTimer; // íšŒë³µ ëŒ€ê¸° ì‹œê°„ íƒ€ì´ë¨¸
     public bool hasEnoughStamina_Jump { get; private set; }
     public bool hasEnoughStamina_Sprint { get; private set; }
 
@@ -31,10 +32,11 @@ public class PlayerStamina : MonoBehaviour
         psm = GetComponent<PlayerStateMachine>();
         pm = GetComponent<PlayerMovement>();
 
-        currentStamina = maxStamina;
+        currentMaxStamina = maxStamina;
+        currentStamina = currentMaxStamina;
 
-        // ÀÌº¥Æ® ±¸µ¶
-        pm.StartJumpAction += () => DrainStamina(jumpStaminaDrain, true); // Á¡ÇÁ ÀÌº¥Æ® ½ÇÇà½Ã ½ºÅÂ¹Ì³Ê °¨¼Ò
+        // ì´ë²¤íŠ¸ êµ¬ë…
+        pm.StartJumpAction += () => DrainStamina(jumpStaminaDrain, true); // ì í”„ ì´ë²¤íŠ¸ ì‹¤í–‰ì‹œ ìŠ¤íƒœë¯¸ë„ˆ ê°ì†Œ
     }
 
     // Update is called once per frame
@@ -46,11 +48,11 @@ public class PlayerStamina : MonoBehaviour
     }
 
     /// <summary>
-    /// Æ¯Á¤ Çàµ¿À» ÇÒ ¼ö ÀÖ´Â ½ºÅÂ¹Ì³Ê°¡ ÃæºĞÈ÷ ÀÖ´Â Áö °è¼Ó ¾÷µ¥ÀÌÆ®
+    /// íŠ¹ì • í–‰ë™ì„ í•  ìˆ˜ ìˆëŠ” ìŠ¤íƒœë¯¸ë„ˆê°€ ì¶©ë¶„íˆ ìˆëŠ” ì§€ ê³„ì† ì—…ë°ì´íŠ¸
     /// </summary>
     private void CheckEnoughStaminaCondition()
     {
-        // ´Ş¸®±â
+        // ë‹¬ë¦¬ê¸°
         if (currentStamina > 0)
         {
             hasEnoughStamina_Sprint = true;
@@ -60,7 +62,7 @@ public class PlayerStamina : MonoBehaviour
             hasEnoughStamina_Sprint = false;
         }
 
-        // Á¡ÇÁ
+        // ì í”„
         if (currentStamina >= jumpStaminaDrain)
         {
             hasEnoughStamina_Jump = true;
@@ -72,11 +74,11 @@ public class PlayerStamina : MonoBehaviour
     }
 
     /// <summary>
-    /// ½ºÅÂ¹Ì³Ê °¨¼Ò Á¶°Ç È®ÀÎ
+    /// ìŠ¤íƒœë¯¸ë„ˆ ê°ì†Œ ì¡°ê±´ í™•ì¸
     /// </summary>
     private void CheckDrainCondition()
     {
-        if (psm.CurrentMoveState == psm.sprintState) // ´Ş¸®±â
+        if (psm.CurrentMoveState == psm.sprintState) // ë‹¬ë¦¬ê¸°
         {
             if (currentStamina > 0f)
             {
@@ -86,10 +88,10 @@ public class PlayerStamina : MonoBehaviour
     }
 
     /// <summary>
-    /// ½ºÅÂ¹Ì³Ê¸¦ ÃÊ´ç amount¸¸Å­ °¨¼Ò½ÃÅ´
+    /// ìŠ¤íƒœë¯¸ë„ˆë¥¼ ì´ˆë‹¹ amountë§Œí¼ ê°ì†Œì‹œí‚´
     /// </summary>
-    /// <param name="amount">°¨¼Ò½ÃÅ³ ¾ç</param>
-    /// <param name="isAtOnce">½ºÅÂ¹Ì³Ê¸¦ ÃÊ´çÀÌ ¾Æ´Ñ ÇÑ ¹ø¿¡ °¨¼Ò½ÃÅ³Áö ¿©ºÎ</param>
+    /// <param name="amount">ê°ì†Œì‹œí‚¬ ì–‘</param>
+    /// <param name="isAtOnce">ìŠ¤íƒœë¯¸ë„ˆë¥¼ ì´ˆë‹¹ì´ ì•„ë‹Œ í•œ ë²ˆì— ê°ì†Œì‹œí‚¬ì§€ ì—¬ë¶€</param>
     private void DrainStamina(float amount, bool isAtOnce)
     {
         if (isAtOnce)
@@ -103,42 +105,42 @@ public class PlayerStamina : MonoBehaviour
     }
 
     /// <summary>
-    /// ½ºÅÂ¹Ì³Ê È¸º¹ Á¶°Ç °Ë»ç
+    /// ìŠ¤íƒœë¯¸ë„ˆ íšŒë³µ ì¡°ê±´ ê²€ì‚¬
     /// </summary>
     private void CheckRecoverCondition()
     {
-        bool cond1 = !(psm.CurrentMoveState == psm.sprintState) && !pm.isJumping; // ´Ş¸®±â¿Í Á¡ÇÁ¸¦ ÇÏÁö ¾Ê°í ÀÖÀ½
-        bool cond2 = currentStamina < maxStamina; // È¸º¹ÇÒ ½ºÅÂ¹Ì³Ê°¡ ÀÖ´Â °æ¿ì
+        bool cond1 = !(psm.CurrentMoveState == psm.sprintState) && !pm.isJumping; // ë‹¬ë¦¬ê¸°ì™€ ì í”„ë¥¼ í•˜ì§€ ì•Šê³  ìˆìŒ
+        bool cond2 = currentStamina < maxStamina; // íšŒë³µí•  ìŠ¤íƒœë¯¸ë„ˆê°€ ìˆëŠ” ê²½ìš°
 
         if (cond1 && cond2)
         {
-            regenTimer += Time.deltaTime; // È¸º¹ ½ÃÀÛ Å¸ÀÌ¸Ó °è»ê
-            if (regenTimer >= staminaRegenDelay) // µô·¹ÀÌ¸¸Å­ ½Ã°£ÀÌ Áö³­ °æ¿ì
+            regenTimer += Time.deltaTime; // íšŒë³µ ì‹œì‘ íƒ€ì´ë¨¸ ê³„ì‚°
+            if (regenTimer >= staminaRegenDelay) // ë”œë ˆì´ë§Œí¼ ì‹œê°„ì´ ì§€ë‚œ ê²½ìš°
             {
                 RecoverStamina(staminaRegenPerSec, false);
             }
         }
         else
         {
-            regenTimer = 0; // Çàµ¿ Áß¿¡´Â Å¸ÀÌ¸Ó ÃÊ±âÈ­
+            regenTimer = 0; // í–‰ë™ ì¤‘ì—ëŠ” íƒ€ì´ë¨¸ ì´ˆê¸°í™”
         }
     }
 
     /// <summary>
-    /// ½ºÅÂ¹Ì³Ê È¸º¹
+    /// ìŠ¤íƒœë¯¸ë„ˆ íšŒë³µ
     /// </summary>
-    /// <param name="amount">È¸º¹ÇÒ ½ºÅÂ¹Ì³Ê ¾ç</param>
-    /// <param name="isAtOnce">ÇÑ ¹ø¿¡ È¸º¹ÇÒ Áö ¿©ºÎ</param>
+    /// <param name="amount">íšŒë³µí•  ìŠ¤íƒœë¯¸ë„ˆ ì–‘</param>
+    /// <param name="isAtOnce">í•œ ë²ˆì— íšŒë³µí•  ì§€ ì—¬ë¶€</param>
     private void RecoverStamina(float amount, bool isAtOnce)
     {
         if (isAtOnce)
         {
             currentStamina += amount;
-            currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina); // ¹üÀ§ Á¦ÇÑ
+            currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina); // ë²”ìœ„ ì œí•œ
         }
         else
         {
-            currentStamina += amount * Time.deltaTime; // ÃÊ´ç amount¸¸Å­ È¸º¹
+            currentStamina += amount * Time.deltaTime; // ì´ˆë‹¹ amountë§Œí¼ íšŒë³µ
         }    
     }
 }

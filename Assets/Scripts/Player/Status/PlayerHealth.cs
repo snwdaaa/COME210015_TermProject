@@ -4,43 +4,45 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ÇÃ·¹ÀÌ¾î Ã¼·Â °ü¸® ½ºÅ©¸³Æ®
+/// í”Œë ˆì´ì–´ ì²´ë ¥ ê´€ë¦¬ ìŠ¤í¬ë¦½íŠ¸
 /// </summary>
 public class PlayerHealth : MonoBehaviour
 {
-    // ÄÄÆ÷³ÍÆ®
+    // ì»´í¬ë„ŒíŠ¸
     private PlayerMovementHelper playerMovementHelper;
     private AudioSource audioSource;
 
-    [Header("»ç¿îµå")]
-    [SerializeField] private AudioClip[] fallDamageSound; // ³«ÇÏ ´ë¹ÌÁö »ç¿îµå
+    [Header("ì‚¬ìš´ë“œ")]
+    [SerializeField] private AudioClip[] fallDamageSound; // ë‚™í•˜ ëŒ€ë¯¸ì§€ ì‚¬ìš´ë“œ
 
-    [Header("Ã¼·Â ¼³Á¤")]
-    [SerializeField] private float maxHealth = 100f; // ÃÖ´ë Ã¼·Â
-    [SerializeField] private bool enableAutoRecover = false; // ÀÚµ¿ È¸º¹ ±â´É È°¼ºÈ­ ¿©ºÎ
-    [SerializeField] private bool isDamageResetRecoverTimer = false; // ´ë¹ÌÁö ¹ŞÀ» ¶§ È¸º¹ Å¸ÀÌ¸Ó ÃÊ±âÈ­ ¿©ºÎ
-    [SerializeField] private float autoRecoverStartDelay = 10f; // ÀÚµ¿ È¸º¹ ±â´É È°¼ºÈ­ µô·¹ÀÌ
-    [SerializeField] private float autoRecoverPerSec = 3f; // ÃÊ´ç È¸º¹·®
+    [Header("ì²´ë ¥ ì„¤ì •")]
+    [SerializeField] private float maxHealth = 100f; // ìµœëŒ€ ì²´ë ¥ ì´ˆê¸° ì„¤ì •ê°’
+    public float currentMaxHealth { get; private set; } // í˜„ì¬ ìµœëŒ€ ì²´ë ¥
+    [SerializeField] private bool enableAutoRecover = false; // ìë™ íšŒë³µ ê¸°ëŠ¥ í™œì„±í™” ì—¬ë¶€
+    [SerializeField] private bool isDamageResetRecoverTimer = false; // ëŒ€ë¯¸ì§€ ë°›ì„ ë•Œ íšŒë³µ íƒ€ì´ë¨¸ ì´ˆê¸°í™” ì—¬ë¶€
+    [SerializeField] private float autoRecoverStartDelay = 10f; // ìë™ íšŒë³µ ê¸°ëŠ¥ í™œì„±í™” ë”œë ˆì´
+    [SerializeField] private float autoRecoverPerSec = 3f; // ì´ˆë‹¹ íšŒë³µëŸ‰
 
-    [Header("Ãß¶ô ´ë¹ÌÁö")]
-    [SerializeField] private float damagableHeight = 3f; // ´ë¹ÌÁö¸¦ ¹ŞÀ» ¼ö ÀÖ´Â ÃÖ¼Ò ³ôÀÌ
-    [SerializeField] private float deathHeight = 8f; // Áï»ç ³ôÀÌ
-    [SerializeField] private float baseFallDamage = 20f; // ÃÖ¼Ò ´ë¹ÌÁö
+    [Header("ì¶”ë½ ëŒ€ë¯¸ì§€")]
+    [SerializeField] private float damagableHeight = 3f; // ëŒ€ë¯¸ì§€ë¥¼ ë°›ì„ ìˆ˜ ìˆëŠ” ìµœì†Œ ë†’ì´
+    [SerializeField] private float deathHeight = 8f; // ì¦‰ì‚¬ ë†’ì´
+    [SerializeField] private float baseFallDamage = 20f; // ìµœì†Œ ëŒ€ë¯¸ì§€
     [SerializeField] private float fallDamageMultiplier = 1.5f;
     
-    // ±âÅ¸ º¯¼ö
-    public float currentHealth { get; private set; } // ÇöÀç Ã¼·Â
-    public bool isDied { get; private set; } // »ç¸Á ¿©ºÎ
-    private float recoverTimer = 0f; // È¸º¹ Å¸ÀÌ¸Ó
+    // ê¸°íƒ€ ë³€ìˆ˜
+    public float currentHealth { get; private set; } // í˜„ì¬ ì²´ë ¥
+    public bool isDied { get; private set; } // ì‚¬ë§ ì—¬ë¶€
+    private float recoverTimer = 0f; // íšŒë³µ íƒ€ì´ë¨¸
 
     private void Start()
     {
         playerMovementHelper = GetComponent<PlayerMovementHelper>();
         audioSource = GetComponent<AudioSource>();
 
-        currentHealth = maxHealth;
+        currentMaxHealth = maxHealth;
+        currentHealth = currentMaxHealth;
 
-        // ÀÌº¥Æ® ±¸µ¶
+        // ì´ë²¤íŠ¸ êµ¬ë…
         SubscribeEvent();
     }
 
@@ -50,7 +52,7 @@ public class PlayerHealth : MonoBehaviour
     }
 
     /// <summary>
-    /// ÀÌº¥Æ® ±¸µ¶ ¸Ş¼­µå
+    /// ì´ë²¤íŠ¸ êµ¬ë… ë©”ì„œë“œ
     /// </summary>
     private void SubscribeEvent()
     {
@@ -62,26 +64,26 @@ public class PlayerHealth : MonoBehaviour
     }
 
     /// <summary>
-    /// ÇÃ·¹ÀÌ¾î¿¡°Ô ´ë¹ÌÁö Àû¿ë
+    /// í”Œë ˆì´ì–´ì—ê²Œ ëŒ€ë¯¸ì§€ ì ìš©
     /// </summary>
-    /// <param name="amount">´ë¹ÌÁö ¾ç</param>
+    /// <param name="amount">ëŒ€ë¯¸ì§€ ì–‘</param>
     public void ApplyDamage(float amount)
     {
         currentHealth -= amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // ¹üÀ§ ¼³Á¤
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // ë²”ìœ„ ì„¤ì •
 
         if (isDamageResetRecoverTimer)
         {
-            recoverTimer = 0; // °ø°İ ¹ŞÀ¸¸é È¸º¹ Å¸ÀÌ¸Ó ÃÊ±âÈ­
+            recoverTimer = 0; // ê³µê²© ë°›ìœ¼ë©´ íšŒë³µ íƒ€ì´ë¨¸ ì´ˆê¸°í™”
         }
     }
     
     /// <summary>
-    /// ÇÃ·¹ÀÌ¾î Ã¼·Â »óÅÂ È®ÀÎ
+    /// í”Œë ˆì´ì–´ ì²´ë ¥ ìƒíƒœ í™•ì¸
     /// </summary>
     public void CheckHealthCondition()
     {
-        if (currentHealth <= 0) // 0 ÀÌÇÏÀÎ °æ¿ì ÇÃ·¹ÀÌ¾î »ç¸Á
+        if (currentHealth <= 0) // 0 ì´í•˜ì¸ ê²½ìš° í”Œë ˆì´ì–´ ì‚¬ë§
         {
             Die();
         }
@@ -99,10 +101,10 @@ public class PlayerHealth : MonoBehaviour
     }
 
     /// <summary>
-    /// ÇÃ·¹ÀÌ¾î Ã¼·Â È¸º¹
+    /// í”Œë ˆì´ì–´ ì²´ë ¥ íšŒë³µ
     /// </summary>
-    /// <param name="amount">È¸º¹ÇÒ Ã¼·ÂÀÇ ¾ç</param>
-    /// <param name="isAtOnce">ÇÑ ¹ø¿¡ Ã¼·ÂÀ» È¸º¹ÇÒ Áö ¿©ºÎ</param>
+    /// <param name="amount">íšŒë³µí•  ì²´ë ¥ì˜ ì–‘</param>
+    /// <param name="isAtOnce">í•œ ë²ˆì— ì²´ë ¥ì„ íšŒë³µí•  ì§€ ì—¬ë¶€</param>
     public void RecoverHealth(float amount, bool isAtOnce)
     {
         if (isAtOnce)
@@ -111,14 +113,14 @@ public class PlayerHealth : MonoBehaviour
         }
         else
         {
-            currentHealth += amount * Time.deltaTime; // ÃÊ´ç amount¸¸Å­ È¸º¹
+            currentHealth += amount * Time.deltaTime; // ì´ˆë‹¹ amountë§Œí¼ íšŒë³µ
         }
 
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // ¹üÀ§ ¼³Á¤
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // ë²”ìœ„ ì„¤ì •
     }
 
     /// <summary>
-    /// ÇÃ·¹ÀÌ¾î »ç¸Á Ã³¸®
+    /// í”Œë ˆì´ì–´ ì‚¬ë§ ì²˜ë¦¬
     /// </summary>
     public void Die()
     {
@@ -127,28 +129,28 @@ public class PlayerHealth : MonoBehaviour
     }
 
     /// <summary>
-    /// Ãß¶ô ³ôÀÌ¿¡ µû¶ó Ãß¶ô µ¥¹ÌÁö °è»ê ÈÄ Àû¿ë
+    /// ì¶”ë½ ë†’ì´ì— ë”°ë¼ ì¶”ë½ ë°ë¯¸ì§€ ê³„ì‚° í›„ ì ìš©
     /// </summary>
-    /// <param name="fallHeight">Ãß¶ô ³ôÀÌ</param>
+    /// <param name="fallHeight">ì¶”ë½ ë†’ì´</param>
     private void ApplyFallDamage(float fallHeight)
     {
         if (fallHeight >= damagableHeight)
         {
             float fallDamage = 0;
-            if (fallHeight >= deathHeight) // Áï»ç ´ë¹ÌÁö Àû¿ë
+            if (fallHeight >= deathHeight) // ì¦‰ì‚¬ ëŒ€ë¯¸ì§€ ì ìš©
             {
                 fallDamage = maxHealth;
             }
-            else // ³ôÀÌ¿¡ ºñ·ÊÇÑ ´ë¹ÌÁö Àû¿ë
+            else // ë†’ì´ì— ë¹„ë¡€í•œ ëŒ€ë¯¸ì§€ ì ìš©
             {
-                // ´ë¹ÌÁö = ±âº» Ãß¶ô ´ë¹ÌÁö + (Ãß¶ô ³ôÀÌ * ´ë¹ÌÁö ¹è¼ö) 
+                // ëŒ€ë¯¸ì§€ = ê¸°ë³¸ ì¶”ë½ ëŒ€ë¯¸ì§€ + (ì¶”ë½ ë†’ì´ * ëŒ€ë¯¸ì§€ ë°°ìˆ˜) 
                 fallDamage = baseFallDamage + (fallHeight * fallDamageMultiplier);
             } 
             
-            fallDamage = Mathf.Clamp(fallDamage, baseFallDamage, maxHealth); // baseFallDamage ~ ÃÖ´ë Ã¼·Â
+            fallDamage = Mathf.Clamp(fallDamage, baseFallDamage, maxHealth); // baseFallDamage ~ ìµœëŒ€ ì²´ë ¥
             ApplyDamage(fallDamage);
 
-            // Ãß¶ô »ç¿îµå Àç»ı
+            // ì¶”ë½ ì‚¬ìš´ë“œ ì¬ìƒ
             audioSource.volume = 1f;
             audioSource.PlayOneShot(fallDamageSound[UnityEngine.Random.Range(0, fallDamageSound.Length)]);
         }
