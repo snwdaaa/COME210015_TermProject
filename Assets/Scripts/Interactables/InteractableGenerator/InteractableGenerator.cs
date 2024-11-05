@@ -50,7 +50,9 @@ public class InteractableGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        circleQTEUI = qteUIObject.GetComponent<CircleQTEUI>();
+        progressBar = GameObject.Find("GeneratorProgressBar").GetComponent<Slider>();
+        circleQTEUI = GameObject.Find("CircleQTE").GetComponent<CircleQTEUI>();
+        progressUIObject = GameObject.Find("GeneratorProgress");
         audioSource = GetComponent<AudioSource>();
 
         SubscribeEvent();
