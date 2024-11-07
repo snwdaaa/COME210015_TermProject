@@ -49,7 +49,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &282788765125865827
 Transform:
   m_ObjectHideFlags: 0
@@ -243,6 +243,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   spawnCount: 5
+  progressBar: {fileID: 7719885058334202755}
+  qteUIObject: {fileID: 6394858977357884824}
+  progressUIObject: {fileID: 8251547469541542865}
 --- !u!4 &6970299297853317348 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8598248801642093804, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
@@ -324,6 +327,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7769953251806978314, guid: b66efaae957f0e34abb46d51f3ba610c, type: 3}
+      propertyPath: speed
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 7769953251806978314, guid: b66efaae957f0e34abb46d51f3ba610c, type: 3}
       propertyPath: mouseInput
       value: 
       objectReference: {fileID: 8807193679449738657}
@@ -385,3 +392,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &6394858977357884824 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1143081438092644183, guid: b66efaae957f0e34abb46d51f3ba610c, type: 3}
+  m_PrefabInstance: {fileID: 6296613754234249935}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7719885058334202755 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4341639735683561804, guid: b66efaae957f0e34abb46d51f3ba610c, type: 3}
+  m_PrefabInstance: {fileID: 6296613754234249935}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &8251547469541542865 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2729588662809700638, guid: b66efaae957f0e34abb46d51f3ba610c, type: 3}
+  m_PrefabInstance: {fileID: 6296613754234249935}
+  m_PrefabAsset: {fileID: 0}

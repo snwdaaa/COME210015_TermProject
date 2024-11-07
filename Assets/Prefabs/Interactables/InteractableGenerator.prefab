@@ -75,7 +75,6 @@ MonoBehaviour:
   qteSound_Fail: {fileID: 8300000, guid: 578bfcb6222522041a8d59bd94664f18, type: 3}
   qteSound_Normal: {fileID: 8300000, guid: 4a5fdab0224c64c4bb273b7d78befddd, type: 3}
   qteSound_Success: {fileID: 8300000, guid: b2cf7d588a7a8ff43868d23acfbcbda5, type: 3}
-  progressBar: {fileID: 0}
   isPlayerOperating: 0
   isRepaired: 0
   currentProgress: 0
@@ -84,8 +83,6 @@ MonoBehaviour:
   failDecrease: 20
   normalDecrease: 5
   successIncrease: 10
-  qteUIObject: {fileID: 0}
-  progressUIObject: {fileID: 0}
 --- !u!82 &8085293473346365929
 AudioSource:
   m_ObjectHideFlags: 0
