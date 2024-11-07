@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GeneratorSpawner : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class GeneratorSpawner : MonoBehaviour
     [Header("Properties")]
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private int spawnCount; // 생성할 발전기의 개수
+    [Header("Game Objects")]
+    public Slider progressBar;
+    public GameObject qteUIObject; // CircleQTEUI 컴포넌트를 가지는 오브젝트
+    public GameObject progressUIObject;
 
     // Start is called before the first frame update
     void Start()

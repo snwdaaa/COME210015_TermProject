@@ -28,6 +28,7 @@ public class CircleQTEUI : MonoBehaviour
     [SerializeField] private float rotatedAngle = 0f; // 회전 각을 누적해 한 바퀴 회전을 감지하기 위한 변수
 
     // 이벤트
+    public static GameObject currentGenerator;
     public event Action OnQTEFail;
     public event Action OnQTENormal;
     public event Action OnQTESuccess;
