@@ -43,8 +43,9 @@ GameObject:
   m_Component:
   - component: {fileID: 282788765125865827}
   - component: {fileID: 4201162763760569799}
+  - component: {fileID: 6623761481691478872}
   m_Layer: 0
-  m_Name: Spot Light
+  m_Name: Flashlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,13 +78,13 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_Range: 10
-  m_SpotAngle: 119
-  m_InnerSpotAngle: 21.80208
+  m_Intensity: 0
+  m_Range: 5
+  m_SpotAngle: 80
+  m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -116,7 +117,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -127,6 +128,22 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &6623761481691478872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7479872758724230991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6cc9fa6f5461354984386b9952950ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  batteryDrainPerSec: 2
+  batteryRecoverPerSec: 2
+  lightIntensity: 1
+  toggleDelay: 1
 --- !u!1001 &1722741194649091080
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -188,6 +205,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4125629541255476982}
     - target: {fileID: 3341056782348337770, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
+      propertyPath: batteryBar
+      value: 
+      objectReference: {fileID: 116162909528602224}
+    - target: {fileID: 3341056782348337770, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
       propertyPath: healthText
       value: 
       objectReference: {fileID: 4125629542455263561}
@@ -199,6 +220,10 @@ PrefabInstance:
       propertyPath: staminaText
       value: 
       objectReference: {fileID: 4114516446923093578}
+    - target: {fileID: 3341056782348337770, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
+      propertyPath: plyFlashlight
+      value: 
+      objectReference: {fileID: 6623761481691478872}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -343,6 +368,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b66efaae957f0e34abb46d51f3ba610c, type: 3}
+--- !u!114 &116162909528602224 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6268625121053742271, guid: b66efaae957f0e34abb46d51f3ba610c, type: 3}
+  m_PrefabInstance: {fileID: 6296613754234249935}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1446560279697433375 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4859707461540938192, guid: b66efaae957f0e34abb46d51f3ba610c, type: 3}

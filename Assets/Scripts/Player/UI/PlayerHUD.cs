@@ -5,15 +5,20 @@ using UnityEngine.UI;
 
 public class PlayerHUD : MonoBehaviour
 {
-    [Header("HUD")]
+    [Header("Health")]
     [SerializeField] private Image healthBar;
-    [SerializeField] private Text healthText;
-    [SerializeField] private Image staminaBar;
-    [SerializeField] private Text staminaText;
-
-    [Header("컴포넌트")]
     private PlayerHealth plyHealth;
+
+    [Header("Stamina")]
+    [SerializeField] private Image staminaBar;
     private PlayerStamina plyStamina;
+
+    [Header("Flashlight")]
+    [SerializeField] private PlayerFlashlight plyFlashlight;
+    [SerializeField] private Image batteryBar;
+
+    
+    
 
     // Start is called before the first frame update
     void Start()
@@ -32,8 +37,8 @@ public class PlayerHUD : MonoBehaviour
     /// </summary>
     private void UpdateHUD()
     {
-        // 체력/스태미너 바 Fill Amount 설정
-        healthBar.fillAmount = plyHealth.currentHealth / plyHealth.currentMaxHealth;
-        staminaBar.fillAmount = plyStamina.currentStamina / plyStamina.currentMaxStamina;
+        healthBar.fillAmount = plyHealth.currentHealth / plyHealth.currentMaxHealth; // 체력
+        staminaBar.fillAmount = plyStamina.currentStamina / plyStamina.currentMaxStamina; // 스태미너
+        batteryBar.fillAmount = plyFlashlight.currentBatteryAmount / plyFlashlight.currentMaxBatteryAmount;
     }
 }

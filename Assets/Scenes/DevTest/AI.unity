@@ -1726,6 +1726,28 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 358825901}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &359557294 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7479872758724230991, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
+  m_PrefabInstance: {fileID: 4120637660472235762}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &359557297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359557294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6cc9fa6f5461354984386b9952950ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxBatteryAmount: 100
+  batteryDrainPerSec: 2
+  batteryRecoverPerSec: 2
+  lightIntensity: 1
+  toggleDelay: 1
 --- !u!1 &412679198
 GameObject:
   m_ObjectHideFlags: 0
@@ -5212,6 +5234,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1824274208}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1834304914 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 116162909528602224, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
+  m_PrefabInstance: {fileID: 4120637660472235762}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1956039842
 GameObject:
   m_ObjectHideFlags: 0
@@ -5931,17 +5964,25 @@ PrefabInstance:
       propertyPath: spawnPoints.Array.data[7]
       value: 
       objectReference: {fileID: 2131485502}
+    - target: {fileID: 4158430544108322402, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
+      propertyPath: batteryBar
+      value: 
+      objectReference: {fileID: 1834304914}
+    - target: {fileID: 4158430544108322402, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
+      propertyPath: plyFlashlight
+      value: 
+      objectReference: {fileID: 359557297}
     - target: {fileID: 4201162763760569799, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
       propertyPath: m_Range
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4201162763760569799, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
       propertyPath: m_Intensity
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4201162763760569799, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
       propertyPath: m_SpotAngle
-      value: 100
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 4201162763760569799, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
       propertyPath: m_Lightmapping
@@ -6010,7 +6051,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7479872758724230991, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 359557297}
   m_SourcePrefab: {fileID: 100100000, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
