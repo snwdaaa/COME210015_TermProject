@@ -152,7 +152,7 @@ public class InteractableGenerator : MonoBehaviour
 
     private IEnumerator PlayGeneratorSound()
     {
-        if (!isStarted)
+        if (!isStarted || currentProgress <= 0f)
         {
             isStarted = true;
             generatorSound.PlayOneShot(generatorSound_Start);

@@ -5931,6 +5931,22 @@ PrefabInstance:
       propertyPath: spawnPoints.Array.data[7]
       value: 
       objectReference: {fileID: 2131485502}
+    - target: {fileID: 1082725033706741926, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 1082725033706741926, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 1082725033706741926, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -20.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 4300697916107935736, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
+      propertyPath: fallDamageMultiplier
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5901208630374199021, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
       propertyPath: m_Name
       value: EssentialObjects
