@@ -14,6 +14,7 @@ public class InteractableGenerator : MonoBehaviour
     private PlayerMovement playerMovement;
     private PlayerCameraMovement cameraMovement;
     private GeneratorSpawner spawner;
+    private UIManager uiManager;
 
     [Header("사운드")]
     [SerializeField] private AudioClip generatorSound_Start;
@@ -51,8 +52,10 @@ public class InteractableGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spawner = GameObject.Find("Managers").GetComponent<GeneratorSpawner>();
+        GameObject managers = GameObject.Find("Managers");
+        spawner = managers.GetComponent<GeneratorSpawner>();
         audioSource = GetComponent<AudioSource>();
+        uiManager = managers.GetComponent<UIManager>();
 
         progressBar = spawner.progressBar;
         qteUIObject = spawner.qteUIObject;
@@ -87,6 +90,11 @@ public class InteractableGenerator : MonoBehaviour
         };
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        uiManager.keyNotifierUI.Show("E", "발전기 수리");
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (!isRepaired)
@@ -99,13 +107,11 @@ public class InteractableGenerator : MonoBehaviour
 
                 if (!isPlayerOperating)
                 {
-                    // ---- 사용 버튼 UI 표시 ----
-
                     if (keyInput.keyPressed_Use)
                     {
                         EnterFixing();
 
-                        // ---- 사용 버튼 UI 숨기기 ----
+                        uiManager.keyNotifierUI.Hide(); // 키 도움말 숨기기
                         StartCoroutine("PlayGeneratorSound"); // 사운드 재생
                         ToggleProgressUI(); // 진행도 UI 표시
                         InitQuickTimeEvent(); // QTE 시작 전 설정
@@ -124,6 +130,8 @@ public class InteractableGenerator : MonoBehaviour
                         ExitFixing();
                         ToggleProgressUI(); // 진행도 UI 표시
 
+                        uiManager.keyNotifierUI.Show("E", "발전기 수리");
+
                     }
                     else
                     {
@@ -133,6 +141,11 @@ public class InteractableGenerator : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        uiManager.keyNotifierUI.Hide(); // 키 도움말 숨기기
     }
 
     /// <summary>
