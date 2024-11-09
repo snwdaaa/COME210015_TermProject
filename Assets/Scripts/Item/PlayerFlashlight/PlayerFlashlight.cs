@@ -6,6 +6,10 @@ public class PlayerFlashlight : MonoBehaviour
 {
     [Header("Components")]
     private new Light light;
+    private AudioSource audioSource;
+
+    [Header("Sounds")]
+    [SerializeField] private AudioClip toggleSound;
 
     [Header("Flashlight")]
     [SerializeField] private float batteryDrainPerSec = 3.0f;
@@ -26,6 +30,7 @@ public class PlayerFlashlight : MonoBehaviour
     void Start()
     {
         light = GetComponent<Light>();
+        audioSource = GetComponent<AudioSource>();
 
         currentMaxBatteryAmount = maxBatteryAmount;
         currentBatteryAmount = maxBatteryAmount;
@@ -48,15 +53,14 @@ public class PlayerFlashlight : MonoBehaviour
         {
             light.intensity = 0f;
             isLightOn = false;
-            Debug.Log("Off");
         }
         else
         {
             light.intensity = lightIntensity;
             isLightOn = true;
-            Debug.Log("On");
         }
 
+        audioSource.PlayOneShot(toggleSound);
         enabledTime = 0.0f; // 타이머 초기화
     }
 
