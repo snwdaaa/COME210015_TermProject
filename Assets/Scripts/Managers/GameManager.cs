@@ -1,3 +1,4 @@
+using Assets.Pixelation.Scripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +19,7 @@ public class GameManager : MonoBehaviour
         Doom
     }
     [Header("GameMode")]
-    public GameMode gameMode = GameMode.Normal; // 현재 게임 모드
+    public static GameMode gameMode = GameMode.Normal; // 현재 게임 모드
 
     [Header("Normal Mode Properties")]
     public static int repairedGeneratorCount = 0; // 수리한 발전기 개수
@@ -29,7 +30,8 @@ public class GameManager : MonoBehaviour
     private int enemiesOnMapCount = 0; // 현재 맵에 있는 적의 수
     public static int eliminatedCount = 0; // 죽인 적의 수
     [SerializeField] private Transform[] enemySpawnPoints; // 스폰 포인트
-    [SerializeField] private GameObject gunPrefab;
+    [SerializeField] private GameObject doomHUD;
+    [SerializeField] private GameObject playerHUD;
     [SerializeField] private AudioClip doomBGM;
     [SerializeField] private float doomMoveSpeed = 5.0f;
 
@@ -70,14 +72,19 @@ public class GameManager : MonoBehaviour
     // ---------------  Doom Mode  ---------------
     IEnumerator EnterDoomMode()
     {
-        meltScreen.StartScreenFadeIn(); // 화면 FadeIn
         gameMode = GameMode.Doom; // 모드 변경
 
-        yield return new WaitForSeconds(2f);
+        meltScreen.StartScreenMelt(); // 화면 Melt
 
-        // UI 표시
-        meltScreen.StartScreenMelt();
+        yield return new WaitForSeconds(3f);
 
+        // 둠 UI 표시 및 기존 UI 숨기기
+        //meltScreen.StartScreenMelt();
+        doomHUD.SetActive(true);
+        playerHUD.SetActive(false);
+
+        // 카메라 Pixelation 쉐이더 active
+        Camera.main.GetComponent<Pixelation>().enabled = true;
         // Directional Light Active
         directionalLight.SetActive(true);
 
@@ -90,6 +97,9 @@ public class GameManager : MonoBehaviour
         plyMovement.ChangeSpeed(doomMoveSpeed, doomMoveSpeed);
 
         // 랜덤 위치에서 적 생성
+
+        yield return new WaitForSeconds(2f);
+        meltScreen.HideMeltImage();
     }
 
     private void CheckDoomModeExitConditions()

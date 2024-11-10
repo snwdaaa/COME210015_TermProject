@@ -344,7 +344,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.05
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2583,7 +2583,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4138856836322698279
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4516,6 +4516,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 35822639642217128, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3989051365030116114}
+    - targetCorrespondingSourceObject: {fileID: 4250550713329436892, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2962297676816962428}
   m_SourcePrefab: {fileID: 100100000, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
 --- !u!4 &1082725033706741926 stripped
 Transform:
@@ -4549,7 +4552,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  spawnCount: 1
+  spawnCount: 5
   progressBar: {fileID: 7719885058334202755}
   qteUIObject: {fileID: 6394858977357884824}
   progressUIObject: {fileID: 8251547469541542865}
@@ -4579,11 +4582,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plyMovement: {fileID: 8516662402440001290}
-  gameMode: 1
   directionalLight: {fileID: 0}
   spawningEnemyCount: 5
   enemySpawnPoints: []
-  gunPrefab: {fileID: 0}
+  doomHUD: {fileID: 5169356291316100190}
+  playerHUD: {fileID: 498529462907632394}
   doomBGM: {fileID: 8300000, guid: c02868ed30c28f540a2d802a466909fe, type: 3}
   doomMoveSpeed: 7
 --- !u!114 &3989051365030116114
@@ -4601,6 +4604,25 @@ MonoBehaviour:
   image: {fileID: 697109452235600391}
   fadeInDelta: 0.01
   fadeInWaitTime: 0.15
+--- !u!1 &3248391274452317396 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4250550713329436892, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
+  m_PrefabInstance: {fileID: 1722741194649091080}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2962297676816962428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3248391274452317396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42cd8dcae69d178488f5efa28e7c7e78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shader: {fileID: 4800000, guid: 95703b29f49b899499233ea7308bb800, type: 3}
+  BlockCount: 512
 --- !u!1 &3711724402362772513 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2624145374533046313, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
@@ -4794,6 +4816,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &498529462907632394 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5875281333492931013, guid: b66efaae957f0e34abb46d51f3ba610c, type: 3}
+  m_PrefabInstance: {fileID: 6296613754234249935}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1446560279697433375 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4859707461540938192, guid: b66efaae957f0e34abb46d51f3ba610c, type: 3}

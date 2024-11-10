@@ -31,7 +31,7 @@ public class DoomShotgun : MonoBehaviour
 
     private void Fire()
     {
-        if (CheckDelay() && Input.GetMouseButtonDown(0))
+        if (GameManager.gameMode == GameManager.GameMode.Doom && CheckDelay() && Input.GetMouseButtonDown(0))
         {
             fireDelayTimer = 0f;
             audioSource.PlayOneShot(fireSound);
