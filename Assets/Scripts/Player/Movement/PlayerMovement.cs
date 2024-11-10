@@ -89,6 +89,13 @@ public class PlayerMovement : MonoBehaviour
         CalcMoveVelocity();
     }
 
+    public void ChangeSpeed(float newWalkSpeed, float newSprintSpeed)
+    {
+        walkSpeed = newWalkSpeed;
+        sprintSpeed = newSprintSpeed;
+        moveSpeed = newWalkSpeed;
+    }
+
     private void CheckKeyInput()
     {
         if (Input.GetButtonDown("Jump"))

@@ -10,7 +10,7 @@ public class GeneratorSpawner : MonoBehaviour
     [SerializeField] private GameObject generatorPrefab;
     [Header("Properties")]
     [SerializeField] private Transform[] spawnPoints;
-    [SerializeField] private int spawnCount; // 생성할 발전기의 개수
+    public int spawnCount; // 생성할 발전기의 개수
     [Header("Game Objects")]
     public Slider progressBar;
     public GameObject qteUIObject; // CircleQTEUI 컴포넌트를 가지는 오브젝트

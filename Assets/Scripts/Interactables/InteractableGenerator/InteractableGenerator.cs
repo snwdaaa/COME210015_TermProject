@@ -281,6 +281,8 @@ public class InteractableGenerator : MonoBehaviour
                 isRepaired = true;
                 ToggleProgressUI();
                 ExitFixing();
+
+                GameManager.repairedGeneratorCount++; // 게임 매니저 수리한 발전기 개수 증가
             }
         }
     }
