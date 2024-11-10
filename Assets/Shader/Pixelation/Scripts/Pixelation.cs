@@ -1,4 +1,4 @@
-﻿using Assets.Pixelation.Example.Scripts;
+using Assets.Pixelation.Example.Scripts;
 using UnityEngine;
 
 namespace Assets.Pixelation.Scripts
@@ -20,4 +20,4 @@ namespace Assets.Pixelation.Scripts
             Graphics.Blit(source, destination, material);
         }
     }
-}
+}   

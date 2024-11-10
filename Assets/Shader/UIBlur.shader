@@ -4,7 +4,7 @@ Shader "Custom/MaskedBlurShader"
     {
         _MainTex("Texture", 2D) = "white" {}
         _Blur("Blur Amount", Float) = 5
-        _TintColor("Tint Color", Color) = (1, 1, 1, 1) // Image 컴포넌트의 Color 속성
+        _TintColor("Tint Color", Color) = (1, 1, 1, 1)
     }
 
     SubShader
@@ -35,7 +35,7 @@ Shader "Custom/MaskedBlurShader"
             sampler2D _MainTex;
             sampler2D _GrabTexture;
             float _Blur;
-            fixed4 _TintColor; // Image의 Color 속성
+            fixed4 _TintColor;
 
             v2f vert(appdata v)
             {
@@ -50,17 +50,14 @@ Shader "Custom/MaskedBlurShader"
             {
                 float blur = _Blur;
                 float2 uv = i.uv;
-                fixed4 originalColor = tex2D(_MainTex, uv);  // 원본 이미지 색상 및 알파값
+                fixed4 originalColor = tex2D(_MainTex, uv);
 
-                // 알파값이 낮을수록 투명하게 유지되도록 설정
                 if (originalColor.a < 0.01)
                     discard;
 
-                // Gaussian Blur 적용
                 fixed4 blurredColor = 0;
                 float weightSum = 0;
 
-                // 블러 샘플링 횟수 설정
                 int blurRadius = 5;
                 for (int x = -blurRadius; x <= blurRadius; x++)
                 {
@@ -69,17 +66,15 @@ Shader "Custom/MaskedBlurShader"
                         float2 offset = float2(x, y) * blur * 0.001;
                         float distance = sqrt(x * x + y * y);
                         float weight = exp(-distance * distance / (2 * blur * blur));
-                        blurredColor += tex2D(_GrabTexture, i.grabPos.xy / i.grabPos.w + offset) * weight;
+                        blurredColor += tex2D(_GrabTexture, (i.grabPos.xy / i.grabPos.w) + offset) * weight;
                         weightSum += weight;
                     }
                 }
                 blurredColor /= weightSum;
 
-                // Image의 Color 속성 곱하기
-                blurredColor *= _TintColor;
-
-                // 원본 알파값 유지
-                blurredColor.a = originalColor.a;
+                // Apply _TintColor to the final color and retain original alpha
+                blurredColor.rgb *= _TintColor.rgb;
+                blurredColor.a = originalColor.a * _TintColor.a;
 
                 return blurredColor;
             }

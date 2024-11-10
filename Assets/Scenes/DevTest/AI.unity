@@ -5935,22 +5935,6 @@ PrefabInstance:
       propertyPath: spawnPoints.Array.data[7]
       value: 
       objectReference: {fileID: 2131485502}
-    - target: {fileID: 697109452235600391, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2962297676816962428, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3752706445660337758, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
-      propertyPath: effectOn
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3989051365030116114, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
-      propertyPath: fadeInWaitTime
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 4608824616350191209, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
       propertyPath: directionalLight
       value: 
@@ -5958,34 +5942,6 @@ PrefabInstance:
     - target: {fileID: 5901208630374199021, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
       propertyPath: m_Name
       value: EssentialObjects
-      objectReference: {fileID: 0}
-    - target: {fileID: 6292462422326329448, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6292462422326329448, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6292462422326329448, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6292462422326329448, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6292462422326329448, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6292462422326329448, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6936995149780672659, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8976031041713582346, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
       propertyPath: m_LocalPosition.x

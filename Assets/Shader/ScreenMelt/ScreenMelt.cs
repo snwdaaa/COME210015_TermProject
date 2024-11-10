@@ -28,7 +28,7 @@ public class ScreenMelt : MonoBehaviour {
 
 
 	//starts the timer to the sprite starts melting
-	void FixedUpdate () 
+	void Update () 
 	{
 		if (effectOn)
 		{

@@ -74,14 +74,12 @@ public class GameManager : MonoBehaviour
     {
         gameMode = GameMode.Doom; // 모드 변경
 
-        meltScreen.StartScreenMelt(); // 화면 Melt
+        meltScreen.ShowScreen();   
+        yield return new WaitForSeconds(1f);
+        meltScreen.StartScreenMelt(); // 화면 Melt   
 
-        yield return new WaitForSeconds(3f);
-
-        // 둠 UI 표시 및 기존 UI 숨기기
-        //meltScreen.StartScreenMelt();
-        doomHUD.SetActive(true);
         playerHUD.SetActive(false);
+        doomHUD.SetActive(true);
 
         // 카메라 Pixelation 쉐이더 active
         Camera.main.GetComponent<Pixelation>().enabled = true;
@@ -98,7 +96,7 @@ public class GameManager : MonoBehaviour
 
         // 랜덤 위치에서 적 생성
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f);
         meltScreen.HideMeltImage();
     }
 
