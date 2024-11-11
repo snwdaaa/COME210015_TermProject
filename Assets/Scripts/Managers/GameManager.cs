@@ -1,4 +1,5 @@
 using Assets.Pixelation.Scripts;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,13 +28,12 @@ public class GameManager : MonoBehaviour
     [Header("Doom Mode Properties")]
     [SerializeField] private GameObject directionalLight; // 맵을 밝게 할 Directional Light
     [SerializeField] private int spawningEnemyCount = 5; // 새롭게 spawn할 적의 수
-    private int enemiesOnMapCount = 0; // 현재 맵에 있는 적의 수
     public static int eliminatedCount = 0; // 죽인 적의 수
-    [SerializeField] private Transform[] enemySpawnPoints; // 스폰 포인트
     [SerializeField] private GameObject doomHUD;
     [SerializeField] private GameObject playerHUD;
     [SerializeField] private AudioClip doomBGM;
     [SerializeField] private float doomMoveSpeed = 5.0f;
+    public event Action DoomModeSpawnEvent;
 
 
     // Start is called before the first frame update
@@ -72,7 +72,8 @@ public class GameManager : MonoBehaviour
     // ---------------  Doom Mode  ---------------
     IEnumerator EnterDoomMode()
     {
-        gameMode = GameMode.Doom; // 모드 변경
+        gameMode = GameMode.Doom; // 모드 변경       
+        DoomModeSpawnEvent?.Invoke(); // 랜덤 위치에서 적 생성
 
         meltScreen.ShowScreen();   
         yield return new WaitForSeconds(1f);
@@ -94,7 +95,7 @@ public class GameManager : MonoBehaviour
         // 이동 속도 변경
         plyMovement.ChangeSpeed(doomMoveSpeed, doomMoveSpeed);
 
-        // 랜덤 위치에서 적 생성
+        Debug.Log(EnemySpawner.enemiesOnMap);
 
         yield return new WaitForSeconds(5f);
         meltScreen.HideMeltImage();
@@ -103,5 +104,11 @@ public class GameManager : MonoBehaviour
     private void CheckDoomModeExitConditions()
     {
         if (gameMode != GameMode.Doom) return; // Doom 모드가 아닌 경우 return
+
+        if (eliminatedCount >= EnemySpawner.enemiesOnMap)
+        {
+            // 탈출구 오픈
+            Debug.Log("Exit");
+        }
     }
 }

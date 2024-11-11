@@ -30,7 +30,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _MeltSpeed: 0.002
-    - _Timer: 0
+    - _Timer: 0.45400056
     m_Colors:
     - _Color: {r: 0.3207547, g: 0.3207547, b: 0.3207547, a: 1}
   m_BuildTextureStacks: []

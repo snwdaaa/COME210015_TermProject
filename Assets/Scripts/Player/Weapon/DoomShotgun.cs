@@ -17,6 +17,10 @@ public class DoomShotgun : MonoBehaviour
     [SerializeField] private AudioClip fireSound;
     [SerializeField] private float fireDelay;
     private float fireDelayTimer = 0f;
+    [SerializeField] private float damage = 50f;
+
+    [Header("Layermask")]
+    public LayerMask layerMask;
 
 
     private void Start()
@@ -36,6 +40,24 @@ public class DoomShotgun : MonoBehaviour
             fireDelayTimer = 0f;
             audioSource.PlayOneShot(fireSound);
             StartCoroutine("PlayFireSprite");
+
+            AttackTarget();
+        }
+    }
+
+    /// <summary>
+    /// 맞은 오브젝트 확인 후 대미지 적용
+    /// </summary>
+    private void AttackTarget()
+    {
+        RaycastHit hit;
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f)); // 화면 정중앙 ray 발사
+
+        if (Physics.Raycast(ray, out hit, 1000f, layerMask))
+        {
+            Enemy enemy = hit.transform.GetComponent<Enemy>();
+
+            enemy.ApplyDamage(damage);
         }
     }
 

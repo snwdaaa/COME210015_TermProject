@@ -8,8 +8,6 @@ public class MeltScreenController : MonoBehaviour
 {
     private ScreenMelt screenMelt;
     [SerializeField] private Image image;
-    [SerializeField] private float fadeInDelta = 0.01f; // 화면 암전 단위
-    [SerializeField] private float fadeInWaitTime = 0.01f; // 화면 암전 속도
 
     private void Start()
     {

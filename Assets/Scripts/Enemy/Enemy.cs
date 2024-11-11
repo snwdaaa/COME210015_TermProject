@@ -12,7 +12,8 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public NavMeshAgent navAgent;
     [HideInInspector] public Animator animator;
     [HideInInspector] public EnemyStateMachine esm;
-    [SerializeField] private CircleQTEUI circleQTEUI;
+    private GameObject managers;
+    private CircleQTEUI circleQTEUI;
 
     // 오브젝트
     private GameObject player;
@@ -43,6 +44,11 @@ public class Enemy : MonoBehaviour
     private bool isInSight = false; // 추적 대상이 시야 범위 내에 있는지 여부
     private Collider sightCol; // 시야 범위 내에서 감지한 추적 대상의 Collider
     private float timeSinceLastSeen; // 대상을 마지막으로 감지한 시점부터 지난 시간
+
+    [Header("체력")]
+    [SerializeField] private float maxHealth;
+    [SerializeField] private float currentHealth;
+    [SerializeField] private Transform ragdollPrefab;
 
     [Header("사운드")]
     [SerializeField] private AudioClip attackSound;
@@ -78,6 +84,8 @@ public class Enemy : MonoBehaviour
         navAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         esm = GetComponent<EnemyStateMachine>();
+        managers = GameObject.Find("Managers");
+        circleQTEUI = managers.GetComponent<UIManager>().circleQTEUI;
 
         // 상태 머신 초기화
         esm.Initialize(esm.patrolState);
@@ -87,6 +95,9 @@ public class Enemy : MonoBehaviour
 
         // 공격 타이머 초기화
         attackTimer = attackDelay; // 처음에 바로 공격할 수 있도록 타이머를 딜레이만큼 설정
+
+        // 체력 설정
+        currentHealth = maxHealth;
     }
 
     private void SubscribeEvent()
@@ -289,5 +300,38 @@ public class Enemy : MonoBehaviour
     {
         isAttacking = false;
         attackTimer = 0; // 타이머 초기화
+    }
+
+    /// <summary>
+    /// 적에게 대미지 적용
+    /// </summary>
+    /// <param name="amount">대미지 양</param>
+    public void ApplyDamage(float amount)
+    {
+        currentHealth -= amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // 범위 설정
+
+        if (currentHealth <= 0)
+        {
+            Death();
+        }
+    }
+
+    /// <summary>
+    /// 적 사망시 호출
+    /// </summary>
+    public void Death()
+    {
+        // 래그돌 생성
+        animator.enabled = false;
+        GetComponent<CapsuleCollider>().enabled = false;
+        audioSource.enabled = false;
+        navAgent.enabled = false;
+        esm.enabled = false;
+        this.enabled = false;
+        GetComponent<EnemyFootstep>().enabled = false;
+        GetComponentInChildren<Light>().enabled = false;
+
+        GameManager.eliminatedCount += 1;
     }
 }
