@@ -7,7 +7,6 @@ public class ScreenMelt : MonoBehaviour {
 	public Material mat;
 	public bool effectOn = false;
 
-
     //initializes array in shader to melt sprite
     void Start()
     {
@@ -32,7 +31,9 @@ public class ScreenMelt : MonoBehaviour {
 	{
 		if (effectOn)
 		{
-			mat.SetFloat("_Timer", mat.GetFloat("_Timer") + mat.GetFloat("_MeltSpeed"));
+			mat.SetFloat("_Timer", mat.GetFloat("_Timer") + mat.GetFloat("_MeltSpeed") * Time.deltaTime);
 		}
-	}
+
+        
+    }
 }

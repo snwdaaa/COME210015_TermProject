@@ -4,7 +4,7 @@ Shader "SOTN Custom/ScreenMeltUnlit"
 	{
 		_Color ("Color", Color) = (1,1,1,1)
 		_MainTex ("Albedo (RGB)", 2D) = "white" {}
-		_MeltSpeed ("Melt Speed", Range (0,0.2)) = 0
+		_MeltSpeed ("Melt Speed", Range (0,1)) = 0
 		[HideInInspector] _Timer ("Timer", float) = 0
 	}
 
@@ -52,7 +52,7 @@ Shader "SOTN Custom/ScreenMeltUnlit"
 			fixed4 frag (v2f i) : SV_Target
 			{
 				// Melt 효과 적용을 위해 y 좌표 조정
-				i.uv.y += _Timer * _Offset[round(i.uv.x * 256.0f)].x;
+				i.uv.y += _Timer * _Offset[(int)floor(i.uv.x * 256.0f)].x;
 
 				// 텍스처 샘플링 및 색상 적용
 				fixed4 col = tex2D(_MainTex, i.uv) * _Color;

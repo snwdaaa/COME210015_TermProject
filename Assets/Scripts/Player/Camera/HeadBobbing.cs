@@ -3,25 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Ä«¸Ş¶ó Bobbing ½ºÅ©¸³Æ®
+/// ì¹´ë©”ë¼ Bobbing ìŠ¤í¬ë¦½íŠ¸
 /// </summary>
 public class HeadBobbing : MonoBehaviour
 {
     private PlayerStateMachine stateMachine;
 
-    [Header("Ä«¸Ş¶ó ¿òÁ÷ÀÓ (Walk)")]
+    [Header("ì¹´ë©”ë¼ ì›€ì§ì„ (Walk)")]
     [SerializeField] [Range(0.001f, 1.0f)] private float walkAmount = 0.1f;
     [SerializeField] [Range(1f, 30f)] private float walkFrequency = 7.0f;
 
-    [Header("Ä«¸Ş¶ó ¿òÁ÷ÀÓ (Sprint)")]
+    [Header("ì¹´ë©”ë¼ ì›€ì§ì„ (Sprint)")]
     [SerializeField] [Range(0.001f, 1.0f)] private float sprintAmount = 0.14f;
     [SerializeField] [Range(1f, 30f)] private float sprintFrequency = 14.0f;
 
-    [Header("Ä«¸Ş¶ó ¿òÁ÷ÀÓ (Crouch Walk)")]
+    [Header("ì¹´ë©”ë¼ ì›€ì§ì„ (Crouch Walk)")]
     [SerializeField] [Range(0.001f, 1.0f)] private float crouchWalkAmount = 0.1f;
     [SerializeField] [Range(1f, 30f)] private float crouchWalkFrequency = 4.0f;
 
-    [Header("±âÅ¸ ¼³Á¤")]
+    [Header("ì¹´ë©”ë¼ ì›€ì§ì„ (Doom)")]
+    [SerializeField][Range(0.001f, 1.0f)] private float doomWalkAmount = 0.14f;
+    [SerializeField][Range(1f, 30f)] private float doomWalkFrequency = 14.0f;
+
+    [Header("ê¸°íƒ€ ì„¤ì •")]
     [SerializeField] [Range(10f, 100f)] private float smoothness = 10.0f;
 
     private Vector3 pivotOriginPos;
@@ -29,7 +33,7 @@ public class HeadBobbing : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        stateMachine = GetComponentInParent<PlayerStateMachine>(); // CamPivotÀÇ ºÎ¸ğÀÎ Player¿¡¼­ PlayerStateMachineÀ» °¡Á®¿È
+        stateMachine = GetComponentInParent<PlayerStateMachine>(); // CamPivotì˜ ë¶€ëª¨ì¸ Playerì—ì„œ PlayerStateMachineì„ ê°€ì ¸ì˜´
 
         pivotOriginPos = transform.localPosition;
     }
@@ -46,18 +50,26 @@ public class HeadBobbing : MonoBehaviour
         bool isWalking = stateMachine.CurrentMoveState == stateMachine.walkState;
         bool isSprinting = stateMachine.CurrentMoveState == stateMachine.sprintState;
         bool isCrouchWalking = stateMachine.CurrentMoveState == stateMachine.crouchWalkState;
+        bool isDoomMode = GameManager.gameMode == GameManager.GameMode.Doom;
 
-        if (isWalking)
+        if (isDoomMode && (isWalking || isSprinting || isCrouchWalking))
         {
-            DoHeadBobbing(walkFrequency, walkAmount, smoothness);
+            DoHeadBobbing(doomWalkFrequency, doomWalkAmount, smoothness);
         }
-        else if (isSprinting)
+        else
         {
-            DoHeadBobbing(sprintFrequency, sprintAmount, smoothness);
-        }
-        else if (isCrouchWalking)
-        {
-            DoHeadBobbing(crouchWalkFrequency, crouchWalkAmount, smoothness);
+            if (isWalking)
+            {
+                DoHeadBobbing(walkFrequency, walkAmount, smoothness);
+            }
+            else if (isSprinting)
+            {
+                DoHeadBobbing(sprintFrequency, sprintAmount, smoothness);
+            }
+            else if (isCrouchWalking)
+            {
+                DoHeadBobbing(crouchWalkFrequency, crouchWalkAmount, smoothness);
+            }
         }
     }
 

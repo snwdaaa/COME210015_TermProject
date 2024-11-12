@@ -278,6 +278,7 @@ public class Enemy : MonoBehaviour
         {
             if (IsPlayerInAttackRange(ref player)) // Player가 범위 내에 있는 경우 레퍼런스로 컴포넌트 받아옴
             {
+                navAgent.speed = 0f; // 공격 범위 내에 있는 경우 멈춤
                 isAttacking = true;
                 animator.SetTrigger("Attack");
             }
@@ -328,9 +329,9 @@ public class Enemy : MonoBehaviour
         audioSource.enabled = false;
         navAgent.enabled = false;
         esm.enabled = false;
-        this.enabled = false;
         GetComponent<EnemyFootstep>().enabled = false;
         GetComponentInChildren<Light>().enabled = false;
+        this.enabled = false;
 
         GameManager.eliminatedCount += 1;
     }

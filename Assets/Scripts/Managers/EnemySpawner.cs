@@ -10,11 +10,10 @@ public class EnemySpawner : MonoBehaviour
     private BoxCollider boxCollider;  // 프리팹을 생성할 Box Collider
     private GameManager gameManager;
 
-    void Start()
+    private void Awake()
     {
         boxCollider = GetComponent<BoxCollider>();
         gameManager = GameObject.Find("Managers").GetComponent<GameManager>();
-
         gameManager.DoomModeSpawnEvent += SpawnEnemy; // 이벤트 구독
     }
 

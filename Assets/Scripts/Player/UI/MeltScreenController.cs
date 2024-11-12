@@ -9,7 +9,7 @@ public class MeltScreenController : MonoBehaviour
     private ScreenMelt screenMelt;
     [SerializeField] private Image image;
 
-    private void Start()
+    private void Awake()
     {
         screenMelt = image.GetComponent<ScreenMelt>();
     }
@@ -21,6 +21,7 @@ public class MeltScreenController : MonoBehaviour
 
     public void StartScreenMelt()
     {
+        screenMelt.enabled = true;
         screenMelt.effectOn = true;
     }
 

@@ -12,6 +12,10 @@ public class DoomShotgun : MonoBehaviour
     public Image shotgunImage; // 샷건 이미지
     public Sprite[] shotgunImages; // 샷건 발사 스프라이트
     [SerializeField] private float spriteChangeDelay = 0.2f; // 스프라이트 교체 간격
+    private Vector2 originPos;
+
+    [Header("Effect")]
+    public Transform hitEffect;
 
     [Header("Attributes")]
     [SerializeField] private AudioClip fireSound;
@@ -25,7 +29,9 @@ public class DoomShotgun : MonoBehaviour
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();     
+        audioSource = GetComponent<AudioSource>();
+
+        originPos = shotgunImage.rectTransform.anchoredPosition;
     }
 
     private void Update()
@@ -56,7 +62,8 @@ public class DoomShotgun : MonoBehaviour
         if (Physics.Raycast(ray, out hit, 1000f, layerMask))
         {
             Enemy enemy = hit.transform.GetComponent<Enemy>();
-
+            Transform effect = Instantiate(hitEffect, hit.point, Quaternion.LookRotation(hit.normal));
+            //Destroy(effect.gameObject, 3f);
             enemy.ApplyDamage(damage);
         }
     }
@@ -83,6 +90,8 @@ public class DoomShotgun : MonoBehaviour
     /// <returns></returns>
     IEnumerator PlayFireSprite()
     {
+        // 앞 방향 시야 확보 위해서 왼쪽으로 살짝 옮김
+        MoveShotgunSpriteLeft();
         shotgunImage.sprite = shotgunImages[1];
         yield return new WaitForSeconds(spriteChangeDelay);
         shotgunImage.sprite = shotgunImages[2];
@@ -93,7 +102,25 @@ public class DoomShotgun : MonoBehaviour
         yield return new WaitForSeconds(spriteChangeDelay);
         shotgunImage.sprite = shotgunImages[5];
         yield return new WaitForSeconds(spriteChangeDelay);
+        // 다시 원래 위치로 되돌림
+        ResetShotgunSpritePos();
         shotgunImage.sprite = shotgunImages[6];
         yield return new WaitForSeconds(spriteChangeDelay);
+
+    }
+
+    private void MoveShotgunSpriteLeft()
+    {
+        // 기존 anchoredPosition 유지, PosX만 - 1/4 지점으로 이동
+        Vector2 newPosition = shotgunImage.rectTransform.anchoredPosition;
+        newPosition.x = -250.0f;
+
+        // 새로운 위치로 설정
+        shotgunImage.rectTransform.anchoredPosition = newPosition;
+    }
+
+    private void ResetShotgunSpritePos()
+    {
+        shotgunImage.rectTransform.anchoredPosition = originPos;
     }
 }

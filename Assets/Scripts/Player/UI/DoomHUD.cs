@@ -11,9 +11,17 @@ public class DoomHUD : MonoBehaviour
     // 플레이어 얼굴 애니메이션 스프라이트들
     public Sprite[] faceExpressions;
 
+    // 남은 적 수 표시하는 텍스트
+    public Text enemyCountText;
+
     void Start()
     {
         StartCoroutine("UpdateHUD");
+    }
+
+    private void OnGUI()
+    {
+        enemyCountText.text = "남은 적: " + (EnemySpawner.enemiesOnMap - GameManager.eliminatedCount).ToString();
     }
 
     IEnumerator UpdateHUD()
