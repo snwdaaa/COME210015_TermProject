@@ -13,13 +13,13 @@ public class CursorManager : MonoBehaviour
         HideCursor();
     }
 
-    private void ShowCursor()
+    public static void ShowCursor()
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
 
-    private void HideCursor()
+    public static void HideCursor()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;

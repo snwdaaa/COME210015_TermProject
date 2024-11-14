@@ -47,7 +47,8 @@ public class GameManager : MonoBehaviour
         ambientSound = GameObject.Find("Ambient").GetComponent<AudioSource>();
         bgmSound = GameObject.Find("BGM").GetComponent<AudioSource>();
 
-        StartCoroutine("EnterDoomMode");
+        //
+        // StartCoroutine("EnterDoomMode");
     }
 
     // Update is called once per frame
