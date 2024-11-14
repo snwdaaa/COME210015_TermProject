@@ -47,8 +47,7 @@ public class GameManager : MonoBehaviour
         ambientSound = GameObject.Find("Ambient").GetComponent<AudioSource>();
         bgmSound = GameObject.Find("BGM").GetComponent<AudioSource>();
 
-        //
-        // StartCoroutine("EnterDoomMode");
+        StartCoroutine("EnterDoomMode"); // 둠 모드 테스트용 코드
     }
 
     // Update is called once per frame
@@ -78,9 +77,11 @@ public class GameManager : MonoBehaviour
     {
         gameMode = GameMode.Doom; // 모드 변경       
 
-        meltScreen.ShowScreen();   
-        meltScreen.StartScreenMelt(); // 화면 Melt   
+        meltScreen.ShowScreen();
 
+        yield return new WaitForSeconds(2.0f);
+
+        meltScreen.StartScreenMelt(); // 화면 Melt
         DoomModeSpawnEvent?.Invoke(); // 랜덤 위치에서 적 생성
 
         playerHUD.SetActive(false);

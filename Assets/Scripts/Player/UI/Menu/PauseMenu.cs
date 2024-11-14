@@ -14,21 +14,23 @@ public class PauseMenu : MonoBehaviour
         // 메뉴가 열려있으면 
         if (isMenuOpened)
         {
-            if (!Cursor.visible) CursorManager.ShowCursor(); // 커서 표시
             if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                if (Cursor.visible) CursorManager.HideCursor(); // 커서 숨김
+            {   
                 Resume(); // ESC 누르면 모든 메뉴 닫고 게임 재개
             }
+
             if (Time.timeScale != 0f) Time.timeScale = 0f; // 시간 멈춤
         }
         else
         {
+
             if (Input.GetKeyDown(KeyCode.Escape) && !pauseMenu.activeSelf)
             {
                 pauseMenu.SetActive(true);
                 isMenuOpened = true;
+                CursorManager.ShowCursor(); // 커서 표시
             }
+
             if (Time.timeScale == 0f) Time.timeScale = 1f; // 시간 되돌림
         }
     }
@@ -38,6 +40,8 @@ public class PauseMenu : MonoBehaviour
     /// </summary>
     public void Resume()
     {
+        CursorManager.HideCursor(); // 커서 숨김
+
         if (pauseMenu.activeSelf)
             pauseMenu.SetActive(false); // 얼시정지 메뉴 UI 비활성화
         if (optionMenu.activeSelf)
@@ -76,7 +80,9 @@ public class PauseMenu : MonoBehaviour
     /// </summary>
     public void ExitToMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        if (Time.timeScale == 0f) Time.timeScale = 1f; // 시간 되돌림
+        isMenuOpened = false;
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 
     /// <summary>

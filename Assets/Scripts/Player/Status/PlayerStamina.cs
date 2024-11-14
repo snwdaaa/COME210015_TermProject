@@ -78,7 +78,12 @@ public class PlayerStamina : MonoBehaviour
     /// </summary>
     private void CheckDrainCondition()
     {
-        if (psm.CurrentMoveState == psm.sprintState) // 달리기
+        // 둠 모드인 경우 스태미너 무한
+        if (GameManager.gameMode == GameManager.GameMode.Doom)
+        {
+            currentStamina = currentMaxStamina;
+        }
+        else if (psm.CurrentMoveState == psm.sprintState) // 달리기
         {
             if (currentStamina > 0f)
             {

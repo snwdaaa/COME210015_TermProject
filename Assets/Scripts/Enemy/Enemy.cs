@@ -49,6 +49,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float maxHealth;
     [SerializeField] private float currentHealth;
     [SerializeField] private Transform ragdollPrefab;
+    [HideInInspector] public bool isDead = false;
 
     [Header("사운드")]
     [SerializeField] private AudioClip attackSound;
@@ -323,6 +324,8 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public void Death()
     {
+        isDead = true;
+
         // 래그돌 생성
         animator.enabled = false;
         GetComponent<CapsuleCollider>().enabled = false;

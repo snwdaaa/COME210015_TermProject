@@ -7,12 +7,14 @@ public class DoomShotgun : MonoBehaviour
 {
     [Header("Components")]
     private AudioSource audioSource;
+    private PlayerStateMachine psm;
 
     [Header("Sprite")]
     public Image shotgunImage; // 샷건 이미지
     public Sprite[] shotgunImages; // 샷건 발사 스프라이트
     [SerializeField] private float spriteChangeDelay = 0.2f; // 스프라이트 교체 간격
     private Vector2 originPos;
+    private bool isAnimationPlaying = false;
 
     [Header("Effect")]
     public Transform hitEffect;
@@ -23,13 +25,18 @@ public class DoomShotgun : MonoBehaviour
     private float fireDelayTimer = 0f;
     [SerializeField] private float damage = 50f;
 
+    [Header("Weapon Sway")]
+    [SerializeField] private float swayAmountX = 300.0f;
+    [SerializeField] private float swayAmountY = 150.0f;
+    [SerializeField] private float swaySpeed = 3.5f;
+
     [Header("Layermask")]
     public LayerMask layerMask;
-
 
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        psm = GameObject.FindWithTag("Player").GetComponent<PlayerStateMachine>();
 
         originPos = shotgunImage.rectTransform.anchoredPosition;
     }
@@ -37,6 +44,7 @@ public class DoomShotgun : MonoBehaviour
     private void Update()
     {
         Fire();
+        SwayWeapon();
     }
 
     private void Fire()
@@ -59,12 +67,16 @@ public class DoomShotgun : MonoBehaviour
         RaycastHit hit;
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f)); // 화면 정중앙 ray 발사
 
-        if (Physics.Raycast(ray, out hit, 1000f, layerMask))
+        if (Physics.Raycast(ray, out hit, 1000f))
         {
-            Enemy enemy = hit.transform.GetComponent<Enemy>();
             Transform effect = Instantiate(hitEffect, hit.point, Quaternion.LookRotation(hit.normal));
             //Destroy(effect.gameObject, 3f);
-            enemy.ApplyDamage(damage);
+
+            if (((1 << hit.collider.gameObject.layer) & layerMask)!= 0)
+            {
+                Enemy enemy = hit.transform.GetComponent<Enemy>();
+                enemy.ApplyDamage(damage);
+            }
         }
     }
 
@@ -90,6 +102,8 @@ public class DoomShotgun : MonoBehaviour
     /// <returns></returns>
     IEnumerator PlayFireSprite()
     {
+        isAnimationPlaying = true;
+
         // 앞 방향 시야 확보 위해서 왼쪽으로 살짝 옮김
         MoveShotgunSpriteLeft();
         shotgunImage.sprite = shotgunImages[1];
@@ -107,6 +121,7 @@ public class DoomShotgun : MonoBehaviour
         shotgunImage.sprite = shotgunImages[6];
         yield return new WaitForSeconds(spriteChangeDelay);
 
+        isAnimationPlaying = false;
     }
 
     private void MoveShotgunSpriteLeft()
@@ -122,5 +137,30 @@ public class DoomShotgun : MonoBehaviour
     private void ResetShotgunSpritePos()
     {
         shotgunImage.rectTransform.anchoredPosition = originPos;
+    }
+
+    private void SwayWeapon()
+    {
+        if (isAnimationPlaying)
+        {
+            return;
+        }
+        if (psm.CurrentMoveState == psm.idleState
+            || psm.CurrentPostureState == psm.crouchState
+            || psm.CurrentPostureState == psm.crouchWalkState)
+        {
+            ResetShotgunSpritePos();
+            return;
+        }
+
+        float swayX = Mathf.Sin(Time.time * swaySpeed) * swayAmountX;
+        float swayY = Mathf.Sin(Time.time * swaySpeed) * swayAmountY;
+        swayY = swayY * Mathf.Sign(swayY); // sin 그래프를 m 모양으로 만듦
+
+        Vector2 newPosition = shotgunImage.rectTransform.anchoredPosition;
+        newPosition.x = Mathf.Lerp(newPosition.x, swayX, Time.deltaTime);
+        newPosition.y = Mathf.Lerp(newPosition.y, swayY, Time.deltaTime);
+
+        shotgunImage.rectTransform.anchoredPosition = newPosition;
     }
 }

@@ -83,6 +83,12 @@ public class PlayerHealth : MonoBehaviour
     /// </summary>
     public void CheckHealthCondition()
     {
+        // 둠 모드인 경우 무적
+        if (GameManager.gameMode == GameManager.GameMode.Doom)
+        {
+            currentHealth = currentMaxHealth;
+        }
+
         if (currentHealth <= 0) // 0 이하인 경우 플레이어 사망
         {
             Die();

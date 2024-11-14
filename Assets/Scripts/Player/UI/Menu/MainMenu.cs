@@ -5,9 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    private void Update()
+    {
+        if (!Cursor.visible)
+        {
+            CursorManager.ShowCursor();
+        }
+    }
+
     public void StartGame()
     {
-        SceneManager.LoadScene("AI"); // AI 테스트용 임시 scene 로드
+        SceneManager.LoadScene("AI", LoadSceneMode.Single); // AI 테스트용 임시 scene 로드
     }
 
     public void ExitGame()

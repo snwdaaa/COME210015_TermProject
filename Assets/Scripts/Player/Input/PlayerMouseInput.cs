@@ -15,7 +15,19 @@ public class PlayerMouseInput : MonoBehaviour
 
     private void Update()
     {
-        DetectMouseInput_MouseInput();
+        if (!PauseMenu.isMenuOpened) // 메뉴에서 시점 움직이는 것 방지
+        {
+            DetectMouseInput_MouseInput();
+        }
+        else
+        {
+            // 시야 돌리는 순간에 일시 정지 메뉴 활성화 할 때
+            // 마지막 속도 그대로 계속 움직이는 문제 해결
+            if (mouseInput != Vector2.zero)
+            {
+                mouseInput = Vector2.zero;
+            }
+        }
     }
 
     private void DetectMouseInput_MouseInput()

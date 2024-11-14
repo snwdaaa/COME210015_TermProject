@@ -13,7 +13,7 @@ public class PlayerCameraMovement : MonoBehaviour
 
     [Header("카메라 설정")]
     [SerializeField] private GameObject camPivot; // 카메라 Pivot
-    [SerializeField] private float mouseSensitivity = 0.05f; // 마우스 감도
+    public static float mouseSensitivity = 1.0f; // 마우스 감도
     [SerializeField] private float mouseMaxAngleY = 85f;
 
     private void Start()

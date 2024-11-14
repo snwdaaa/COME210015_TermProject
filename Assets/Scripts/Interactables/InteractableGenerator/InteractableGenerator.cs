@@ -92,7 +92,10 @@ public class InteractableGenerator : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        uiManager.keyNotifierUI.Show("E", "발전기 수리");
+        if (other.gameObject.tag == "Player")
+        {
+            uiManager.keyNotifierUI.Show("E", "발전기 수리");
+        }        
     }
 
     private void OnTriggerStay(Collider other)
