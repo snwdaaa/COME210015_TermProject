@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
         ambientSound = GameObject.Find("Ambient").GetComponent<AudioSource>();
         bgmSound = GameObject.Find("BGM").GetComponent<AudioSource>();
 
-        StartCoroutine("EnterDoomMode"); // 둠 모드 테스트용 코드
+        //StartCoroutine("EnterDoomMode"); // 둠 모드 테스트용 코드
     }
 
     // Update is called once per frame

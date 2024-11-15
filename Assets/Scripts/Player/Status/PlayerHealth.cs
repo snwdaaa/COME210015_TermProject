@@ -130,7 +130,7 @@ public class PlayerHealth : MonoBehaviour
     /// </summary>
     public void Die()
     {
-        Debug.Log("Player Died");
+        GameObject.Find("GameOver Manager").GetComponent<GameOverMenu>().gameOverMenu.SetActive(true);
         isDied = true;
     }
 

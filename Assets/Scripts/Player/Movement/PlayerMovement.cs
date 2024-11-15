@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public PlayerKeyInput playerKeyInput { get; private set; }
     public PlayerStateMachine playerStateMachine { get; private set; }
     public PlayerStamina playerStamina { get; private set; }
+    public PlayerHealth playerHealth { get; private set; }
 
     public enum MoveState { Idle, Walk, Sprint, CrouchWalk, Slide, OnAir };
     public enum PostureState { Stand, Crouch };
@@ -71,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         playerKeyInput = GetComponent<PlayerKeyInput>();
         playerStamina = GetComponent<PlayerStamina>();
+        playerHealth = GetComponent<PlayerHealth>();
 
         slopeForceTmp = slopeDownForce;
 
@@ -87,6 +89,13 @@ public class PlayerMovement : MonoBehaviour
     {
         CheckJump();
         CalcMoveVelocity();
+
+        if (playerHealth.isDied) // 플레이어가 사망한 경우 못 움직이게
+        {
+            moveVelocity = Vector3.zero;
+            moveVelocityWithGravity = Vector3.zero;
+            return;
+        }
     }
 
     public void ChangeSpeed(float newWalkSpeed, float newSprintSpeed)

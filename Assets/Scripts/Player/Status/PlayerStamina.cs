@@ -10,6 +10,7 @@ public class PlayerStamina : MonoBehaviour
     // 컴포넌트
     private PlayerStateMachine psm;
     private PlayerMovement pm;
+    private PlayerHealth plyHealth;
 
     [Header("스태미너 설정")]
     [SerializeField] private float maxStamina = 100f; // 최대 스태미너
@@ -31,6 +32,7 @@ public class PlayerStamina : MonoBehaviour
     {
         psm = GetComponent<PlayerStateMachine>();
         pm = GetComponent<PlayerMovement>();
+        plyHealth = GetComponent<PlayerHealth>();
 
         currentMaxStamina = maxStamina;
         currentStamina = currentMaxStamina;
@@ -42,6 +44,8 @@ public class PlayerStamina : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (plyHealth.isDied) return;
+
         CheckDrainCondition();
         CheckRecoverCondition();
         CheckEnoughStaminaCondition();

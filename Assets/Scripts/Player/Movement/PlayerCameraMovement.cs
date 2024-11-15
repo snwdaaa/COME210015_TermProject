@@ -10,6 +10,7 @@ public class PlayerCameraMovement : MonoBehaviour
     // 컴포넌트
     private PlayerMouseInput playerMouseInput;
     private Camera playerFpCam; // 플레이어 1인칭 카메라
+    private PlayerHealth playerHealth;
 
     [Header("카메라 설정")]
     [SerializeField] private GameObject camPivot; // 카메라 Pivot
@@ -19,10 +20,13 @@ public class PlayerCameraMovement : MonoBehaviour
     private void Start()
     {
         playerMouseInput = GetComponent<PlayerMouseInput>();
+        playerHealth = GetComponent<PlayerHealth>();
     }
 
     private void LateUpdate()
     {
+        if (playerHealth.isDied) return; // 플레이어가 사망한 경우 못 움직이게
+
         Look(playerMouseInput.mouseInput);
     }
 

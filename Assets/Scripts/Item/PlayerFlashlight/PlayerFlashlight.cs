@@ -7,6 +7,7 @@ public class PlayerFlashlight : MonoBehaviour
     [Header("Components")]
     private new Light light;
     private AudioSource audioSource;
+    private PlayerHealth plyHealth;
 
     [Header("Sounds")]
     [SerializeField] private AudioClip toggleSound;
@@ -31,6 +32,7 @@ public class PlayerFlashlight : MonoBehaviour
     {
         light = GetComponent<Light>();
         audioSource = GetComponent<AudioSource>();
+        plyHealth = GetComponentInParent<PlayerHealth>();
 
         currentMaxBatteryAmount = maxBatteryAmount;
         currentBatteryAmount = maxBatteryAmount;
@@ -39,6 +41,8 @@ public class PlayerFlashlight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (plyHealth.isDied) return;
+
         if (IsToggleable() && Input.GetButtonDown("Flashlight"))
         {
             ToggleFlashlight();
