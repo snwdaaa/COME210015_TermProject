@@ -12,8 +12,6 @@ public class ExitArea : MonoBehaviour
     {
         exitAreaCollider = GetComponent<BoxCollider>();
         gameManager = GameObject.Find("Managers").GetComponent<GameManager>();
-
-        exitAreaCollider.enabled = false; // 기본적으로 시작할 때 자기 자신 비활성화
     }
 
     public void EnableExitArea()

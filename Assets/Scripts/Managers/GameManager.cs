@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     private GeneratorSpawner generatorSpawner;
     [SerializeField] private PlayerMovement plyMovement;
     private MeltScreenController meltScreen;
-    private AudioSource ambientSound;
     private AudioSource bgmSound;
 
     public enum GameMode
@@ -27,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Doom Mode Properties")]
     [SerializeField] private GameObject directionalLight; // 맵을 밝게 할 Directional Light
-    public static int eliminatedCount = 0; // 죽인 적의 수
+    public int eliminatedCount = 0; // 죽인 적의 수
     [SerializeField] private GameObject doomHUD;
     [SerializeField] private GameObject playerHUD;
     [SerializeField] private AudioClip doomBGM;
@@ -44,10 +43,9 @@ public class GameManager : MonoBehaviour
     {
         generatorSpawner = GetComponent<GeneratorSpawner>();
         meltScreen = GetComponent<MeltScreenController>();
-        ambientSound = GameObject.Find("Ambient").GetComponent<AudioSource>();
-        bgmSound = GameObject.Find("BGM").GetComponent<AudioSource>();
+        bgmSound = GameObject.Find("DoomBGM").GetComponent<AudioSource>();
 
-        //StartCoroutine("EnterDoomMode"); // 둠 모드 테스트용 코드
+        // StartCoroutine("EnterDoomMode"); // 둠 모드 테스트용 코드
     }
 
     // Update is called once per frame
@@ -109,7 +107,8 @@ public class GameManager : MonoBehaviour
         if (gameMode != GameMode.Doom) return; // Doom 모드가 아닌 경우 return
 
         if (eliminatedCount >= EnemySpawner.enemiesOnMap)
-        {       
+        {
+            if (eliminatedCount == 0 && EnemySpawner.enemiesOnMap == 0) return;
             exitArea.EnableExitArea(); // 탈출구 오픈
         }
     }

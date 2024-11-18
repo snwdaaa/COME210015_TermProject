@@ -15,6 +15,8 @@ public class EnemySpawner : MonoBehaviour
         boxCollider = GetComponent<BoxCollider>();
         gameManager = GameObject.Find("Managers").GetComponent<GameManager>();
         gameManager.DoomModeSpawnEvent += SpawnEnemy; // 이벤트 구독
+
+        enemiesOnMap = 0;
     }
 
     void SpawnEnemy()

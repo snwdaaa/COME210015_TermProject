@@ -13,7 +13,7 @@ public class PhysicsUtil : MonoBehaviour
     public static bool CheckUpperSpace(Vector3 startPos, float needLength)
     {
         RaycastHit hit;
-        // Debug.DrawRay(startPos, Vector3.up * needLength, Color.green);
+        Debug.DrawRay(startPos, Vector3.up * needLength, Color.green);
 
         if (Physics.Raycast(startPos, Vector3.up, out hit, needLength))
         {

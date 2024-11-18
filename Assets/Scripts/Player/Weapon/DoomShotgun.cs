@@ -75,7 +75,7 @@ public class DoomShotgun : MonoBehaviour
             if (((1 << hit.collider.gameObject.layer) & layerMask)!= 0)
             {
                 Enemy enemy = hit.transform.GetComponent<Enemy>();
-                enemy.ApplyDamage(damage);
+                enemy.ApplyDamage(damage, this.gameObject.transform);
             }
         }
     }

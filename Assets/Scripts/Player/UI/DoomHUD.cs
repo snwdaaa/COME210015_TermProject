@@ -14,14 +14,19 @@ public class DoomHUD : MonoBehaviour
     // 남은 적 수 표시하는 텍스트
     public Text enemyCountText;
 
+    // 컴포넌트
+    private GameManager gameManager;
+
     void Start()
     {
         StartCoroutine("UpdateHUD");
+
+        gameManager = GameObject.Find("Managers").GetComponent<GameManager>();
     }
 
     private void OnGUI()
     {
-        enemyCountText.text = "남은 적: " + (EnemySpawner.enemiesOnMap - GameManager.eliminatedCount).ToString();
+        enemyCountText.text = "남은 적: " + (EnemySpawner.enemiesOnMap - gameManager.eliminatedCount).ToString();
     }
 
     IEnumerator UpdateHUD()

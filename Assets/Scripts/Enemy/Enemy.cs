@@ -308,10 +308,13 @@ public class Enemy : MonoBehaviour
     /// 적에게 대미지 적용
     /// </summary>
     /// <param name="amount">대미지 양</param>
-    public void ApplyDamage(float amount)
+    public void ApplyDamage(float amount, Transform attacker)
     {
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // 범위 설정
+
+        // 공격자 추적 시작
+        chaseTarget = attacker;
 
         if (currentHealth <= 0)
         {
@@ -326,16 +329,15 @@ public class Enemy : MonoBehaviour
     {
         isDead = true;
 
-        // 래그돌 생성
-        animator.enabled = false;
+        // 래그돌 생성      
         GetComponent<CapsuleCollider>().enabled = false;
         audioSource.enabled = false;
         navAgent.enabled = false;
         esm.enabled = false;
         GetComponent<EnemyFootstep>().enabled = false;
-        GetComponentInChildren<Light>().enabled = false;
+        animator.enabled = false;
         this.enabled = false;
 
-        GameManager.eliminatedCount += 1;
+        managers.GetComponent<GameManager>().eliminatedCount += 1;
     }
 }

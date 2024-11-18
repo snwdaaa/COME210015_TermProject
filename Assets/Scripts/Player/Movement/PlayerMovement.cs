@@ -315,7 +315,8 @@ public class PlayerMovement : MonoBehaviour
     {
         // 일어섰을 때의 높이만큼 충분한 공간이 없으면 일어나지 않음
         // 캐릭터의 상하좌우에서 위쪽으로 레이 발사해서 검사
-        float dist = standHeight - crouchHeight + characterController.height - transform.position.y;
+        //float dist = standHeight - crouchHeight + characterController.height;
+        float dist = (standHeight - crouchHeight) + 0.2f;
         bool cond1 = PhysicsUtil.CheckUpperSpace(transform.position + transform.forward * characterController.radius, dist); // 앞쪽
         bool cond2 = PhysicsUtil.CheckUpperSpace(transform.position - transform.forward * characterController.radius, dist); // 뒤쪽
         bool cond3 = PhysicsUtil.CheckUpperSpace(transform.position + transform.right * characterController.radius, dist); // 오른쪽

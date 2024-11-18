@@ -78,8 +78,8 @@ MonoBehaviour:
   isPlayerOperating: 0
   isRepaired: 0
   currentProgress: 0
-  progressionPerSec: 2
-  decreasePerSec: 1
+  progressionPerSec: 3
+  decreasePerSec: 0.5
   failDecrease: 20
   normalDecrease: 5
   successIncrease: 10
