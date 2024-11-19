@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public EnemyStateMachine esm;
     private GameObject managers;
     private CircleQTEUI circleQTEUI;
+    private PlayerFlashlight plyFlashlight;
 
     // 오브젝트
     private GameObject player;
@@ -37,7 +38,8 @@ public class Enemy : MonoBehaviour
 
     [Header("플레이어 탐지")]
     [SerializeField] private float detectionFov = 50f; // 시아갹
-    [SerializeField] private float detectionDistance = 30f; // 시야 거리
+    [SerializeField] private float detectionDistance = 25f; // 시야 거리
+    [SerializeField] private float flashlightDetectionDistance = 35f; // 시야 거리
     [SerializeField] private Transform eyeTransform; // 시야 기준점
     [SerializeField] private float targetLostTime = 10f; // 대상이 시야 범위 내에 없을 때 Chase 상태에서 벗어나는 데 걸리는 시간
     [HideInInspector] public Transform chaseTarget; // 추적 대상
@@ -48,7 +50,6 @@ public class Enemy : MonoBehaviour
     [Header("체력")]
     [SerializeField] private float maxHealth;
     [SerializeField] private float currentHealth;
-    [SerializeField] private Transform ragdollPrefab;
     [HideInInspector] public bool isDead = false;
 
     [Header("사운드")]
@@ -87,6 +88,7 @@ public class Enemy : MonoBehaviour
         esm = GetComponent<EnemyStateMachine>();
         managers = GameObject.Find("Managers");
         circleQTEUI = managers.GetComponent<UIManager>().circleQTEUI;
+        plyFlashlight = GameObject.FindWithTag("Player").GetComponentInChildren<PlayerFlashlight>();
 
         // 상태 머신 초기화
         esm.Initialize(esm.patrolState);
@@ -116,11 +118,15 @@ public class Enemy : MonoBehaviour
     private bool IsCaughtInSight()
     {
         // 먼저 구 안에 있는 모든 콜라이더를 가져온 후, 시야 범위 내있는 대상 중 Ray에 맞은 콜라이더만 구분해 다시 가져옴
-        Collider[] colliders = Physics.OverlapSphere(eyeTransform.position, detectionDistance); // 중심이 eyeTransform이고 반지름이 시야 거리인 구 안에 있는 Collider를 모두 가져옴
+        // 중심이 eyeTransform이고 반지름이 시야 거리인 구 안에 있는 Collider를 모두 가져옴
+        Collider[] colliders = Physics.OverlapSphere(eyeTransform.position, 
+            plyFlashlight.isLightOn ? flashlightDetectionDistance : detectionDistance); // 플래시가 켜져 있으면 시야 거리 늘림
 
         foreach (Collider col in colliders)
         {
-            if (AIUtil.IsTargetOnSight(col.transform, eyeTransform, detectionFov, detectionDistance, "Player")) // 대상이 시야각 내에 들어오고, 다른 물체에 가려지지 않으면
+            // 대상이 시야각 내에 들어오고, 다른 물체에 가려지지 않으면
+            if (AIUtil.IsTargetOnSight(col.transform, eyeTransform, detectionFov,
+                plyFlashlight.isLightOn ? flashlightDetectionDistance : detectionDistance, "Player"))
             {
                 sightCol = col;
                 return true;

@@ -37,23 +37,28 @@ public class DynamicBGMController : MonoBehaviour
             return;
         }
 
-        isChasing = esm.CurrentState == esm.chaseState;
+        // 추적을 시작해야 공격을 할 수 있으므로 공격 상태도 추적 상태로 간주
+        isChasing = esm.CurrentState == esm.chaseState || esm.CurrentState == esm.attackState;
 
         // 상태에 따라 볼륨을 전환
         if (isChasing)
-        {
+        {       
             if (!isDetectSoundPlayed)
             {
                 chaseSource.PlayOneShot(detectedSound);
                 isDetectSoundPlayed = true;
             }
             bgmSource.volume = Mathf.Lerp(bgmSource.volume, 0f, Time.deltaTime * transitionSpeed);
-            chaseSource.volume = Mathf.Lerp(chaseSource.volume, 0.6f, Time.deltaTime * transitionSpeed);
+            chaseSource.volume = Mathf.Lerp(chaseSource.volume, 0.05f, Time.deltaTime * transitionSpeed);
         }
         else
         {
-            if (isDetectSoundPlayed) isDetectSoundPlayed = false;
-            bgmSource.volume = Mathf.Lerp(bgmSource.volume, 0.6f, Time.deltaTime * transitionSpeed);
+            if (isDetectSoundPlayed)
+            {
+                isDetectSoundPlayed = false;
+            }
+
+            bgmSource.volume = Mathf.Lerp(bgmSource.volume, 0.05f, Time.deltaTime * transitionSpeed);
             chaseSource.volume = Mathf.Lerp(chaseSource.volume, 0f, Time.deltaTime * transitionSpeed);
         }
     }

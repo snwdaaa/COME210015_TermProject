@@ -65,12 +65,12 @@ public class GameOption : MonoBehaviour
 
         if (!PlayerPrefs.HasKey("Brightness"))
         {
-            PlayerPrefs.SetFloat("Brightness", 15.0f);
+            PlayerPrefs.SetFloat("Brightness", 0.3f);
         }
 
-        colorGrading.contrast.value = PlayerPrefs.GetFloat("Brightness");
-        brightnessSlider.value = colorGrading.contrast.value;
-        brightnessText.text = colorGrading.contrast.value.ToString("0.0");
+        colorGrading.gamma.value.w = PlayerPrefs.GetFloat("Brightness");
+        brightnessSlider.value = colorGrading.gamma.value.w; // w가 감마
+        brightnessText.text = colorGrading.gamma.value.w.ToString("0.0");
     }
 
     public void ChangeVideoValue(Text valueText)
@@ -79,7 +79,7 @@ public class GameOption : MonoBehaviour
         valueText.text = brightnessSlider.value.ToString("0.0");
 
         // Contrast 변경
-        colorGrading.contrast.value = brightnessSlider.value;
+        colorGrading.gamma.value.w = brightnessSlider.value;
 
         // PlayerPrefs 저장
         PlayerPrefs.SetFloat("Brightness", brightnessSlider.value);

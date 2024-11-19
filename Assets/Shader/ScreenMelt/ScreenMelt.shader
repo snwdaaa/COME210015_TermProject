@@ -6,6 +6,7 @@ Shader "SOTN Custom/ScreenMeltUnlit"
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _MeltSpeed ("Melt Speed", Range (0,1)) = 0
         _Timer ("Timer", float) = 0
+        _OffsetTex ("Offset Texture", 2D) = "white" {} // 오프셋 텍스처
     }
     SubShader
     {
@@ -21,8 +22,9 @@ Shader "SOTN Custom/ScreenMeltUnlit"
             #pragma target 3.0
             fixed4 _Color;
             sampler2D _MainTex;
+            sampler2D _OffsetTex; // 오프셋 텍스처
             float _Timer;
-            float2 _Offset[256];
+
             struct appdata
             {
                 float4 vertex : POSITION;
@@ -44,10 +46,17 @@ Shader "SOTN Custom/ScreenMeltUnlit"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                int index = (int)floor(clamp(i.uv.x * 256.0f, 0, 255));
-                i.uv.y += clamp(_Timer, 0.0, 1.0) * _Offset[index].x;
+                // 텍스처 UV에서 오프셋 샘플링
+                float index = i.uv.x; 
+                float offset = tex2D(_OffsetTex, float2(index, 0)).r;
+
+                // 오프셋 값을 UV Y축에 적용
+                i.uv.y += clamp(_Timer, 0.0, 1.0) * offset;
+
+                // 텍스처 샘플링 및 알파 값 처리
                 fixed4 col = tex2D(_MainTex, i.uv) * _Color;
                 if (col.a < 0.01) discard;
+
                 return col;
             }
             ENDCG
