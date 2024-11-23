@@ -144,6 +144,10 @@ public class InteractableGenerator : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            uiManager.keyNotifierUI.Hide(); // 키 도움말 숨기기
+        }
     }
 
     private void OnTriggerExit(Collider other)

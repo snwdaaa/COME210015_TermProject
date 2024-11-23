@@ -1898,7 +1898,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9019587548092422974
 Transform:
   m_ObjectHideFlags: 0
@@ -2530,7 +2530,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 7
   MaxDistance: 20
   Pan2D: 0
   rolloffMode: 1
@@ -2702,12 +2702,12 @@ MonoBehaviour:
   isAttacking: 0
   detectionFov: 120
   detectionDistance: 20
+  flashlightDetectionDistance: 35
   eyeTransform: {fileID: 3977593863448643448}
-  targetLostTime: 7
+  targetLostTime: 6.5
   chaseTarget: {fileID: 0}
   maxHealth: 100
   currentHealth: 0
-  ragdollPrefab: {fileID: 4706891819951168701, guid: daf78cb50993fd040bf26b69c5d60c3c, type: 3}
   isDead: 0
   attackSound: {fileID: 8300000, guid: 5f6508cba53ecf0448b30e47bf27bfd1, type: 3}
 --- !u!114 &314845065659562636
@@ -2764,8 +2764,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b682207ff9ac8db4695704cd57fb59a7, type: 3}
   - {fileID: 8300000, guid: 938df53f74d50544b83b2cd1b17069f9, type: 3}
   - {fileID: 8300000, guid: f29d6db9c3a008d4aae34c3399830406, type: 3}
-  walkVolume: 1
-  sprintVolume: 1
+  walkVolume: 2
+  sprintVolume: 3
   walkStepInterval: 0.4
   sprintStepInterval: 0.3
 --- !u!1 &7525196848959419573
