@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
         meltScreen = GetComponent<MeltScreenController>();
         bgmSound = GameObject.Find("DoomBGM").GetComponent<AudioSource>();
 
-        // StartCoroutine("EnterDoomMode"); // 둠 모드 테스트용 코드
+        StartCoroutine("EnterDoomMode"); // 둠 모드 테스트용 코드
     }
 
     // Update is called once per frame
