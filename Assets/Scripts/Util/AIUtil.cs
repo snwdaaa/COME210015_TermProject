@@ -51,7 +51,14 @@ public class AIUtil : MonoBehaviour
     {
         for (int i = 0; i < 30; i++)
         {
-            Vector3 randomPos = Random.insideUnitSphere * radius + center;
+            //Vector3 randomPos = Random.insideUnitSphere * radius + center;
+
+            // 랜덤 위치 생성 (수평 반경 + 수직 범위)
+            Vector3 randomPos = new Vector3(
+                Random.Range(-radius, radius),
+                Random.Range(-40f, 40f),
+                Random.Range(-radius, radius)
+            ) + center;
 
             NavMeshHit hit; // NavMesh 샘플링 결과 저장
 

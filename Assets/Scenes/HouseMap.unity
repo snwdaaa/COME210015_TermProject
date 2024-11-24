@@ -739,8 +739,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6383149551737303910, guid: 39ca9ccab67f3ed44bc8ab587f991285, type: 3}
+      propertyPath: targetLostTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6383149551737303910, guid: 39ca9ccab67f3ed44bc8ab587f991285, type: 3}
       propertyPath: patrolPointDistance
-      value: 400
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6756748475317892307, guid: 39ca9ccab67f3ed44bc8ab587f991285, type: 3}
       propertyPath: MaxDistance
@@ -3576,7 +3580,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 151452475454804441, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
       propertyPath: spawnCount
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 151452475454804441, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
       propertyPath: spawnPoints.Array.data[0]
@@ -3713,6 +3717,14 @@ PrefabInstance:
     - target: {fileID: 1082725033706741926, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
       propertyPath: m_LocalPosition.z
       value: -7.094
+      objectReference: {fileID: 0}
+    - target: {fileID: 4300697916107935736, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
+      propertyPath: baseFallDamage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4300697916107935736, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
+      propertyPath: fallDamageMultiplier
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4608824616350191209, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
       propertyPath: exitArea
