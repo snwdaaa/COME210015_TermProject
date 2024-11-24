@@ -15,7 +15,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("AI", LoadSceneMode.Single); // AI 테스트용 임시 scene 로드
+        SceneManager.LoadScene(1, LoadSceneMode.Single); // AI 테스트용 임시 scene 로드
     }
 
     public void ExitGame()
