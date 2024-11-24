@@ -8424,6 +8424,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3190591475039466480, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
+      propertyPath: deathHeight
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190591475039466480, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
       propertyPath: fallDamageMultiplier
       value: 4
       objectReference: {fileID: 0}
@@ -8538,7 +8542,24 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  spawnCount: 5
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  spawnCount: 1
   progressBar: {fileID: 7719885058334202755}
   qteUIObject: {fileID: 6394858977357884824}
   progressUIObject: {fileID: 8251547469541542865}
@@ -8569,6 +8590,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plyMovement: {fileID: 8516662402440001290}
+  plyCamMovement: {fileID: 7818259392944410940}
   directionalLight: {fileID: 0}
   eliminatedCount: 0
   doomHUD: {fileID: 5169356291316100190}
@@ -8577,6 +8599,9 @@ MonoBehaviour:
   doomMoveSpeed: 7
   exitArea: {fileID: 0}
   clearUI: {fileID: 5191759164468920204}
+  exitCamPos: {fileID: 0}
+  exitLight: {fileID: 0}
+  unlockSound: {fileID: 8300000, guid: a14ed4ff57ec6f84d91d96b694f9e348, type: 3}
 --- !u!114 &3989051365030116114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8674,6 +8699,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8598248801642093804, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
   m_PrefabInstance: {fileID: 1722741194649091080}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7818259392944410940 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8892478975388790068, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
+  m_PrefabInstance: {fileID: 1722741194649091080}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3711724402362772513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd971a90539d14741aba20b25f8fbc62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8516662402440001290 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7050707003175455490, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}

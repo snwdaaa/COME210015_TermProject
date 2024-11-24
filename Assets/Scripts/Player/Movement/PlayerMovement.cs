@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("상태")] // 인스펙터 확인용
     public MoveState moveState = MoveState.Idle;
     public PostureState postureState = PostureState.Stand;
+    public bool disabled = false;
 
     [Header("이동 속도 설정")]
     [SerializeField] private float moveSpeed;
@@ -90,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
         CheckJump();
         CalcMoveVelocity();
 
-        if (playerHealth.isDied) // 플레이어가 사망한 경우 못 움직이게
+        if (playerHealth.isDied || disabled) // 플레이어가 사망한 경우 못 움직이게
         {
             moveVelocity = Vector3.zero;
             moveVelocityWithGravity = Vector3.zero;

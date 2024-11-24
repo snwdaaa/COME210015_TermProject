@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     [Header("Components")]
     private GeneratorSpawner generatorSpawner;
     [SerializeField] private PlayerMovement plyMovement;
+    [SerializeField] private PlayerCameraMovement plyCamMovement;
+    
     private MeltScreenController meltScreen;
     private AudioSource bgmSound;
 
@@ -36,6 +38,10 @@ public class GameManager : MonoBehaviour
     [Header("Exit Properties")]
     [SerializeField] private ExitArea exitArea;
     [SerializeField] private GameObject clearUI;
+    [SerializeField] private Transform exitCamPos;
+    [SerializeField] private Light exitLight;
+    [SerializeField] private AudioClip unlockSound;
+    private bool cutscenePlayed = false;
 
 
     // Start is called before the first frame update
@@ -70,8 +76,40 @@ public class GameManager : MonoBehaviour
         if (repairedGeneratorCount >= generatorSpawner.spawnCount)
         {
             //StartCoroutine("EnterDoomMode");
-            exitArea.EnableExitArea(); // 탈출구 오픈
+
+            if (!cutscenePlayed)
+            {
+                StartCoroutine("ShowExitArea");
+                exitArea.EnableExitArea(); // 탈출구 오픈
+            }
         }
+    }
+
+    /// <summary>
+    /// 탈출 조건 만족하면 잠시 탈출 지점 보여줌
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator ShowExitArea()
+    {
+        cutscenePlayed = true;
+
+        Vector3 camOriginPos = Camera.main.transform.position;
+        Quaternion camOriginRot = Camera.main.transform.rotation;
+
+        plyMovement.disabled = true;
+        plyCamMovement.disabled = true;
+
+        Camera.main.transform.position = exitCamPos.position;
+        Camera.main.transform.rotation = exitCamPos.rotation;
+        yield return new WaitForSeconds(1f);
+        exitLight.color = Color.green;
+        AudioSource.PlayClipAtPoint(unlockSound, transform.position);
+        yield return new WaitForSeconds(3f);
+        Camera.main.transform.position = camOriginPos;
+        Camera.main.transform.rotation = camOriginRot;
+
+        plyMovement.disabled = false;
+        plyCamMovement.disabled = false;
     }
 
     // ---------------  Doom Mode  ---------------

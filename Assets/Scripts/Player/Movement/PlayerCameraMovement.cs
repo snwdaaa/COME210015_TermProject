@@ -16,6 +16,7 @@ public class PlayerCameraMovement : MonoBehaviour
     [SerializeField] private GameObject camPivot; // 카메라 Pivot
     public static float mouseSensitivity = 1.0f; // 마우스 감도
     [SerializeField] private float mouseMaxAngleY = 85f;
+    public bool disabled = false;
 
     private void Start()
     {
@@ -26,6 +27,7 @@ public class PlayerCameraMovement : MonoBehaviour
     private void LateUpdate()
     {
         if (playerHealth.isDied) return; // 플레이어가 사망한 경우 못 움직이게
+        if (disabled) return;
 
         Look(playerMouseInput.mouseInput);
     }
