@@ -45,7 +45,10 @@ public class GameManager : MonoBehaviour
         meltScreen = GetComponent<MeltScreenController>();
         bgmSound = GameObject.Find("DoomBGM").GetComponent<AudioSource>();
 
-        // StartCoroutine("EnterDoomMode"); // 둠 모드 테스트용 코드
+        if (gameMode == GameMode.Doom)
+        {
+            StartCoroutine("EnterDoomMode"); // 둠 모드 진입
+        }
     }
 
     // Update is called once per frame
@@ -66,14 +69,15 @@ public class GameManager : MonoBehaviour
         // 발전기를 모두 수리했으면 Doom Mode 진입
         if (repairedGeneratorCount >= generatorSpawner.spawnCount)
         {
-            StartCoroutine("EnterDoomMode");
+            //StartCoroutine("EnterDoomMode");
+            exitArea.EnableExitArea(); // 탈출구 오픈
         }
     }
 
     // ---------------  Doom Mode  ---------------
     IEnumerator EnterDoomMode()
     {
-        gameMode = GameMode.Doom; // 모드 변경       
+        // gameMode = GameMode.Doom; // 모드 변경       
 
         meltScreen.ShowScreen();
 

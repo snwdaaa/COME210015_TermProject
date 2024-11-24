@@ -9,7 +9,10 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: c28156f181088724abdf06b95d0e724a
   - enabled: 1
-    path: Assets/Scenes/DevTest/AI.unity
-    guid: e7820ba747e139149b6c71dc48440183
+    path: Assets/Scenes/HouseMap.unity
+    guid: d9f9e2fdb61a71c45bc2d2107bb701b6
+  - enabled: 1
+    path: Assets/Scenes/MazeMap.unity
+    guid: 61b72fc1726a10b458273b826eca494b
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 8f7e1b7ca2d548140a0951c3b2913a85, type: 2}

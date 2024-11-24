@@ -15,6 +15,7 @@ public class InteractableGenerator : MonoBehaviour
     private PlayerCameraMovement cameraMovement;
     private GeneratorSpawner spawner;
     private UIManager uiManager;
+    private Light statusLight;
 
     [Header("사운드")]
     [SerializeField] private AudioClip generatorSound_Start;
@@ -56,6 +57,7 @@ public class InteractableGenerator : MonoBehaviour
         spawner = managers.GetComponent<GeneratorSpawner>();
         audioSource = GetComponent<AudioSource>();
         uiManager = managers.GetComponent<UIManager>();
+        statusLight = GetComponentInChildren<Light>();
 
         progressBar = spawner.progressBar;
         qteUIObject = spawner.qteUIObject;
@@ -290,6 +292,7 @@ public class InteractableGenerator : MonoBehaviour
                 ExitFixing();
 
                 GameManager.repairedGeneratorCount++; // 게임 매니저 수리한 발전기 개수 증가
+                statusLight.color = Color.green; // 상태 조명 색 변경
             }
         }
     }
@@ -308,42 +311,42 @@ public class InteractableGenerator : MonoBehaviour
         }
     }
 
-        /// <summary>
-        /// QTE 실패 시 호출되는 함수
-        /// </summary>
-        private void OnQTEFail(GameObject target)
-        {
-            if (target != CircleQTEUI.currentGenerator) return; // Invoke로 Broadcast된 메시지가 자신의 것이 아니면 무시
+    /// <summary>
+    /// QTE 실패 시 호출되는 함수
+    /// </summary>
+    private void OnQTEFail(GameObject target)
+    {
+        if (target != CircleQTEUI.currentGenerator) return; // Invoke로 Broadcast된 메시지가 자신의 것이 아니면 무시
 
-            currentProgress -= failDecrease;
-            currentProgress = Mathf.Clamp(currentProgress, 0, completeProgress);
+        currentProgress -= failDecrease;
+        currentProgress = Mathf.Clamp(currentProgress, 0, completeProgress);
 
-            audioSource.PlayOneShot(qteSound_Fail);
-        }
+        audioSource.PlayOneShot(qteSound_Fail);
+    }
 
-        /// <summary>
-        /// QTE 보통 성공 시 호출되는 함수
-        /// </summary>
-        private void OnQTENormal(GameObject target)
-        {
-            if (target != CircleQTEUI.currentGenerator) return; // Invoke로 Broadcast된 메시지가 자신의 것이 아니면 무시
+    /// <summary>
+    /// QTE 보통 성공 시 호출되는 함수
+    /// </summary>
+    private void OnQTENormal(GameObject target)
+    {
+        if (target != CircleQTEUI.currentGenerator) return; // Invoke로 Broadcast된 메시지가 자신의 것이 아니면 무시
 
-            currentProgress -= normalDecrease;
-            currentProgress = Mathf.Clamp(currentProgress, 0, completeProgress);
+        currentProgress -= normalDecrease;
+        currentProgress = Mathf.Clamp(currentProgress, 0, completeProgress);
 
-            audioSource.PlayOneShot(qteSound_Normal);
-        }
+        audioSource.PlayOneShot(qteSound_Normal);
+    }
 
-        /// <summary>
-        /// QTE 성공 시 호출되는 함수
-        /// </summary>
-        private void OnQTESuccess(GameObject target)
-        {
-            if (target != CircleQTEUI.currentGenerator) return; // Invoke로 Broadcast된 메시지가 자신의 것이 아니면 무시
+    /// <summary>
+    /// QTE 성공 시 호출되는 함수
+    /// </summary>
+    private void OnQTESuccess(GameObject target)
+    {
+        if (target != CircleQTEUI.currentGenerator) return; // Invoke로 Broadcast된 메시지가 자신의 것이 아니면 무시
 
-            currentProgress += successIncrease;
-            currentProgress = Mathf.Clamp(currentProgress, 0, completeProgress);
+        currentProgress += successIncrease;
+        currentProgress = Mathf.Clamp(currentProgress, 0, completeProgress);
 
-            audioSource.PlayOneShot(qteSound_Success);
-        }
+        audioSource.PlayOneShot(qteSound_Success);
+    }
 }

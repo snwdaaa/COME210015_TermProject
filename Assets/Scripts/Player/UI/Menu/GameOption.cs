@@ -65,7 +65,7 @@ public class GameOption : MonoBehaviour
 
         if (!PlayerPrefs.HasKey("Brightness"))
         {
-            PlayerPrefs.SetFloat("Brightness", 0.3f);
+            PlayerPrefs.SetFloat("Brightness", 0.5f);
         }
 
         colorGrading.gamma.value.w = PlayerPrefs.GetFloat("Brightness");

@@ -18,7 +18,10 @@ public class DynamicBGMController : MonoBehaviour
 
     void Start()
     {
-        esm = GameObject.FindWithTag("Enemy").GetComponent<EnemyStateMachine>();
+        if (GameManager.gameMode != GameManager.GameMode.Doom)
+        {
+            esm = GameObject.FindWithTag("Enemy").GetComponent<EnemyStateMachine>();
+        }
 
         // 시작 시 기본 BGM 활성화
         bgmSource.volume = 1f;

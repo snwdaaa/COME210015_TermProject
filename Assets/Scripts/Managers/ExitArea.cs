@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ExitArea : MonoBehaviour
 {
@@ -23,7 +24,15 @@ public class ExitArea : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            gameManager.CompleteGame();
+            if (GameManager.gameMode == GameManager.GameMode.Doom)
+            {
+                gameManager.CompleteGame();
+            }
+            else if (GameManager.gameMode == GameManager.GameMode.Normal)
+            {
+                SceneManager.LoadScene(2, LoadSceneMode.Single); // 미로맵 Load
+                GameManager.gameMode = GameManager.GameMode.Doom; // 모드 변경
+            }
         }
     }
 }
