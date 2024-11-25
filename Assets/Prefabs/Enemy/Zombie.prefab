@@ -691,9 +691,9 @@ MonoBehaviour:
   animator: {fileID: 0}
   esm: {fileID: 0}
   updatePeriod: 0.2
-  patrolSpeed: 3
-  chaseSpeed: 4
-  patrolPointDistance: 60
+  patrolSpeed: 5
+  chaseSpeed: 6
+  patrolPointDistance: 300
   attackDamage: 30
   attackDelay: 2
   attackRadius: 1

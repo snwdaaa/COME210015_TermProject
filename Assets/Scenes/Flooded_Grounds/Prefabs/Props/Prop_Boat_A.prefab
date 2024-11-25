@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 3390472}
   - component: {fileID: 2310144}
   - component: {fileID: 6526986}
+  - component: {fileID: 1373964638702437059}
   m_Layer: 8
   m_Name: lo_Prop_Boat_A_LOD1
   m_TagString: Untagged
@@ -167,6 +168,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 11.097536, y: 2.8171902, z: 2.5999212}
   m_Center: {x: -4.9592543, y: 1.0689754, z: 0.007919908}
+--- !u!208 &1373964638702437059
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134628}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 5.5490003, y: 1.409, z: 1.3000001}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -4.959, y: 1.069, z: 0.008}
+  m_TimeToStationary: 0.5
 --- !u!1 &152016
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,6 +195,7 @@ GameObject:
   - component: {fileID: 465904}
   - component: {fileID: 3380308}
   - component: {fileID: 2353594}
+  - component: {fileID: 2740001841953878743}
   m_Layer: 8
   m_Name: lo_Prop_Boat_A_LOD2
   m_TagString: Untagged
@@ -250,6 +268,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &2740001841953878743
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152016}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 5.5490003, y: 1.409, z: 1.3000001}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -4.959, y: 1.069, z: 0.008}
+  m_TimeToStationary: 0.5
 --- !u!1 &187672
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,6 +296,7 @@ GameObject:
   - component: {fileID: 3351626}
   - component: {fileID: 2376696}
   - component: {fileID: 6586176}
+  - component: {fileID: 5276001208365194546}
   m_Layer: 8
   m_Name: lo_Prop_Boat_A_LOD0
   m_TagString: Untagged
@@ -355,3 +390,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 11.097536, y: 2.8171902, z: 2.5999212}
   m_Center: {x: -4.9592543, y: 1.0689754, z: 0.007919908}
+--- !u!208 &5276001208365194546
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 187672}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 5.5490003, y: 1.409, z: 1.3000001}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -4.959, y: 1.069, z: 0.008}
+  m_TimeToStationary: 0.5

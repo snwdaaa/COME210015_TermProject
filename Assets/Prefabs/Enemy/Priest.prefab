@@ -2530,8 +2530,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 7
-  MaxDistance: 20
+  MinDistance: 2
+  MaxDistance: 10
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -2656,9 +2656,9 @@ NavMeshAgent:
   m_Acceleration: 50
   avoidancePriority: 50
   m_AngularSpeed: 360
-  m_StoppingDistance: 1
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
@@ -2691,20 +2691,20 @@ MonoBehaviour:
   navAgent: {fileID: 0}
   animator: {fileID: 0}
   esm: {fileID: 0}
-  updatePeriod: 0.2
+  updatePeriod: 0.01
   patrolSpeed: 3
   chaseSpeed: 4
-  patrolPointDistance: 60
+  patrolPointDistance: 300
   attackDamage: 30
   attackDelay: 2
-  attackRadius: 1
+  attackRadius: 0.5
   attackRoot: {fileID: 3050856807970753199}
   isAttacking: 0
   detectionFov: 120
   detectionDistance: 20
   flashlightDetectionDistance: 35
   eyeTransform: {fileID: 3977593863448643448}
-  targetLostTime: 6.5
+  targetLostTime: 3
   chaseTarget: {fileID: 0}
   maxHealth: 100
   currentHealth: 0

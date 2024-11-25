@@ -14,7 +14,8 @@ public class AttackState : IState
 
     public void Enter()
     {
-
+        enemy.navAgent.stoppingDistance = 1f;
+        enemy.navAgent.isStopped = true; // 공격할 때 멈춤
     }
 
     public void Update()
@@ -28,6 +29,7 @@ public class AttackState : IState
 
     public void Exit()
     {
-
+        enemy.navAgent.stoppingDistance = 0f;
+        enemy.navAgent.isStopped = false; // 공격할 때 멈춤
     }
 }

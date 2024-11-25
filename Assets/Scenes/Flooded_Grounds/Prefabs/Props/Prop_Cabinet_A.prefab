@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3351172}
   - component: {fileID: 2337598}
   - component: {fileID: 6533930}
+  - component: {fileID: 6045665472331132411}
   m_Layer: 8
   m_Name: lo_Prop_Cabinet_A_LOD1
   m_TagString: Untagged
@@ -105,6 +106,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.9608426, y: 3.6103702, z: 0.95660967}
   m_Center: {x: 0.0006516874, y: 1.8066566, z: 0.42181864}
+--- !u!208 &6045665472331132411
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111928}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.98, y: 1.8050001, z: 0.47800002}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.001, y: 1.807, z: 0.42200002}
+  m_TimeToStationary: 0.5
 --- !u!1 &164674
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,6 +134,7 @@ GameObject:
   - component: {fileID: 3328286}
   - component: {fileID: 2347102}
   - component: {fileID: 6531326}
+  - component: {fileID: 2486060412690710054}
   m_Layer: 8
   m_Name: lo_Prop_Cabinet_A_LOD0
   m_TagString: Untagged
@@ -210,6 +228,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.9608426, y: 3.6103702, z: 0.95660967}
   m_Center: {x: 0.0006516874, y: 1.8066566, z: 0.42181864}
+--- !u!208 &2486060412690710054
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164674}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.98, y: 1.8050001, z: 0.47800002}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.001, y: 1.807, z: 0.42200002}
+  m_TimeToStationary: 0.5
 --- !u!1 &190816
 GameObject:
   m_ObjectHideFlags: 0

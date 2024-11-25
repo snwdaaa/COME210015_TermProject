@@ -16,6 +16,7 @@ public class ChaseState : IState
     {
         // 이동 속도 설정
         enemy.navAgent.speed = enemy.chaseSpeed;
+        enemy.navAgent.stoppingDistance = 1f;
     }
 
     public void Update()
@@ -41,6 +42,6 @@ public class ChaseState : IState
 
     public void Exit()
     {
-
+        enemy.navAgent.stoppingDistance = 0f;
     }
 }

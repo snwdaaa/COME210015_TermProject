@@ -69,6 +69,7 @@ GameObject:
   - component: {fileID: 3395130}
   - component: {fileID: 2340862}
   - component: {fileID: 6590944}
+  - component: {fileID: 322038682862627068}
   m_Layer: 8
   m_Name: lo_Prop_Vase_B_LOD0
   m_TagString: Untagged
@@ -162,6 +163,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.33391368, y: 0.77241653, z: 0.33241004}
   m_Center: {x: 0.006248653, y: 0.38887164, z: -0.0006618574}
+--- !u!208 &322038682862627068
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137640}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.16700001, y: 0.386, z: 0.16600001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.006, y: 0.38900003, z: -0.001}
+  m_TimeToStationary: 0.5
 --- !u!1 &149744
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,6 +191,7 @@ GameObject:
   - component: {fileID: 3311064}
   - component: {fileID: 2329222}
   - component: {fileID: 6523468}
+  - component: {fileID: 2800446659955302176}
   m_Layer: 8
   m_Name: lo_Prop_Vase_B_LOD1
   m_TagString: Untagged
@@ -267,3 +285,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.33391368, y: 0.77241653, z: 0.29068637}
   m_Center: {x: 0.006248653, y: 0.38887164, z: -0.0006618574}
+--- !u!208 &2800446659955302176
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149744}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.16700001, y: 0.386, z: 0.14500001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.006, y: 0.38900003, z: -0.001}
+  m_TimeToStationary: 0.5

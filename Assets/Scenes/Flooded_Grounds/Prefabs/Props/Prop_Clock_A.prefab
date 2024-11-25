@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3399812}
   - component: {fileID: 2345684}
   - component: {fileID: 6548236}
+  - component: {fileID: 1239342162883514591}
   m_Layer: 8
   m_Name: lo_Prop_Clock_A_LOD1
   m_TagString: Untagged
@@ -105,6 +106,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0739739, y: 3.927643, z: 0.61760354}
   m_Center: {x: -0.00074899197, y: 1.9559883, z: 0.25817633}
+--- !u!208 &1239342162883514591
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147072}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.537, y: 1.9640001, z: 0.30900002}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.001, y: 1.9560001, z: 0.25800002}
+  m_TimeToStationary: 0.5
 --- !u!1 &174376
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,6 +191,7 @@ GameObject:
   - component: {fileID: 3383020}
   - component: {fileID: 2380546}
   - component: {fileID: 6557654}
+  - component: {fileID: 8745355070532713102}
   m_Layer: 8
   m_Name: lo_Prop_Clock_A_LOD0
   m_TagString: Untagged
@@ -267,3 +285,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0739739, y: 3.927643, z: 0.61760354}
   m_Center: {x: -0.00074899197, y: 1.9559883, z: 0.25817633}
+--- !u!208 &8745355070532713102
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 197594}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.537, y: 1.9640001, z: 0.30900002}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.001, y: 1.9560001, z: 0.25800002}
+  m_TimeToStationary: 0.5

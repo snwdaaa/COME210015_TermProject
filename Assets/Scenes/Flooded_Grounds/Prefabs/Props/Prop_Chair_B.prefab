@@ -69,6 +69,7 @@ GameObject:
   - component: {fileID: 3374976}
   - component: {fileID: 2368390}
   - component: {fileID: 6561358}
+  - component: {fileID: 2234095238022347417}
   m_Layer: 8
   m_Name: lo_Prop_Chair_B_LOD0
   m_TagString: Untagged
@@ -162,6 +163,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.857939, y: 1.7184892, z: 1.1873357}
   m_Center: {x: 0.001056686, y: 0.85539174, z: -0.0016337633}
+--- !u!208 &2234095238022347417
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164546}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.42900002, y: 0.859, z: 0.59400004}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.001, y: 0.855, z: -0.002}
+  m_TimeToStationary: 0.5
 --- !u!1 &172462
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,6 +191,7 @@ GameObject:
   - component: {fileID: 3325976}
   - component: {fileID: 2308636}
   - component: {fileID: 6555648}
+  - component: {fileID: 2454651718494001725}
   m_Layer: 8
   m_Name: lo_Prop_Chair_B_LOD1
   m_TagString: Untagged
@@ -267,3 +285,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.857939, y: 1.7011598, z: 1.1873357}
   m_Center: {x: 0.001056686, y: 0.85144144, z: -0.0016337633}
+--- !u!208 &2454651718494001725
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 172462}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.42900002, y: 0.851, z: 0.59400004}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.001, y: 0.851, z: -0.002}
+  m_TimeToStationary: 0.5

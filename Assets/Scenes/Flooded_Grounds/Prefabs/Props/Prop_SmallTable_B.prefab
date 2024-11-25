@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3332300}
   - component: {fileID: 2325456}
   - component: {fileID: 6566330}
+  - component: {fileID: 797569697691294366}
   m_Layer: 8
   m_Name: lo_Prop_SmallTable_B_LOD0
   m_TagString: Untagged
@@ -105,6 +106,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0609883, y: 0.6964605, z: 1.0103817}
   m_Center: {x: 0.00008606911, y: 0.34790707, z: -0.00013667345}
+--- !u!208 &797569697691294366
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 120198}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.53000003, y: 0.34800002, z: 0.505}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.34800002, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &143650
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,6 +134,7 @@ GameObject:
   - component: {fileID: 3373112}
   - component: {fileID: 2362258}
   - component: {fileID: 6589814}
+  - component: {fileID: 3566340835124934715}
   m_Layer: 8
   m_Name: lo_Prop_SmallTable_B_LOD1
   m_TagString: Untagged
@@ -210,6 +228,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0609883, y: 0.6964605, z: 1.0103817}
   m_Center: {x: 0.00008606911, y: 0.34790707, z: -0.00013667345}
+--- !u!208 &3566340835124934715
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143650}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.53000003, y: 0.34800002, z: 0.505}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.34800002, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &145104
 GameObject:
   m_ObjectHideFlags: 0

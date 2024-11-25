@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3352258}
   - component: {fileID: 2318122}
   - component: {fileID: 6526028}
+  - component: {fileID: 8351122276088865743}
   m_Layer: 8
   m_Name: lo_Prop_ParkBench_A_LOD1
   m_TagString: Untagged
@@ -105,6 +106,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.616446, y: 1.1688807, z: 0.97970456}
   m_Center: {x: -0.0022388697, y: 0.6004895, z: 0.053472668}
+--- !u!208 &8351122276088865743
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122480}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.3080001, y: 0.58400005, z: 0.49}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.002, y: 0.6, z: 0.053000003}
+  m_TimeToStationary: 0.5
 --- !u!1 &175182
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,6 +134,7 @@ GameObject:
   - component: {fileID: 3348780}
   - component: {fileID: 2341038}
   - component: {fileID: 6526088}
+  - component: {fileID: 5742370053000338472}
   m_Layer: 8
   m_Name: lo_Prop_ParkBench_A_LOD2
   m_TagString: Untagged
@@ -210,6 +228,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.616446, y: 1.1688807, z: 0.97970456}
   m_Center: {x: -0.0022388697, y: 0.6004895, z: 0.053472668}
+--- !u!208 &5742370053000338472
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175182}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.3080001, y: 0.58400005, z: 0.49}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.002, y: 0.6, z: 0.053000003}
+  m_TimeToStationary: 0.5
 --- !u!1 &191750
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,6 +256,7 @@ GameObject:
   - component: {fileID: 3329606}
   - component: {fileID: 2347452}
   - component: {fileID: 6528718}
+  - component: {fileID: 914429965709545868}
   m_Layer: 8
   m_Name: lo_Prop_ParkBench_A_LOD0
   m_TagString: Untagged
@@ -315,6 +350,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.616446, y: 1.1726127, z: 0.9862871}
   m_Center: {x: -0.0022388697, y: 0.6023555, z: 0.050181404}
+--- !u!208 &914429965709545868
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191750}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.3080001, y: 0.586, z: 0.49300003}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.002, y: 0.60200006, z: 0.05}
+  m_TimeToStationary: 0.5
 --- !u!1 &194530
 GameObject:
   m_ObjectHideFlags: 0

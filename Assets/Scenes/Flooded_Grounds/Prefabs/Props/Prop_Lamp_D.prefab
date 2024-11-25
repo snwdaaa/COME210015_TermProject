@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3302230}
   - component: {fileID: 2308446}
   - component: {fileID: 6547144}
+  - component: {fileID: 7086717234615050859}
   m_Layer: 8
   m_Name: lo_Prop_Lamp_D_LOD1
   m_TagString: Untagged
@@ -105,6 +106,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8397954, y: 1.049104, z: 0.8397953}
   m_Center: {x: 0.0000006556511, y: -0.5218755, z: 0.000000029802322}
+--- !u!208 &7086717234615050859
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112432}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.42000002, y: 0.52500004, z: 0.42000002}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: -0.522, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &122826
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,6 +191,7 @@ GameObject:
   - component: {fileID: 3355304}
   - component: {fileID: 2307798}
   - component: {fileID: 6527162}
+  - component: {fileID: 4134733309161983764}
   m_Layer: 8
   m_Name: lo_Prop_Lamp_D_LOD0
   m_TagString: Untagged
@@ -267,3 +285,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8570119, y: 1.0544721, z: 0.8570118}
   m_Center: {x: 0.0000006556511, y: -0.52455956, z: 0.000000044703484}
+--- !u!208 &4134733309161983764
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196478}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.42900002, y: 0.527, z: 0.42900002}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: -0.52500004, z: 0}
+  m_TimeToStationary: 0.5

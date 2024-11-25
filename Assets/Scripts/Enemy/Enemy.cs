@@ -103,6 +103,11 @@ public class Enemy : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    private void Update()
+    {
+        Debug.Log(navAgent.isStopped);
+    }
+
     private void SubscribeEvent()
     {
         circleQTEUI.OnQTEFail += () =>
@@ -206,6 +211,7 @@ public class Enemy : MonoBehaviour
     {
         CheckSight(); // 시야 범위 검사
         UpdateChaseTargetPosition(); // 추적 대상 위치 갱신
+        CheckDistanceToTarget(); // 추적 대상과의 거리 확인
         CheckLostTarget(); // 추적 대상 놓쳤는 지 확인
 
         yield return new WaitForSeconds(updatePeriod);
@@ -239,6 +245,26 @@ public class Enemy : MonoBehaviour
         else
         {
             timeSinceLastSeen = 0;
+        }
+    }
+
+    /// <summary>
+    /// 타겟과 일정한 거리를 유지하기 위해 일정 거리 내로 들어오면 멈춤
+    /// </summary>
+    private void CheckDistanceToTarget()
+    {
+        if (chaseTarget != null)
+        {
+            float distanceToTarget = Vector3.Distance(transform.position, chaseTarget.position);
+
+            if (distanceToTarget <= 1.0f)
+            {
+                navAgent.isStopped = true;
+            }
+            else
+            {
+                navAgent.isStopped = false;
+            }
         }
     }
 
