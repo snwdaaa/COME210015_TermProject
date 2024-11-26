@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject playerHUD;
     [SerializeField] private AudioClip doomBGM;
     [SerializeField] private float doomMoveSpeed = 5.0f;
+    [SerializeField] private GameObject doomShotgunSprite;
+    [SerializeField] private DoomShotgun doomShotgun;
     public event Action DoomModeSpawnEvent;
 
     [Header("Exit Properties")]
@@ -99,6 +101,13 @@ public class GameManager : MonoBehaviour
         plyMovement.disabled = true;
         plyCamMovement.disabled = true;
 
+        // 둠 모드인 경우 삿건 숨기기
+        if (gameMode == GameMode.Doom)
+        {
+            doomShotgunSprite.SetActive(false);
+            doomShotgun.enabled = false;
+        }
+
         Camera.main.transform.position = exitCamPos.position;
         Camera.main.transform.rotation = exitCamPos.rotation;
         yield return new WaitForSeconds(1f);
@@ -110,6 +119,13 @@ public class GameManager : MonoBehaviour
 
         plyMovement.disabled = false;
         plyCamMovement.disabled = false;
+
+        // 둠 모드인 경우 삿건 다시 표시
+        if (gameMode == GameMode.Doom)
+        {
+            doomShotgunSprite.SetActive(true);
+            doomShotgun.enabled = true;
+        }
     }
 
     // ---------------  Doom Mode  ---------------
@@ -151,7 +167,12 @@ public class GameManager : MonoBehaviour
         if (eliminatedCount >= EnemySpawner.enemiesOnMap)
         {
             if (eliminatedCount == 0 && EnemySpawner.enemiesOnMap == 0) return;
-            exitArea.EnableExitArea(); // 탈출구 오픈
+
+            if (!cutscenePlayed)
+            {
+                StartCoroutine("ShowExitArea");
+                exitArea.EnableExitArea(); // 탈출구 오픈
+            }
         }
     }
 

@@ -26,7 +26,13 @@ public class Enemy : MonoBehaviour
     [Header("이동 및 NavMesh")]
     public float patrolSpeed = 2f;
     public float chaseSpeed = 5f;
+    [SerializeField] private bool isSamplingPatrolPoint = false; // 순찰 지점을 랜덤으로 샘플링?
     [SerializeField] private float patrolPointDistance = 50f; // 새롭게 찾을 랜덤한 순찰 지점까지의 최대 거리
+    [SerializeField] private Transform[] patrolPoints;
+    private int lastPatrolPointIdx = 0;
+    private Transform lastPatrolPoint = null;
+    private bool isArrived = false;
+    [SerializeField] private bool isDestPlayerLastPos = false;
 
     [Header("공격")]
     [SerializeField] private float attackDamage = 30f;
@@ -102,12 +108,6 @@ public class Enemy : MonoBehaviour
         // 체력 설정
         currentHealth = maxHealth;
     }
-
-    private void Update()
-    {
-        Debug.Log(navAgent.isStopped);
-    }
-
     private void SubscribeEvent()
     {
         circleQTEUI.OnQTEFail += () =>
@@ -170,12 +170,44 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void SetPatrolWaypoint()
     {
-        if (navAgent.destination == null || navAgent.remainingDistance <= 1f) // Waypoint가 없거나, 거의 도달한 상태면
+        if (isSamplingPatrolPoint)
         {
-            // NavMesh 상의 임의의 위치를 새로운 Waypoint로 설정
-            Vector3 patrolDestination = AIUtil.GetRandomPointOnNavMesh(this.transform.position, patrolPointDistance, NavMesh.AllAreas);
-            navAgent.SetDestination(patrolDestination);
+            if (navAgent.destination == null || navAgent.remainingDistance <= 1f) // Waypoint가 없거나, 거의 도달한 상태면
+            {
+                // NavMesh 상의 임의의 위치를 새로운 Waypoint로 설정
+                Vector3 patrolDestination = AIUtil.GetRandomPointOnNavMesh(this.transform.position, patrolPointDistance, NavMesh.AllAreas);
+                navAgent.SetDestination(patrolDestination);
+            }
         }
+        else
+        {
+            // 순찰 경로 따라서 순차적으로 움직임
+            // 1. partrolPoints 배열 (크기 고정)
+            // 2. modulo 연산으로 사이즈만큼 계속 돌면서 웨이포인트 설정
+            // 3. 추적하다가 다시 순찰로 돌아갈 때 마지막으로 이동하던 웨이포인트로 이동
+            if (navAgent.destination == null || navAgent.destination == transform.position) // Waypoint가 없으면
+            {
+                lastPatrolPoint = patrolPoints[lastPatrolPointIdx];
+                navAgent.SetDestination(lastPatrolPoint.position);
+                isArrived = false;
+            }
+            else if (navAgent.remainingDistance <= 0.1f && !isArrived) // 거의 도달한 상태면 웨이포인트 인덱스 증가
+            {
+                isArrived = true;
+
+                // 만약 도착한 지점이 플레이어의 마지막 위치라면
+                // 마지막으로 이동하던 웨이포인트로 이동하기 위해 return
+                if (isDestPlayerLastPos) // 정지 거리 포함
+                {
+                    isDestPlayerLastPos = false;
+                    return;
+                }
+
+                lastPatrolPointIdx = (lastPatrolPointIdx + 1) % patrolPoints.Length;    
+            }
+        }
+
+
     }
 
     /// <summary>
@@ -225,6 +257,7 @@ public class Enemy : MonoBehaviour
         if (chaseTarget != null)
         {
             navAgent.SetDestination(chaseTarget.position);
+            isDestPlayerLastPos = true;
         }
     }
 

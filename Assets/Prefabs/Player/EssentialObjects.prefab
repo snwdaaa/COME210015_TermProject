@@ -8428,8 +8428,12 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3190591475039466480, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
+      propertyPath: baseFallDamage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190591475039466480, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
       propertyPath: fallDamageMultiplier
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3286491612966045170, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
       propertyPath: m_Depth
@@ -8466,6 +8470,10 @@ PrefabInstance:
     - target: {fileID: 4599401207524311884, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
       value: 8192
+      objectReference: {fileID: 0}
+    - target: {fileID: 7050707003175455490, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
+      propertyPath: walkSpeed
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7838085299630053660, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
       propertyPath: sprintStaminaDrainPerSec
@@ -8597,6 +8605,8 @@ MonoBehaviour:
   playerHUD: {fileID: 498529462907632394}
   doomBGM: {fileID: 8300000, guid: c02868ed30c28f540a2d802a466909fe, type: 3}
   doomMoveSpeed: 7
+  doomShotgunSprite: {fileID: 0}
+  doomShotgun: {fileID: 0}
   exitArea: {fileID: 0}
   clearUI: {fileID: 5191759164468920204}
   exitCamPos: {fileID: 0}
@@ -8682,7 +8692,7 @@ MonoBehaviour:
   hitEffect: {fileID: 3986179179329749341, guid: 8eb503696b886e04faff8fc0f480d473, type: 3}
   fireSound: {fileID: 8300000, guid: bbfb3972ee4616f44859699ca28b3c96, type: 3}
   fireDelay: 1
-  damage: 50
+  damage: 100
   swayAmountX: 200
   swayAmountY: 150
   swaySpeed: 3.5

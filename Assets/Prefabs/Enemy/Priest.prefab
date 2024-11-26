@@ -2695,6 +2695,8 @@ MonoBehaviour:
   patrolSpeed: 3
   chaseSpeed: 4
   patrolPointDistance: 300
+  patrolPoints: []
+  isSamplingPatrolPoint: 0
   attackDamage: 30
   attackDelay: 2
   attackRadius: 0.5

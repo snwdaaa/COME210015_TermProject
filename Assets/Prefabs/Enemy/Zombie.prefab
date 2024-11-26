@@ -439,9 +439,10 @@ GameObject:
   - component: {fileID: 1762284028365628879}
   - component: {fileID: 8886141030931423242}
   - component: {fileID: 7774499814219591501}
+  - component: {fileID: -7372158542639686845}
   m_Layer: 12
   m_Name: Zombie
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -657,7 +658,7 @@ NavMeshAgent:
   m_AngularSpeed: 360
   m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
@@ -691,9 +692,11 @@ MonoBehaviour:
   animator: {fileID: 0}
   esm: {fileID: 0}
   updatePeriod: 0.2
-  patrolSpeed: 5
-  chaseSpeed: 6
-  patrolPointDistance: 300
+  patrolSpeed: 7
+  chaseSpeed: 9
+  patrolPointDistance: 15
+  patrolPoints: []
+  isSamplingPatrolPoint: 1
   attackDamage: 30
   attackDelay: 2
   attackRadius: 1
@@ -767,6 +770,36 @@ MonoBehaviour:
   sprintVolume: 1
   walkStepInterval: 0.4
   sprintStepInterval: 0.3
+--- !u!205 &-7372158542639686845
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802141946770642557}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: -0.0012483597, y: 0.85743785, z: -0.013152435}
+  m_Size: 1.7556667
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.25
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 3703448483222152082}
+    - renderer: {fileID: 1423091062506722646}
+  - screenRelativeHeight: 0.125
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 4571750643622614547}
+    - renderer: {fileID: 7130709355374550965}
+  - screenRelativeHeight: 0.01
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 4464215036463152024}
+    - renderer: {fileID: 568900410445794160}
+  m_Enabled: 1
 --- !u!1 &926938068884930659
 GameObject:
   m_ObjectHideFlags: 0
