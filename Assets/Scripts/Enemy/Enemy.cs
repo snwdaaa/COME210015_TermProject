@@ -172,7 +172,7 @@ public class Enemy : MonoBehaviour
     {
         if (isSamplingPatrolPoint)
         {
-            if (navAgent.destination == null || navAgent.remainingDistance <= 1f) // Waypoint가 없거나, 거의 도달한 상태면
+            if (navAgent.destination == null || navAgent.remainingDistance <= 2f) // Waypoint가 없거나, 거의 도달한 상태면
             {
                 // NavMesh 상의 임의의 위치를 새로운 Waypoint로 설정
                 Vector3 patrolDestination = AIUtil.GetRandomPointOnNavMesh(this.transform.position, patrolPointDistance, NavMesh.AllAreas);
@@ -191,7 +191,7 @@ public class Enemy : MonoBehaviour
                 navAgent.SetDestination(lastPatrolPoint.position);
                 isArrived = false;
             }
-            else if (navAgent.remainingDistance <= 0.1f && !isArrived) // 거의 도달한 상태면 웨이포인트 인덱스 증가
+            else if (navAgent.remainingDistance <= 2f && !isArrived) // 거의 도달한 상태면 웨이포인트 인덱스 증가
             {
                 isArrived = true;
 
