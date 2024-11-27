@@ -17714,6 +17714,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -7.094
       objectReference: {fileID: 0}
+    - target: {fileID: 3207323282323875200, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
+      propertyPath: m_Volume
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 4608824616350191209, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
       propertyPath: exitArea
       value: 
@@ -17734,6 +17738,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EssentialObjects
       objectReference: {fileID: 0}
+    - target: {fileID: 7822403135715649135, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: b172b3dd2fafc454989e3ed8b6e45f35, type: 2}
     - target: {fileID: 8976031041713582346, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

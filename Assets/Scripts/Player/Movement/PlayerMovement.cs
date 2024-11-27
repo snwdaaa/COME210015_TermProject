@@ -335,6 +335,5 @@ public class PlayerMovement : MonoBehaviour
         {
             isCrouching = false;
         }
-
     }
 }

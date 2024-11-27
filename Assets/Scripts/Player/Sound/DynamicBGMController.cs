@@ -52,7 +52,7 @@ public class DynamicBGMController : MonoBehaviour
                 isDetectSoundPlayed = true;
             }
             bgmSource.volume = Mathf.Lerp(bgmSource.volume, 0f, Time.deltaTime * transitionSpeed);
-            chaseSource.volume = Mathf.Lerp(chaseSource.volume, 0.05f, Time.deltaTime * transitionSpeed);
+            chaseSource.volume = Mathf.Lerp(chaseSource.volume, 0.2f, Time.deltaTime * transitionSpeed);
         }
         else
         {
@@ -61,7 +61,7 @@ public class DynamicBGMController : MonoBehaviour
                 isDetectSoundPlayed = false;
             }
 
-            bgmSource.volume = Mathf.Lerp(bgmSource.volume, 0.05f, Time.deltaTime * transitionSpeed);
+            bgmSource.volume = Mathf.Lerp(bgmSource.volume, 0.2f, Time.deltaTime * transitionSpeed);
             chaseSource.volume = Mathf.Lerp(chaseSource.volume, 0f, Time.deltaTime * transitionSpeed);
         }
     }

@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     private GameObject managers;
     private CircleQTEUI circleQTEUI;
     private PlayerFlashlight plyFlashlight;
+    private Rigidbody[] ragdollRigidbodies;
 
     // 오브젝트
     private GameObject player;
@@ -86,6 +87,17 @@ public class Enemy : MonoBehaviour
 
 #endif
 
+    private void Awake()
+    {
+        ragdollRigidbodies = GetComponentsInChildren<Rigidbody>();
+
+        // 공격 타이머 초기화
+        attackTimer = attackDelay; // 처음에 바로 공격할 수 있도록 타이머를 딜레이만큼 설정
+
+        // 체력 설정
+        currentHealth = maxHealth;
+    }
+
     private void Start()
     {
         // 컴포넌트 가져오기
@@ -103,11 +115,7 @@ public class Enemy : MonoBehaviour
         // 이벤트 구독
         SubscribeEvent();
 
-        // 공격 타이머 초기화
-        attackTimer = attackDelay; // 처음에 바로 공격할 수 있도록 타이머를 딜레이만큼 설정
-
-        // 체력 설정
-        currentHealth = maxHealth;
+        DisableRagdoll();
     }
     private void SubscribeEvent()
     {
@@ -417,9 +425,27 @@ public class Enemy : MonoBehaviour
         navAgent.enabled = false;
         esm.enabled = false;
         GetComponent<EnemyFootstep>().enabled = false;
+        EnableRagdoll();
         animator.enabled = false;
         this.enabled = false;
 
         managers.GetComponent<GameManager>().eliminatedCount += 1;
+    }
+
+    private void DisableRagdoll()
+    {
+        foreach (Rigidbody rb in ragdollRigidbodies)
+        {
+            rb.isKinematic = true;
+            rb.excludeLayers |= (1 << LayerMask.NameToLayer("Player"));
+        }
+    }
+
+    private void EnableRagdoll()
+    {
+        foreach (Rigidbody rb in ragdollRigidbodies)
+        {
+            rb.isKinematic = false;
+        }
     }
 }
