@@ -6390,6 +6390,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 859735894}
     - target: {fileID: 4608824616350191209, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
+      propertyPath: doomMoveSpeed
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4608824616350191209, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
       propertyPath: directionalLight
       value: 
       objectReference: {fileID: 734287765}
