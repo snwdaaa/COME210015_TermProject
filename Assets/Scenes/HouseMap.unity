@@ -2864,18 +2864,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6383149551737303910, guid: 39ca9ccab67f3ed44bc8ab587f991285, type: 3}
-      propertyPath: chaseSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6383149551737303910, guid: 39ca9ccab67f3ed44bc8ab587f991285, type: 3}
-      propertyPath: patrolSpeed
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6383149551737303910, guid: 39ca9ccab67f3ed44bc8ab587f991285, type: 3}
-      propertyPath: patrolPoints.Array.size
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 6383149551737303910, guid: 39ca9ccab67f3ed44bc8ab587f991285, type: 3}
       propertyPath: patrolPoints.Array.data[0]
       value: 
       objectReference: {fileID: 249725735}
@@ -2933,7 +2921,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6922170637060134284, guid: 39ca9ccab67f3ed44bc8ab587f991285, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.371
+      value: 15.416
       objectReference: {fileID: 0}
     - target: {fileID: 6922170637060134284, guid: 39ca9ccab67f3ed44bc8ab587f991285, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8222,6 +8210,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: air_duct_I (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5294939861398657330, guid: 86065dbaeb0a89a4395995ee7383dde9, type: 3}
+      propertyPath: m_ReceiveGI
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5294939861398657330, guid: 86065dbaeb0a89a4395995ee7383dde9, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11514,9 +11510,37 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8636450158970854444}
     m_Modifications:
+    - target: {fileID: 340598826903031992, guid: 28dfc32e4da11aa4bb4b54ab0d5d5efd, type: 3}
+      propertyPath: m_Size.x
+      value: 0.43563184
+      objectReference: {fileID: 0}
+    - target: {fileID: 340598826903031992, guid: 28dfc32e4da11aa4bb4b54ab0d5d5efd, type: 3}
+      propertyPath: m_Size.y
+      value: 1.1228114
+      objectReference: {fileID: 0}
+    - target: {fileID: 340598826903031992, guid: 28dfc32e4da11aa4bb4b54ab0d5d5efd, type: 3}
+      propertyPath: m_Size.z
+      value: 2.1038008
+      objectReference: {fileID: 0}
+    - target: {fileID: 340598826903031992, guid: 28dfc32e4da11aa4bb4b54ab0d5d5efd, type: 3}
+      propertyPath: m_Center.x
+      value: -36.530857
+      objectReference: {fileID: 0}
+    - target: {fileID: 340598826903031992, guid: 28dfc32e4da11aa4bb4b54ab0d5d5efd, type: 3}
+      propertyPath: m_Center.y
+      value: 0.63858813
+      objectReference: {fileID: 0}
+    - target: {fileID: 340598826903031992, guid: 28dfc32e4da11aa4bb4b54ab0d5d5efd, type: 3}
+      propertyPath: m_Center.z
+      value: 1.5874511
+      objectReference: {fileID: 0}
     - target: {fileID: 1705353280615736149, guid: 28dfc32e4da11aa4bb4b54ab0d5d5efd, type: 3}
       propertyPath: m_Name
       value: air_duct_sideways_90 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3002340457112354016, guid: 28dfc32e4da11aa4bb4b54ab0d5d5efd, type: 3}
+      propertyPath: m_Center.x
+      value: -36.59
       objectReference: {fileID: 0}
     - target: {fileID: 8539780737358756572, guid: 28dfc32e4da11aa4bb4b54ab0d5d5efd, type: 3}
       propertyPath: m_LocalScale.x
@@ -17280,6 +17304,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7402355638531966901, guid: e9c53b1d36fcad44b945a63104387490, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -17686,14 +17714,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -7.094
       objectReference: {fileID: 0}
-    - target: {fileID: 4300697916107935736, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
-      propertyPath: baseFallDamage
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 4300697916107935736, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
-      propertyPath: fallDamageMultiplier
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4608824616350191209, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
       propertyPath: exitArea
       value: 
@@ -17710,10 +17730,6 @@ PrefabInstance:
       propertyPath: directionalLight
       value: 
       objectReference: {fileID: 180573616}
-    - target: {fileID: 5583698536257815672, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
-      propertyPath: damage
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 5901208630374199021, guid: b1e0f2537ad42cc4a9a17f5f459bc62d, type: 3}
       propertyPath: m_Name
       value: EssentialObjects

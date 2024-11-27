@@ -694,15 +694,17 @@ MonoBehaviour:
   updatePeriod: 0.2
   patrolSpeed: 7
   chaseSpeed: 9
+  isSamplingPatrolPoint: 1
   patrolPointDistance: 15
   patrolPoints: []
-  isSamplingPatrolPoint: 1
+  isArrived: 1
+  arrivedDistance: 1
   attackDamage: 30
   attackDelay: 2
   attackRadius: 1
   attackRoot: {fileID: 4344091565764943040}
   isAttacking: 0
-  detectionFov: 120
+  detectionFov: 160
   detectionDistance: 20
   flashlightDetectionDistance: 35
   eyeTransform: {fileID: 7557348141757361913}

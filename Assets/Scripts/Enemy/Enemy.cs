@@ -31,8 +31,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform[] patrolPoints;
     private int lastPatrolPointIdx = 0;
     private Transform lastPatrolPoint = null;
-    private bool isArrived = false;
-    [SerializeField] private bool isDestPlayerLastPos = false;
+    private bool isDestPlayerLastPos = false;
+    [SerializeField] private bool isArrived = true;
+    [SerializeField] private float arrivedDistance = 1f;
 
     [Header("공격")]
     [SerializeField] private float attackDamage = 30f;
@@ -172,7 +173,8 @@ public class Enemy : MonoBehaviour
     {
         if (isSamplingPatrolPoint)
         {
-            if (navAgent.destination == null || navAgent.remainingDistance <= 2f) // Waypoint가 없거나, 거의 도달한 상태면
+            // 경로 계산이 끝남 and (경로가 없음 or 거의 도달함)
+            if (!navAgent.pathPending && navAgent.remainingDistance <= arrivedDistance) // Waypoint가 없거나, 거의 도달한 상태면
             {
                 // NavMesh 상의 임의의 위치를 새로운 Waypoint로 설정
                 Vector3 patrolDestination = AIUtil.GetRandomPointOnNavMesh(this.transform.position, patrolPointDistance, NavMesh.AllAreas);
@@ -181,33 +183,48 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            // 순찰 경로 따라서 순차적으로 움직임
-            // 1. partrolPoints 배열 (크기 고정)
-            // 2. modulo 연산으로 사이즈만큼 계속 돌면서 웨이포인트 설정
-            // 3. 추적하다가 다시 순찰로 돌아갈 때 마지막으로 이동하던 웨이포인트로 이동
-            if (navAgent.destination == null || navAgent.destination == transform.position) // Waypoint가 없으면
+            // 경로 계산 완료했을 때
+            if (!navAgent.pathPending)
             {
-                lastPatrolPoint = patrolPoints[lastPatrolPointIdx];
-                navAgent.SetDestination(lastPatrolPoint.position);
-                isArrived = false;
-            }
-            else if (navAgent.remainingDistance <= 2f && !isArrived) // 거의 도달한 상태면 웨이포인트 인덱스 증가
-            {
-                isArrived = true;
-
-                // 만약 도착한 지점이 플레이어의 마지막 위치라면
-                // 마지막으로 이동하던 웨이포인트로 이동하기 위해 return
-                if (isDestPlayerLastPos) // 정지 거리 포함
+                if (!navAgent.hasPath) // 경로가 없다면 초기 경로 설정
                 {
-                    isDestPlayerLastPos = false;
-                    return;
+                    lastPatrolPoint = patrolPoints[lastPatrolPointIdx];
+                    navAgent.SetDestination(lastPatrolPoint.position);
+                    isArrived = false;
+                    Debug.Log("초기 웨이포인트 설정");
                 }
+                else // 경로가 있다면
+                {
+                    if (navAgent.remainingDistance <= arrivedDistance) // 거의 도착했으면
+                    {
+                        if (!isArrived) // 주변에 있는 동안은 도착했다고 판단
+                        {
+                            isArrived = true;
 
-                lastPatrolPointIdx = (lastPatrolPointIdx + 1) % patrolPoints.Length;    
+                            // 현재 도착한 목적지가 플레이어의 마지막 위치면
+                            if (isDestPlayerLastPos)
+                            {
+                                isDestPlayerLastPos = false;
+                                Debug.Log("플레이어 마지막 위치 도착. 웨이포인트 복귀");
+                            }
+                            else
+                            {
+                                lastPatrolPointIdx = (lastPatrolPointIdx + 1) % patrolPoints.Length;
+                                lastPatrolPoint = patrolPoints[lastPatrolPointIdx];
+                                Debug.Log("웨이포인트 도착. 다음 웨이포인트로 이동");
+                            }
+
+                            navAgent.SetDestination(lastPatrolPoint.position);
+                        }
+                    }
+                    else // 도착하지 않았으면
+                    {
+                        if (isArrived) isArrived = false; // 도착 후 새로운 포인트로 이동하기 위해 벗어나는 경우 false로
+
+                    }
+                }
             }
         }
-
-
     }
 
     /// <summary>
@@ -257,7 +274,7 @@ public class Enemy : MonoBehaviour
         if (chaseTarget != null)
         {
             navAgent.SetDestination(chaseTarget.position);
-            isDestPlayerLastPos = true;
+            if (!isDestPlayerLastPos) isDestPlayerLastPos = true;
         }
     }
 

@@ -2692,11 +2692,26 @@ MonoBehaviour:
   animator: {fileID: 0}
   esm: {fileID: 0}
   updatePeriod: 0.01
-  patrolSpeed: 3
-  chaseSpeed: 4
-  patrolPointDistance: 300
-  patrolPoints: []
+  patrolSpeed: 4
+  chaseSpeed: 5
   isSamplingPatrolPoint: 0
+  patrolPointDistance: 300
+  patrolPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  isArrived: 1
+  arrivedDistance: 1
   attackDamage: 30
   attackDelay: 2
   attackRadius: 0.5
@@ -2706,7 +2721,7 @@ MonoBehaviour:
   detectionDistance: 20
   flashlightDetectionDistance: 35
   eyeTransform: {fileID: 3977593863448643448}
-  targetLostTime: 3
+  targetLostTime: 4.5
   chaseTarget: {fileID: 0}
   maxHealth: 100
   currentHealth: 0

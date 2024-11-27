@@ -52,7 +52,9 @@ Shader "Custom/DoubleSidedShader"
 
             // Normal Map
             fixed3 normal = UnpackNormal(tex2D(_NormalMap, IN.uv_NormalMap));
-            o.Normal = normal;
+
+            // Double-sided lighting: Flip normals if back-facing
+            o.Normal = -normal;
 
             // AO Map
             float ao = tex2D(_OcclusionMap, IN.uv_OcclusionMap).r; // AO 값을 가져옴
