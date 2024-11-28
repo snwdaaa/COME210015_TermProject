@@ -195,12 +195,6 @@ public class InteractableGenerator : MonoBehaviour
         randomTimes = GetRandomQTEStartTimes(1f, neededTime, Mathf.Clamp((int)(neededTime / 5f), 1, 6)); // 0초 ~ neededTime까지 QTE를 시작할 랜덤한 시간을 결정
         nextTime = randomTimes[0];
         currentTime = 0;
-
-        // 무작위로 뽑은 시간을 출력
-        foreach (float time in randomTimes)
-        {
-            Debug.Log(time);
-        }
     }
 
     /// <summary>
