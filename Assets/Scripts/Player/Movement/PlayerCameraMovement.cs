@@ -18,10 +18,15 @@ public class PlayerCameraMovement : MonoBehaviour
     [SerializeField] private float mouseMaxAngleY = 85f;
     public bool disabled = false;
 
-    private void Start()
+    private void Awake()
     {
         playerMouseInput = GetComponent<PlayerMouseInput>();
         playerHealth = GetComponent<PlayerHealth>();
+    }
+
+    private void Start()
+    {
+
     }
 
     private void LateUpdate()

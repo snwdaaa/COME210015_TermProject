@@ -25,15 +25,16 @@ public class PlayerStamina : MonoBehaviour
     public bool hasEnoughStamina_Jump { get; private set; }
     public bool hasEnoughStamina_Sprint { get; private set; }
 
-    
-
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         psm = GetComponent<PlayerStateMachine>();
         pm = GetComponent<PlayerMovement>();
         plyHealth = GetComponent<PlayerHealth>();
+    }
 
+    // Start is called before the first frame update
+    void Start()
+    {
         currentMaxStamina = maxStamina;
         currentStamina = currentMaxStamina;
 

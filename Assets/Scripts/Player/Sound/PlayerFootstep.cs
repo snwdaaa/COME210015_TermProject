@@ -34,15 +34,18 @@ public class PlayerFootstep : MonoBehaviour
     private int surfaceType;
     private float stepIntervalTimer = 0f;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        audioSource.volume = walkVolume;
         playerStateMachine = GetComponent<PlayerStateMachine>();
         playerMovement = GetComponent<PlayerMovement>();
         playerMovementHelper = GetComponent<PlayerMovementHelper>();
+    }
 
+    // Start is called before the first frame update
+    void Start()
+    {       
+        audioSource.volume = walkVolume;
         SubscribeEvent();
     }
 

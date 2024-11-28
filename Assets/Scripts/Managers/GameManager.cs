@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -45,18 +46,34 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip unlockSound;
     private bool cutscenePlayed = false;
 
+    private void Awake()
+    {
+        generatorSpawner = GetComponent<GeneratorSpawner>();
+        meltScreen = GetComponent<MeltScreenController>();
+
+        // 맵에 따라 모드 설정
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        if (currentScene.name == "MazeMap")
+        {
+            gameMode = GameMode.Doom;
+            StartCoroutine("EnterDoomMode"); // 둠 모드 진입
+        }
+        else if (currentScene.name == "HouseMap")
+        {
+            gameMode = GameMode.Normal;
+            repairedGeneratorCount = 0;
+        }
+        else
+        {
+            gameMode = GameMode.None;
+        }      
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        generatorSpawner = GetComponent<GeneratorSpawner>();
-        meltScreen = GetComponent<MeltScreenController>();
-        bgmSound = GameObject.Find("DoomBGM").GetComponent<AudioSource>();
-
-        if (gameMode == GameMode.Doom)
-        {
-            StartCoroutine("EnterDoomMode"); // 둠 모드 진입
-        }
+        bgmSound = GameObject.Find("DoomBGM").GetComponent<AudioSource>();   
     }
 
     // Update is called once per frame
@@ -131,8 +148,6 @@ public class GameManager : MonoBehaviour
     // ---------------  Doom Mode  ---------------
     IEnumerator EnterDoomMode()
     {
-        // gameMode = GameMode.Doom; // 모드 변경       
-
         meltScreen.ShowScreen();
 
         yield return new WaitForSeconds(2.0f);

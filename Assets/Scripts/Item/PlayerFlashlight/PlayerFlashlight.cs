@@ -26,14 +26,16 @@ public class PlayerFlashlight : MonoBehaviour
     public float currentMaxBatteryAmount { get; private set; }
     public float currentBatteryAmount { get; private set; } // 현재 배터리 양
 
+    private void Awake()
+    {
+        light = GetComponent<Light>();
+        audioSource = GetComponent<AudioSource>();       
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        light = GetComponent<Light>();
-        audioSource = GetComponent<AudioSource>();
         plyHealth = GetComponentInParent<PlayerHealth>();
-
         currentMaxBatteryAmount = maxBatteryAmount;
         currentBatteryAmount = maxBatteryAmount;
     }

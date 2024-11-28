@@ -19,9 +19,21 @@ public class GeneratorSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (GameManager.gameMode == GameManager.GameMode.Doom) return;
+        if (GameManager.gameMode == GameManager.GameMode.Doom) 
+            this.enabled = false;
 
-        SpawnGenerator();
+        spawnCount = Mathf.Clamp(spawnCount, 1, spawnPoints.Length); // 예외 범위 보정
+        StartCoroutine("SpawnGeneratorCoroutine");
+    }
+
+    IEnumerator SpawnGeneratorCoroutine()
+    {
+        yield return new WaitForSeconds(0.01f);
+
+        if (GameManager.gameMode == GameManager.GameMode.Normal)
+        {
+            SpawnGenerator();
+        }
     }
 
     private void SpawnGenerator()
@@ -40,21 +52,16 @@ public class GeneratorSpawner : MonoBehaviour
     /// <returns></returns>
     private Transform[] GetRandomSpawnpoints()
     {
-        int cnt = 0;
-        bool[] isUsed = new bool[spawnPoints.Length]; // 사용 여부 저장할 배열
-        Transform[] randomPoints = new Transform[spawnCount];
-
-        while (cnt < spawnCount)
+        List<Transform> shuffledPoints = spawnPoints.ToList();
+        
+        for (int i = 0; i < shuffledPoints.Count; i++) // 랜덤하게 셔플
         {
-            int randIdx = Random.Range(0, spawnPoints.Length);
-            if (!isUsed[randIdx])
-            {
-                isUsed[randIdx] = true;
-                randomPoints[cnt] = spawnPoints[randIdx];
-                cnt++;
-            }          
+            int randIdx = Random.Range(i, shuffledPoints.Count);
+            (shuffledPoints[i], shuffledPoints[randIdx]) = (shuffledPoints[randIdx], shuffledPoints[i]);
         }
 
-        return randomPoints;
+        // 상위 spawnCount개의 포인트 반환
+        return shuffledPoints.Take(spawnCount).ToArray();
     }
+
 }

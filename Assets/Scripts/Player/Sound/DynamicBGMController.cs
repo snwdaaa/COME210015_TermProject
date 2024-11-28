@@ -18,30 +18,44 @@ public class DynamicBGMController : MonoBehaviour
 
     void Start()
     {
-        if (GameManager.gameMode != GameManager.GameMode.Doom)
-        {
-            esm = GameObject.FindWithTag("Enemy").GetComponent<EnemyStateMachine>();
-        }
-
         // 시작 시 기본 BGM 활성화
         bgmSource.volume = 1f;
         chaseSource.volume = 0f;
 
         bgmSource.Play();
         chaseSource.Play();
+
+        StartCoroutine("LateStart");
+
+    }
+
+    IEnumerator LateStart()
+    {
+        yield return new WaitForSeconds(0.001f);
+
+        if (GameManager.gameMode == GameManager.GameMode.Normal)
+        {
+            GameObject enemy = GameObject.FindWithTag("Enemy");
+
+            if (enemy != null)
+            {
+                esm = enemy.GetComponent<EnemyStateMachine>();
+            }
+        }
+
+        if (GameManager.gameMode == GameManager.GameMode.Doom)
+        {
+            if (chaseSource.enabled) bgmSource.enabled = false;
+        }
     }
 
     void Update()
     {
-        if (GameManager.gameMode == GameManager.GameMode.Doom)
+        if (esm != null)
         {
-            //if (bgmSource.enabled) bgmSource.enabled = false;
-            if (chaseSource.enabled) bgmSource.enabled = false;
-            return;
+            // 추적을 시작해야 공격을 할 수 있으므로 공격 상태도 추적 상태로 간주
+            isChasing = esm.CurrentState == esm.chaseState || esm.CurrentState == esm.attackState;
         }
-
-        // 추적을 시작해야 공격을 할 수 있으므로 공격 상태도 추적 상태로 간주
-        isChasing = esm.CurrentState == esm.chaseState || esm.CurrentState == esm.attackState;
 
         // 상태에 따라 볼륨을 전환
         if (isChasing)

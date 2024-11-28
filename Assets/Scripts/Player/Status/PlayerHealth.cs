@@ -34,11 +34,14 @@ public class PlayerHealth : MonoBehaviour
     public bool isDied { get; private set; } // 사망 여부
     private float recoverTimer = 0f; // 회복 타이머
 
-    private void Start()
+    private void Awake()
     {
         playerMovementHelper = GetComponent<PlayerMovementHelper>();
         audioSource = GetComponent<AudioSource>();
+    }
 
+    private void Start()
+    {
         currentMaxHealth = maxHealth;
         currentHealth = currentMaxHealth;
 

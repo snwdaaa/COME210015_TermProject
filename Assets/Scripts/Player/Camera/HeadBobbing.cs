@@ -30,6 +30,11 @@ public class HeadBobbing : MonoBehaviour
 
     private Vector3 pivotOriginPos;
 
+    private void Awake()
+    {
+        
+    }
+
     // Start is called before the first frame update
     void Start()
     {

@@ -68,16 +68,18 @@ public class PlayerMovement : MonoBehaviour
     public float currentSpeed => new Vector2(characterController.velocity.x, characterController.velocity.z).magnitude;
     public float currentHeight => characterController.height;
 
-    private void Start()
+    private void Awake()
     {
         characterController = GetComponent<CharacterController>();
         playerKeyInput = GetComponent<PlayerKeyInput>();
         playerStamina = GetComponent<PlayerStamina>();
         playerHealth = GetComponent<PlayerHealth>();
-
-        slopeForceTmp = slopeDownForce;
-
         playerStateMachine = GetComponent<PlayerStateMachine>();
+    }
+
+    private void Start()
+    {
+        slopeForceTmp = slopeDownForce;      
         playerStateMachine.Initialize(playerStateMachine.idleState, playerStateMachine.standState); // State 초기화
     }
 

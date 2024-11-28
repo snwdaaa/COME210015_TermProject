@@ -9,9 +9,13 @@ public class ExitArea : MonoBehaviour
     private BoxCollider exitAreaCollider;
     private GameManager gameManager;
 
-    private void Start()
+    private void Awake()
     {
         exitAreaCollider = GetComponent<BoxCollider>();
+    }
+
+    private void Start()
+    {
         gameManager = GameObject.Find("Managers").GetComponent<GameManager>();
     }
 
@@ -31,7 +35,7 @@ public class ExitArea : MonoBehaviour
             else if (GameManager.gameMode == GameManager.GameMode.Normal)
             {
                 SceneManager.LoadScene(2, LoadSceneMode.Single); // 미로맵 Load
-                GameManager.gameMode = GameManager.GameMode.Doom; // 모드 변경
+                //GameManager.gameMode = GameManager.GameMode.Doom; // 모드 변경
             }
         }
     }

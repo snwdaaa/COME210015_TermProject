@@ -8440,6 +8440,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3286491612966045170, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
+      propertyPath: field of view
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 3286491612966045170, guid: c8fa9da97fabb8d4f95e1e030e7ee1a9, type: 3}
       propertyPath: m_CullingMask.m_Bits
       value: 16343
       objectReference: {fileID: 0}

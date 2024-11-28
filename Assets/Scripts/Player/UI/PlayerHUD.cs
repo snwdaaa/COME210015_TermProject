@@ -17,14 +17,16 @@ public class PlayerHUD : MonoBehaviour
     [SerializeField] private PlayerFlashlight plyFlashlight;
     [SerializeField] private Image batteryBar;
 
-    
-    
+    private void Awake()
+    {
+        plyHealth = GetComponent<PlayerHealth>();
+        plyStamina = GetComponent<PlayerStamina>();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        plyHealth = GetComponent<PlayerHealth>();
-        plyStamina = GetComponent<PlayerStamina>();
+
     }
 
     private void OnGUI()

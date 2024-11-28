@@ -89,6 +89,11 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
+        // 컴포넌트 가져오기
+        audioSource = GetComponent<AudioSource>();
+        navAgent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+        esm = GetComponent<EnemyStateMachine>();
         ragdollRigidbodies = GetComponentsInChildren<Rigidbody>();
 
         // 공격 타이머 초기화
@@ -101,10 +106,6 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         // 컴포넌트 가져오기
-        audioSource = GetComponent<AudioSource>();
-        navAgent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
-        esm = GetComponent<EnemyStateMachine>();
         managers = GameObject.Find("Managers");
         circleQTEUI = managers.GetComponent<UIManager>().circleQTEUI;
         plyFlashlight = GameObject.FindWithTag("Player").GetComponentInChildren<PlayerFlashlight>();
@@ -199,7 +200,7 @@ public class Enemy : MonoBehaviour
                     lastPatrolPoint = patrolPoints[lastPatrolPointIdx];
                     navAgent.SetDestination(lastPatrolPoint.position);
                     isArrived = false;
-                    Debug.Log("초기 웨이포인트 설정");
+                    //Debug.Log("초기 웨이포인트 설정");
                 }
                 else // 경로가 있다면
                 {
@@ -213,13 +214,13 @@ public class Enemy : MonoBehaviour
                             if (isDestPlayerLastPos)
                             {
                                 isDestPlayerLastPos = false;
-                                Debug.Log("플레이어 마지막 위치 도착. 웨이포인트 복귀");
+                                //Debug.Log("플레이어 마지막 위치 도착. 웨이포인트 복귀");
                             }
                             else
                             {
                                 lastPatrolPointIdx = (lastPatrolPointIdx + 1) % patrolPoints.Length;
                                 lastPatrolPoint = patrolPoints[lastPatrolPointIdx];
-                                Debug.Log("웨이포인트 도착. 다음 웨이포인트로 이동");
+                                //Debug.Log("웨이포인트 도착. 다음 웨이포인트로 이동");
                             }
 
                             navAgent.SetDestination(lastPatrolPoint.position);

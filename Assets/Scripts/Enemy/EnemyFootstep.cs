@@ -25,13 +25,17 @@ public class EnemyFootstep : MonoBehaviour
     private int surfaceType;
     private float stepIntervalTimer = 0f;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        audioSource.volume = walkVolume;
         enemy = GetComponent<Enemy>();
         capCol = GetComponent<CapsuleCollider>();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {       
+        audioSource.volume = walkVolume;
     }
 
     // Update is called once per frame

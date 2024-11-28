@@ -50,14 +50,18 @@ public class InteractableGenerator : MonoBehaviour
     private float nextTime;
     private List<int> randomTimes;
 
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        statusLight = GetComponentInChildren<Light>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         GameObject managers = GameObject.Find("Managers");
-        spawner = managers.GetComponent<GeneratorSpawner>();
-        audioSource = GetComponent<AudioSource>();
-        uiManager = managers.GetComponent<UIManager>();
-        statusLight = GetComponentInChildren<Light>();
+        spawner = managers.GetComponent<GeneratorSpawner>();   
+        uiManager = managers.GetComponent<UIManager>();     
 
         progressBar = spawner.progressBar;
         qteUIObject = spawner.qteUIObject;

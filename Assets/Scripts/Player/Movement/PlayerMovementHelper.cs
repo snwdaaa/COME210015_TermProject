@@ -5,15 +5,15 @@ using UnityEditor;
 using UnityEngine;
 
 /// <summary>
-/// ÇÃ·¹ÀÌ¾î ÀÌµ¿ °ü·Ã ºÎ°¡ ±â´É Ã³¸®
+/// í”Œë ˆì´ì–´ ì´ë™ ê´€ë ¨ ë¶€ê°€ ê¸°ëŠ¥ ì²˜ë¦¬
 /// </summary>
 public class PlayerMovementHelper : MonoBehaviour
 {
-    // ÄÄÆ÷³ÍÆ®
+    // ì»´í¬ë„ŒíŠ¸
     private PlayerMovement playerMovement;
     private PlayerStateMachine playerStateMachine;
 
-    // ----------------- Á¡ÇÁ, Ãß¶ô Ã³¸® -----------------
+    // ----------------- ì í”„, ì¶”ë½ ì²˜ë¦¬ -----------------
     public bool onAirStarted { get; private set; }
     public bool onAirType_Jump { get; private set; }
     public bool onAirType_Fall { get; private set; }
@@ -22,17 +22,20 @@ public class PlayerMovementHelper : MonoBehaviour
     public event Action PlayerLandingEvent;
 
     public float fallHeight { get; private set; }
-    private float playerMaxHeight; // ÇÃ·¹ÀÌ¾îÀÇ ÃÖ´ë À§Ä¡ ³ôÀÌ
-    private float playerLandHeight; // ÇÃ·¹ÀÌ¾îÀÇ ÂøÁö À§Ä¡ ³ôÀÌ
-    // ----------------- Á¡ÇÁ, Ãß¶ô Ã³¸® -----------------
+    private float playerMaxHeight; // í”Œë ˆì´ì–´ì˜ ìµœëŒ€ ìœ„ì¹˜ ë†’ì´
+    private float playerLandHeight; // í”Œë ˆì´ì–´ì˜ ì°©ì§€ ìœ„ì¹˜ ë†’ì´
+    // ----------------- ì í”„, ì¶”ë½ ì²˜ë¦¬ -----------------
+
+    private void Awake()
+    {
+        playerMovement = GetComponent<PlayerMovement>();
+        playerStateMachine = GetComponent<PlayerStateMachine>();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        playerMovement = GetComponent<PlayerMovement>();
-        playerStateMachine = GetComponent<PlayerStateMachine>();
-
-        // ÃÊ±âÈ­
+        // ì´ˆê¸°í™”
         onAirStarted = false;
         onAirType_Fall = false;
         onAirType_Jump = false;
@@ -44,9 +47,9 @@ public class PlayerMovementHelper : MonoBehaviour
         CheckOnAirState();
     }
 
-    // ----------------- Á¡ÇÁ, Ãß¶ô Ã³¸® -----------------
+    // ----------------- ì í”„, ì¶”ë½ ì²˜ë¦¬ -----------------
     /// <summary>
-    /// ÇöÀç ÇÃ·¹ÀÌ¾î°¡ °øÁß¿¡ ¶°ÀÖ´Â »óÅÂ°¡ Á¡ÇÁ¿¡ ÀÇÇÑ »óÅÂÀÎÁö Á¡ÇÁ ¾øÀÌ ¶³¾îÁø »óÅÂÀÎÁö Ã¼Å©
+    /// í˜„ì¬ í”Œë ˆì´ì–´ê°€ ê³µì¤‘ì— ë– ìˆëŠ” ìƒíƒœê°€ ì í”„ì— ì˜í•œ ìƒíƒœì¸ì§€ ì í”„ ì—†ì´ ë–¨ì–´ì§„ ìƒíƒœì¸ì§€ ì²´í¬
     /// </summary>
     private void CheckOnAirState()
     {
@@ -61,7 +64,7 @@ public class PlayerMovementHelper : MonoBehaviour
     }
 
     /// <summary>
-    /// ÇÃ·¹ÀÌ¾î°¡ Á¡ÇÁ or Ãß¶ôÀ» ½ÃÀÛÇÒ ¶§ È£Ãâ
+    /// í”Œë ˆì´ì–´ê°€ ì í”„ or ì¶”ë½ì„ ì‹œì‘í•  ë•Œ í˜¸ì¶œ
     /// </summary>
     private void StartOnAirState()
     {
@@ -71,7 +74,7 @@ public class PlayerMovementHelper : MonoBehaviour
             onAirType_Jump = true;
             PlayerJumpStartEvent?.Invoke();
 
-            // ³ôÀÌ °è»ê
+            // ë†’ì´ ê³„ì‚°
             CalcFallStartHeight();
         }
         else if (playerStateMachine.CurrentMoveState == playerStateMachine.onAirState)
@@ -79,15 +82,15 @@ public class PlayerMovementHelper : MonoBehaviour
             onAirStarted = true;
             onAirType_Fall = true;
 
-            // ³ôÀÌ °è»ê
+            // ë†’ì´ ê³„ì‚°
             CalcFallStartHeight();
       
-            PlayerFallStartEvent?.Invoke(); // ÀÌº¥Æ® ½ÇÇà
+            PlayerFallStartEvent?.Invoke(); // ì´ë²¤íŠ¸ ì‹¤í–‰
         }
     }
 
     /// <summary>
-    /// ÇÃ·¹ÀÌ¾î°¡ ÂøÁöÇÒ ¶§ È£Ãâ
+    /// í”Œë ˆì´ì–´ê°€ ì°©ì§€í•  ë•Œ í˜¸ì¶œ
     /// </summary>
     private void EndOnAirState()
     {
@@ -102,15 +105,15 @@ public class PlayerMovementHelper : MonoBehaviour
             if (onAirType_Jump) onAirType_Jump = false;
             else if (onAirType_Fall) onAirType_Fall = false;
 
-            // ³ôÀÌ °è»ê
+            // ë†’ì´ ê³„ì‚°
             CalcFallEndHeight();
 
-            PlayerLandingEvent?.Invoke(); // ÀÌº¥Æ® ½ÇÇà
+            PlayerLandingEvent?.Invoke(); // ì´ë²¤íŠ¸ ì‹¤í–‰
         }
     }
 
     /// <summary>
-    /// ÇÃ·¹ÀÌ¾î°¡ Ãß¶ôÀ» ½ÃÀÛÇÏ´Â ÃÖ´ë ³ôÀÌ¸¦ °è»ê ÈÄ ÀúÀå
+    /// í”Œë ˆì´ì–´ê°€ ì¶”ë½ì„ ì‹œì‘í•˜ëŠ” ìµœëŒ€ ë†’ì´ë¥¼ ê³„ì‚° í›„ ì €ì¥
     /// </summary>
     private void CalcFallStartHeight()
     {
@@ -118,19 +121,19 @@ public class PlayerMovementHelper : MonoBehaviour
 
         if (onAirType_Jump)
         {
-            Vector3 playerMoveDir = playerMovement.moveVelocityWithGravity; // ÀÌµ¿ ¹æÇâ º¤ÅÍ
-            Vector3 playerMoveDirAxis = Vector3.zero; // ÀÌµ¿ ¹æÇâÀ» ÁöÇ¥¸é¿¡ Åõ»çÇÑ º¤ÅÍ¿Í °°Àº ¹æÇâÀ» °¡Áö´Â º¤ÅÍ (ÀÌÇÏ ·çÆ® º¤ÅÍ)
+            Vector3 playerMoveDir = playerMovement.moveVelocityWithGravity; // ì´ë™ ë°©í–¥ ë²¡í„°
+            Vector3 playerMoveDirAxis = Vector3.zero; // ì´ë™ ë°©í–¥ì„ ì§€í‘œë©´ì— íˆ¬ì‚¬í•œ ë²¡í„°ì™€ ê°™ì€ ë°©í–¥ì„ ê°€ì§€ëŠ” ë²¡í„° (ì´í•˜ ë£¨íŠ¸ ë²¡í„°)
 
-            // ÀÌµ¿ ¹æÇâ º¤ÅÍ·Î ·çÆ® º¤ÅÍÀÇ ¹æÇâÀ» °è»ê
+            // ì´ë™ ë°©í–¥ ë²¡í„°ë¡œ ë£¨íŠ¸ ë²¡í„°ì˜ ë°©í–¥ì„ ê³„ì‚°
             playerMoveDirAxis += transform.InverseTransformDirection(this.transform.forward) * playerMoveDir.z;
             playerMoveDirAxis += transform.InverseTransformDirection(this.transform.right) * playerMoveDir.x;
 
-            // Áß·ÂÀÇ ¿µÇâÀ» ¹Ş´Â ÃÖ´ë Á¡ÇÁ ³ôÀÌ (Æ÷¹°¼± ¿îµ¿ ÃÖ°íÁ¡ ³ôÀÌ °ø½Ä)
-            // = (Á¡ÇÁ ½ÃÀÛ½Ã ÀÌµ¿ ¼Óµµ)^2 * sin^2(ÀÌµ¿ ¹æÇâ ·çÆ® º¤ÅÍ¿Í Á¡ÇÁ ÀÌµ¿ ¹æÇâ »çÀÌ °¢) / 2 * gravity
+            // ì¤‘ë ¥ì˜ ì˜í–¥ì„ ë°›ëŠ” ìµœëŒ€ ì í”„ ë†’ì´ (í¬ë¬¼ì„  ìš´ë™ ìµœê³ ì  ë†’ì´ ê³µì‹)
+            // = (ì í”„ ì‹œì‘ì‹œ ì´ë™ ì†ë„)^2 * sin^2(ì´ë™ ë°©í–¥ ë£¨íŠ¸ ë²¡í„°ì™€ ì í”„ ì´ë™ ë°©í–¥ ì‚¬ì´ ê°) / 2 * gravity
             float angle = Vector3.Angle(playerMoveDir.normalized, playerMoveDirAxis.normalized);
-            float sinVal = Mathf.Sin(angle * Mathf.Deg2Rad); // ¶óµğ¾ÈÀ¸·Î º¯È¯
-            sinVal = (sinVal > 0) ? sinVal : 1; // Á¦ÀÚ¸® Á¡ÇÁ º¸Á¤ -> ¼öÁ÷ ¹æÇâ ÀÌµ¿Àº Sin(pi/2(90µµ)) = 1
-            float jumpMaxHeight = (Mathf.Pow(playerMoveDir.magnitude, 2) * Mathf.Pow(sinVal, 2)) / (2 * Mathf.Abs(Physics.gravity.y)); // Áß·Â°ª Ç×»ó ¾ç¼ö¿©¾ß ÇÔ
+            float sinVal = Mathf.Sin(angle * Mathf.Deg2Rad); // ë¼ë””ì•ˆìœ¼ë¡œ ë³€í™˜
+            sinVal = (sinVal > 0) ? sinVal : 1; // ì œìë¦¬ ì í”„ ë³´ì • -> ìˆ˜ì§ ë°©í–¥ ì´ë™ì€ Sin(pi/2(90ë„)) = 1
+            float jumpMaxHeight = (Mathf.Pow(playerMoveDir.magnitude, 2) * Mathf.Pow(sinVal, 2)) / (2 * Mathf.Abs(Physics.gravity.y)); // ì¤‘ë ¥ê°’ í•­ìƒ ì–‘ìˆ˜ì—¬ì•¼ í•¨
             playerMaxHeight = startYPos + jumpMaxHeight;
         }
         else if (onAirType_Fall)
@@ -140,12 +143,12 @@ public class PlayerMovementHelper : MonoBehaviour
     }
 
     /// <summary>
-    /// ÇÃ·¹ÀÌ¾î°¡ Áö¸é¿¡ ÂøÁöÇÑ À§Ä¡ÀÇ ³ôÀÌ¿Í ÃÖÁ¾ ³«ÇÏ ³ôÀÌ¸¦ °è»ê ÈÄ ÀúÀå
+    /// í”Œë ˆì´ì–´ê°€ ì§€ë©´ì— ì°©ì§€í•œ ìœ„ì¹˜ì˜ ë†’ì´ì™€ ìµœì¢… ë‚™í•˜ ë†’ì´ë¥¼ ê³„ì‚° í›„ ì €ì¥
     /// </summary>
     private void CalcFallEndHeight()
     {
         playerLandHeight = this.gameObject.transform.position.y;
         fallHeight = playerMaxHeight - playerLandHeight;
     }
-    // ----------------- Á¡ÇÁ, Ãß¶ô Ã³¸® -----------------
+    // ----------------- ì í”„, ì¶”ë½ ì²˜ë¦¬ -----------------
 }

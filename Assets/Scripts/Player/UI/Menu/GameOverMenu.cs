@@ -20,7 +20,7 @@ public class GameOverMenu : MonoBehaviour
     /// </summary>
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single); // AI 테스트용 임시 scene 로드
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
     }
 
     /// <summary>
